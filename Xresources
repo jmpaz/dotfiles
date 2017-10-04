@@ -1,0 +1,11 @@
+! Colors
+!#include ".Xresources.d/colors-base16-ocean"
+!#include ".Xresources.d/colors-palendrome"
+!#include ".Xresources.d/colors-one-dark"
+!#include ".Xresources.d/colors-breeze-dark"
+
+! Rofi
+#include ".Xresources.d/rofi-blue"
+
+! Fonts
+#include ".Xresources.d/fonts"

@@ -1,0 +1,18 @@
+rofi.location:          0
+rofi.color-enabled:     true
+!                       'background', 'border'
+rofi.color-window:      argb:E6232F39, #232F39, #6DC6E4
+!                       'bg',          'fg',    'bgalt',       'hlbg',        'hlfg'
+rofi.color-normal:      argb:00232F39, #E3E9E8, argb:00232F39, argb:FF6DC6E4, argb:FF232F39
+rofi.color-urgent:      argb:00232F39, #5FABD9, #232F39, #5FABD9, #E3E9E8
+rofi.color-active:      argb:00232F39, #E3E9E8, #232F39, #6DC6E4, #232F39
+
+rofi.separator-style:   dash
+rofi.fullscreen:        true
+rofi.padding:           130
+rofi.hide-scrollbar:    true
+rofi.line-margin:       5
+rofi.fake-transparency: false
+rofi.yoffset:           0
+rofi.xoffset:           0
+rofi.font:              System San Francisco 15

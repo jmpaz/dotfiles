@@ -1,0 +1,75 @@
+[keys]
+append = n
+archive = X
+bottom = G
+change-focus = tab
+clear-filter = F
+delete = D
+down = j, down
+edit = enter, A, e
+edit-complete = tab
+edit-delete-beginning = ctrl u
+edit-delete-end = ctrl k
+edit-delete-word = ctrl w
+edit-end = ctrl e, end
+edit-home = ctrl a, home
+edit-move-left = left
+edit-move-right = right
+edit-paste = ctrl y
+edit-save = return
+edit-word-left = meta b, ctrl b
+edit-word-right = meta f, ctrl f
+insert-after = o
+insert-before = O
+left = H, left
+quit = q
+reload = R
+right = L, right
+save = S
+save-item = enter
+search = /
+search-clear = C
+search-end = enter
+swap-down = J
+swap-up = K
+toggle-borders = b
+toggle-complete = x
+toggle-filter = f
+toggle-help = h, ?
+toggle-sorting = s
+toggle-toolbar = t
+toggle-wrapping = w
+top = g
+up = k, up
+
+[settings]
+file = ~/Documents/todo/todo.txt
+archive = ~/Documents/todo/done.txt
+auto-save = True
+# colorscheme = exampletheme
+# others: base16-light base16-dark solarized-light solarized-dark
+
+[colorscheme-exampletheme]
+plain=h250
+selected=,h238
+header=h250,h235
+header_todo_count=h39,h235
+header_todo_pending_count=h228,h235
+header_todo_done_count=h156,h235
+header_file=h48,h235
+dialog_background=,h248
+dialog_color=,h240
+dialog_shadow=,h238
+footer=h39,h235
+search_match=h222,h235
+completed=h59
+context=h39
+project=h214
+creation_date=h135
+due_date=h161
+priority_a=h167
+priority_b=h173
+priority_c=h185
+priority_d=h77
+priority_e=h80
+priority_f=h62
