@@ -1,0 +1,4 @@
+EXCLUDES="README.md LICENSE fonts"
+COPY_ALWAYS=weechat/*
+HOSTNAME="vm-ubuntu"
+SYMLINK_DIRS="vim zfunctions oh-my-zsh"

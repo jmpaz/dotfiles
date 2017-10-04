@@ -1,0 +1,48 @@
+# Import colorscheme from wal, pick one:
+(wal -r &)
+# setsid wal -r
+
+# functions
+kedit() {
+  nohup kate "$@" 2>&1 1>/dev/null & disown
+}
+
+taedit() {
+  command textadept "$@" & disown
+}
+
+walset() {
+  wal -n -ti "$@"
+  feh --bg-scale "$(< "${HOME}/.cache/wal/wal")"
+}
+
+# personal
+alias la="ls -A"
+alias cls="colorls -sd"
+alias cla="colorls -sd -A"
+alias todo="todotxt-machine"
+alias fehs="feh -. -S filename" # scale down to window and sort by filename
+
+# config
+alias zshconf="vim ~/.zshrc"
+alias bashconf="vim ~/.bashrc"
+alias shconf="vim ~/.shrc"
+alias xrconf="vim ~/.Xresources"
+alias i3conf="vim ~/.config/i3/config"
+alias herbstconf="vim ~/.config/herbstluftwm/autostart"
+alias polyconf="vim ~/.config/polybar/config"
+alias termconf="vim ~/.config/terminator/config"
+alias compconf="vim ~/.compton.conf"
+alias todoconf="vim ~/.todotxt-machinerc"
+alias todoref="todoconf && todotxt-machine"
+alias taconf="vim ~/.textadept/init.lua"
+alias walscheme="wal -n -ti"
+alias fehwal="feh --bg-scale \"\$(< \"\#{HOME}/.cache/wal/wal\")\""
+
+# reload
+alias szsh="source ~/.zshrc"
+alias sbash="source ~/.bashrc"
+alias xreload="xrdb -load ~/.Xresources"
+
+# path
+export PATH=$PATH:$HOME/bin

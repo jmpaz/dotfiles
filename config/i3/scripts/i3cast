@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# i3cast - create and upload screen recordings
+# ============================================
+# gluecifer: **budRich** 2017
+# 
+# ### usage ### 
+# just run the script to start the recording  
+# run it again to stop and preview the recording  
+# and perform action, (save,upload or play again).  
+# if no action is selected the recording is deleted.  
+# uploaded recordings is also saved.  
+# 
+# a notification is shown when upload is complete and  
+# a link is put in your clipboard.  
+# 
+# ### protip ###
+# `bindsym --release Mod3+Pint exec --no-startup-id i3cast`  
+# 
+# ### requirements ### 
+# * **i3get**    https://redd.it/6wyarw
+# * **i3run**    https://redd.it/6x0p0q
+# * **urxvt**    get it from your package manager
+# * **ffmpeg**   get it from your package manager
+# * **curl**     get it from your package manager
+# * **mpv**      get it from your package manager
+# * **dmenu**    get it from your package manager
+# * **xclip**    get it from your package manager  
+# 
+# ### optional ### 
+# **gif-is-jif**  https://github.com/markasoftware/gif-is-jif
+# 
+# ### discussion ###
+# https://redd.it/6xlibu
+# =====================================================
+# 
+# other players might work, change var PLAYER if you for some
+# reason don't want to use mpv.
+PLAYER=mpv
+
+# Folder to store saved and uploaded videos localy.
+FOLDER=$HOME/Videos/c/
+
+# Customize the DMENU to your liking
+DMENU_OPTIONS=
+# DMENU_OPTIONS="-h 16"
+
+# to add gfycat as an host, enter path to gif-is-jif
+GIF_IS_JIF=
+GIF_IS_JIF="$HOME/Tools/gif-is-jif.bash"
+
+
+# DON'T CHANGE THIS VAR
+HOSTS="ptpb.pw"
+
+# Filename and location of recording before saving
+TMP_FILE=/tmp/tmpcast.mkv
+
+# Command used for recording, it works well for my screen,
+# but you might want to change at least -s 1366x768 to match
+# your resolution.
+COMMAND="ffmpeg -thread_queue_size 128 -f x11grab -r 30 \
+-s 1366x768 -i :0.0 -vcodec libx264 -preset ultrafast \
+-threads 0 -y $TMP_FILE"
+
+[[ -n $GIF_IS_JIF ]] && HOSTS+="\ngfycat"
+
+play(){
+  ${PLAYER} $TMP_FILE
+  sel1="play\nupload\nsave"
+  choice=$(echo -e "${sel1}" | dmenu ${DMENU_OPTIONS} -p "action:")
+  if [[ -z $choice ]]; then
+    rm $TMP_FILE 
+    exit
+  fi
+  case $choice in
+    play ) play ;;
+    upload ) upload ;;
+    save ) save ;;
+  esac
+}
+
+
+upload(){
+  save
+  choice=$(echo -e "${HOSTS}" | dmenu ${DMENU_OPTIONS} -p "select host:")
+  [[ -z $choice ]] && exit 
+  case $choice in
+    'ptpb.pw' ) 
+      pst=$(curl --form "c=@${SAVED}" https://ptpb.pw/)
+      pst=$(printf "${pst}" | awk -F':' '$1=="url"{$1="";print $0}')
+    ;;
+
+    gfycat    ) 
+      pst=$(${GIF_IS_JIF} ${SAVED})
+      printf "${pst}" | awk '$NF ~ "http"{print $NF}'
+      pst=$(printf "${pst}" | awk '$NF ~ "http"{print $NF}')
+    ;;
+  esac
+  
+  echo ${pst} | xclip -selection 'clipboard'
+  notify-send "Upload complete: $pst"
+}
+
+save(){
+  choice=$(echo "" | dmenu ${DMENU_OPTIONS} -p "name:")
+  if [[ -z $choice ]]; then
+    rm $TMP_FILE
+    exit
+  fi
+  SAVED=$FOLDER$choice.mkv
+  mkdir -p $FOLDER
+  mv $TMP_FILE $SAVED
+}
+
+cid=$(i3get -i castterm)
+if [[ -z $cid ]]; then
+  rm -f $TMP_FILE
+  # start recording
+  i3run -i castterm -e urxvt -name castterm -e "${COMMAND}"
+  # send it to scratchpad by double launching i3run
+  i3run -i castterm -e urxvt -name castterm -e "${COMMAND}"
+else
+  # stop recording, focus castterm
+  i3run -i castterm -e urxvt -name castterm -e "${COMMAND}"
+  # send key q to castterm to stop recording and kill the window
+  xdotool key q
+  play
+fi
+
