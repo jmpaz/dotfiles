@@ -1,3 +1,8 @@
+# variables
+export DOTS="$HOME/.dotfiles" 
+export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
+export CBDIR="$HOME/.dotfiles/host-cb-xfce"
+
 # personal
 alias la="ls -A"
 alias cls="colorls -sd"
@@ -8,6 +13,8 @@ alias fehs="feh -. -S filename" # scale down to window and sort by filename
 # config
 alias zshconf="vim ~/.zshrc"
 alias alconf="vim ~/.util/aliases.sh"
+alias vmconf="vim $VMDIR/util/host.sh"
+alias cbconf="vim $CBDIR/util/host.sh"
 alias xrconf="vim ~/.Xresources"
 alias i3conf="vim ~/.config/i3/config"
 alias polyconf="vim ~/.config/polybar/config"
