@@ -11,6 +11,7 @@ alias todo="todotxt-machine"
 alias fehs="feh -. -S filename" # scale down to window and sort by filename
 
 # config
+alias dots="cd $DOTS"
 alias zshconf="vim ~/.zshrc"
 alias alconf="vim ~/.util/aliases.sh"
 alias vmconf="vim $VMDIR/util/host.sh"
