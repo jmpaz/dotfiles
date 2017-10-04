@@ -35,11 +35,6 @@ alias xreload="xrdb -load ~/.Xresources"
 # https://github.com/jez/
 # vvvvv
 
-# be verbose
-alias cp="cp -v"
-alias mv="mv -v"
-alias rm="rm -v"
-
 # up
 alias cdd="cd .."
 alias cddd="cd ../.."
