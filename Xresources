@@ -5,7 +5,7 @@
 !#include ".Xresources.d/colors-breeze-dark"
 
 ! Rofi
-#include ".Xresources.d/rofi-blue"
+!#include ".Xresources.d/rofi-blue"
 
 ! Fonts
 #include ".Xresources.d/fonts"
