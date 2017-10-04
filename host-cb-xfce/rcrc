@@ -1,0 +1,4 @@
+EXCLUDES="README.md LICENSE fonts"
+COPY_ALWAYS=weechat/*
+HOSTNAME="cb-xfce"
+SYMLINK_DIRS="vim zfunctions oh-my-zsh"
