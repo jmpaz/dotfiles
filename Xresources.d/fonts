@@ -1,12 +1,1 @@
-#define FNT SauceCodePro Nerd Font Mono
-#define STYL
-#define SIZ 9
-*.font: FNT STYL SIZ
-
-Xft.dpi: 96
-Xft.antialias: true
-Xft.hinting: true
-Xft.rgba: rgb
-Xft.autohint: false
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
+/home/josh/.dotfiles/Xresources.d/fonts
