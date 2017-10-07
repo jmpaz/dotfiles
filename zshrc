@@ -1,5 +1,5 @@
 export DEFAULT_USER=josh
-export TERM="xterm-256color"
+# export TERM="xterm-256color"
 export ZSH=/home/josh/.oh-my-zsh
 plugins=(git)
 ZSH_THEME="gitsome"
