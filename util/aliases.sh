@@ -13,6 +13,7 @@ alias :q="exit"
 
 # config
 alias dots="cd $DOTS"
+alias .s="cd $DOTS"
 alias zshconf="vim ~/.zshrc"
 alias alconf="vim ~/.util/aliases.sh"
 alias vmconf="vim $VMDIR/util/host.sh"
