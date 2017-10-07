@@ -3,12 +3,13 @@ export DOTS="$HOME/.dotfiles"
 export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
 export CBDIR="$HOME/.dotfiles/host-cb-xfce"
 
-# personal
+# misc
 alias la="ls -A"
 alias cls="colorls -sd"
 alias cla="colorls -sd -A"
 alias todo="todotxt-machine"
 alias fehs="feh -. -S filename" # scale down to window and sort by filename
+alias :q="exit"
 
 # config
 alias dots="cd $DOTS"
@@ -51,7 +52,6 @@ alias vim &> /dev/null || alias vim="vim -p"
 alias vimv="vim -O"
 
 # lol
-alias :q="clear"
 alias clera="clear"
 alias lcera="clear"
 alias lcear="clear"

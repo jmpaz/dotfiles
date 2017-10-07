@@ -34,7 +34,6 @@ client.placeholder      $color0 $color0 $color7 $color0 $color0
 client.background       $color0
 
 bindsym $mod+Shift+q kill
-bindsym $mod+w kill
 bindsym --release button2 kill
 
 bindsym $mod+a focus parent
@@ -56,10 +55,6 @@ bindsym $mod+$alt+Down move down
 bindsym $mod+$alt+Up move up
 bindsym $mod+$alt+Right move right
 bindsym $mod+f fullscreen toggle
-bindsym $mod+s layout toggle stacking tabbed
-bindsym $mod+e layout toggle split
-bindsym $mod+v split vertical
-bindsym $mod+c split horizontal
 
 # Browser and Windows-inspired focus keybinds
 bindsym $mod+Tab focus right
@@ -162,17 +157,30 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+set $layoutmenu "layout: [s]tacked   [tab]bed   [h]-split   [v]-split"
+bindsym $mod+e mode $layoutmenu
+mode $layoutmenu {
+    bindsym s layout stacking ; mode "default"
+    bindsym Tab layout tabbed  ; mode "default"
+    bindsym h layout splith ; mode "default"
+    bindsym v layout splitv ; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 set $gapsmenu "gaps: [0]  [1]  [2]"
+bindsym $mod+g mode $gapsmenu
 mode $gapsmenu {
     bindsym 0 gaps inner current set 0; gaps outer current set 0 ; mode "default"
-    bindsym 1 gaps inner current set 10; gaps outer current set 5 ; mode "default"
+    bindsym 1 gaps inner current set 8; gaps outer current set 2 ; mode "default"
     bindsym 2 gaps inner current set 20; gaps outer current set 15 ; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-set $sysmenu "system:  [g]aps  [r]eload  [l]ock  log[o]ut"
+set $sysmenu "system:  [r]eload  [l]ock  log[o]ut"
 bindsym Control+$alt+x mode $sysmenu
 mode $sysmenu {
     bindsym g mode $gapsmenu
@@ -188,7 +196,7 @@ mode $sysmenu {
 }
 
 set $launchmenu "launch: [c]hrome [f]irefox e[x]plorer [t]odo"
-bindsym $mod+space mode $launchmenu
+bindsym $alt+space mode $launchmenu
 mode $launchmenu {
     bindsym c exec google-chrome ; mode "default"
     bindsym f exec firefox ; mode "default"
@@ -222,7 +230,8 @@ bindsym $mod+Return exec termite
 bindsym Control+Shift+Escape exec xfce4-taskmanager
 bindsym Control+$alt+c exec ~/bin/clipster -sc
 bindsym $mod+Shift+c exec google-chrome
-bindsym $alt+space exec rofi -show run -lines 7 -eh 2 -width 100 -height 600 -padding 450 -opacity "85"
+bindsym $mod+Shift+f exec firefox
+bindsym $mod+space exec rofi -show run -lines 7 -eh 2 -width 100 -height 600 -padding 450 -opacity "85"
 bindsym $alt+grave exec rofi -show window -lines 7 -eh 2 -width 100 -height 600 -padding 450 -opacity "85"
 
 # Floating windows -- as a reference: xprop's first part is the instance, 2nd is the class
