@@ -124,13 +124,14 @@ label-maxlen = 50
 format-padding = 2
 format-foreground = ${xrdb:color7} 
 
+[module/wired-network]
+type = internal/network
+interface = ens33
+
 [module/wireless-network]
 type = internal/network
-interface = enp0s20f0u1
+interface = wlan0
 
-format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-format-packetloss = <animation-packetloss> <label-connected>
-
-label-connected = %essid% %downspeed:9%
-label-disconnected = not connected
+format-packetloss = <animation-packetloss>
+label-connected = %essid% %downspeed%
