@@ -4,12 +4,14 @@ export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
 export CBDIR="$HOME/.dotfiles/host-cb-xfce"
 
 # misc
-alias la="ls -A"
-alias cls="colorls -sd"
-alias cla="colorls -sd -A"
 alias todo="todotxt-machine"
+alias toclip="xclip -selection c"
+
+# feh/wal
 alias fehs="feh -. -S filename" # scale down to window and sort by filename
-alias :q="exit"
+alias fehwal="feh --bg-scale \"\$(< \"\#{HOME}/.cache/wal/wal\")\""
+alias walnobg="wal -n -ti"
+alias walxr="cat ~/.cache/wal/colors.Xresources"
 
 # config
 alias dots="cd $DOTS"
@@ -28,31 +30,27 @@ alias termconf="vim ~/.config/terminator/config"
 alias compconf="vim ~/.compton.conf"
 alias todoconf="vim ~/.todotxt-machinerc"
 alias todoref="todoconf && todotxt-machine"
-alias walscheme="wal -n -ti"
-alias fehwal="feh --bg-scale \"\$(< \"\#{HOME}/.cache/wal/wal\")\""
 
 # reload
 alias szsh="source ~/.zshrc"
 alias sbash="source ~/.bashrc"
 alias xreload="xrdb -load ~/.Xresources"
 
-# -----
-# https://github.com/jez/
-# vvvvv
-
-# up
-alias cdd="cd .."
-alias cddd="cd ../.."
-alias cdddd="cd ../../.."
-alias cddddd="cd ../../../.."
-alias cdddddd="cd ../../../../.."
-alias cddddddd="cd ../../../../../.."
+alias :q="exit"
+alias la="ls -A"
+alias cls="colorls -sd"
+alias cla="colorls -sd -A"
+alias cdu="cd .."
+alias cduu="cd ../.."
+alias cdu2="cd ../.."
+alias cdu3="cd ../../.."
+alias cdu4="cd ../../../.."
+alias cdu5="cd ../../../../.."
 
 # open multiple files in Vim tabs
 alias vim &> /dev/null || alias vim="vim -p"
 alias vimv="vim -O"
 
-# lol
 alias clera="clear"
 alias lcera="clear"
 alias lcear="clear"
@@ -63,7 +61,6 @@ which texdef &> /dev/null && alias latexdef="texdef --tex latex"
 # Easily download an MP3 from youtube on the command line
 which youtube-dl &> /dev/null && alias youtube-mp3="youtube-dl --extract-audio --audio-format mp3"
 
-# ----- aliases that are actually full-blown commands -------------------------
 # list disk usage statistics for the current folder
 alias duls="du -h -d1 | sort -hr"
 
