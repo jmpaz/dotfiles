@@ -59,41 +59,33 @@ bindsym $mod+f fullscreen toggle
 # Browser and Windows-inspired focus keybinds
 bindsym $mod+Tab focus right
 bindsym $mod+Shift+Tab focus left
+bindsym $mod+$alt+Tab move right
+bindsym $mod+$alt+Shift+Tab move left
 bindsym Control+$mod+Tab exec i3-alt-tab --next
 bindsym Control+$mod+Shift+Tab exec i3-alt-tab --prev
 bindsym $alt+Tab focus parent, focus right, focus child
 bindsym $alt+Shift+Tab focus parent, focus left, focus child
 
-set $workspace1  "1: I "
-set $workspace2  "2: II "
-set $workspace3  "3: III "
-set $workspace4  "4: IV "
-set $workspace5  "5: V "
-set $workspace6  "6: VI "
-set $workspace7  "7: VII "
-set $workspace8  "8: VII "
-set $workspace9  "9: IX "
-set $workspace10 "10: X "
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace $workspace3
-bindsym $mod+4 workspace $workspace4
-bindsym $mod+5 workspace $workspace5
-bindsym $mod+6 workspace $workspace6
-bindsym $mod+7 workspace $workspace7
-bindsym $mod+8 workspace $workspace8
-bindsym $mod+9 workspace $workspace9
-bindsym $mod+0 workspace $workspace10
-bindsym $mod+Shift+1 move container to workspace $workspace1
-bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace $workspace3
-bindsym $mod+Shift+4 move container to workspace $workspace4
-bindsym $mod+Shift+5 move container to workspace $workspace5
-bindsym $mod+Shift+6 move container to workspace $workspace6
-bindsym $mod+Shift+7 move container to workspace $workspace7
-bindsym $mod+Shift+8 move container to workspace $workspace8
-bindsym $mod+Shift+9 move container to workspace $workspace9
-bindsym $mod+Shift+0 move container to workspace $workspace10
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
 bindsym Control+$mod+Shift+1 mark "scratch1", move scratchpad
 bindsym Control+$mod+Shift+2 mark "scratch2", move scratchpad
@@ -231,8 +223,8 @@ bindsym Control+Shift+Escape exec xfce4-taskmanager
 bindsym Control+$alt+c exec ~/bin/clipster -sc
 bindsym $mod+Shift+c exec google-chrome
 bindsym $mod+Shift+f exec firefox
-bindsym $mod+space exec rofi -show run -lines 7 -eh 2 -width 100 -height 600 -padding 450 -opacity "85"
-bindsym $alt+grave exec rofi -show window -lines 7 -eh 2 -width 100 -height 600 -padding 450 -opacity "85"
+bindsym $mod+space exec rofi -show run -opacity "85"
+bindsym $alt+grave exec rofi -show window -eh 2 -padding 300 -opacity "85"
 
 # Floating windows -- as a reference: xprop's first part is the instance, 2nd is the class
 for_window [class="Indicator-kdeconnect-settings" instance="indicator-kdeconnect-settings"] floating enable
