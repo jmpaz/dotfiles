@@ -37,6 +37,7 @@ alias sbash="source ~/.bashrc"
 alias xreload="xrdb -load ~/.Xresources"
 
 alias :q="exit"
+alias quit="exit"
 alias la="ls -A"
 alias cls="colorls -sd"
 alias cla="colorls -sd -A"
