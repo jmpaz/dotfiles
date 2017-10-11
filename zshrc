@@ -2,7 +2,7 @@ export DEFAULT_USER=josh
 # export TERM="xterm-256color"
 export ZSH=/home/josh/.oh-my-zsh
 plugins=(git)
-ZSH_THEME="gitsome"
+ZSH_THEME="gitster"
 source $ZSH/oh-my-zsh.sh
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
