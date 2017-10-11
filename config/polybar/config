@@ -127,11 +127,12 @@ format-foreground = ${xrdb:color7}
 [module/wired-network]
 type = internal/network
 interface = ens33
+format-packetloss = <animation-packetloss>
+label-connected = %essid% %downspeed%
 
 [module/wireless-network]
 type = internal/network
 interface = wlan0
-
 format-disconnected = <label-disconnected>
 format-packetloss = <animation-packetloss>
 label-connected = %essid% %downspeed%
