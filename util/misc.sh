@@ -9,5 +9,5 @@ else
   export EDITOR="vim"
 fi
 
-# add cargo programs to path
 export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:~/.bin
