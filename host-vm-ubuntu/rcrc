@@ -1,4 +1,4 @@
 EXCLUDES="README.md LICENSE"
 COPY_ALWAYS=weechat/*
 HOSTNAME="vm-ubuntu"
-SYMLINK_DIRS="vim zfunctions oh-my-zsh"
+SYMLINK_DIRS="vim oh-my-zsh"
