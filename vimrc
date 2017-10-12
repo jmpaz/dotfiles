@@ -1,13 +1,16 @@
 if v:progname =~? "evim"
   finish
 endif
-
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
-
-" theme: wal
+set number
 colorscheme wal
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" vim-pathogen
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
 
 "" theme: deus
 "set t_Co=256
@@ -17,15 +20,6 @@ colorscheme wal
 "let g:deus_termcolors=256
 "" override bg to terminal color
 "autocmd ColorScheme * highlight! Normal ctermbg=NONE guibg=NONE
-
-" Line numbers
-set number
-
-" use system clipboard (install vim-gtk if not working)
-" set clipboard=unnamedplus
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
 
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
