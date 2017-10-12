@@ -35,18 +35,23 @@ alias todoref="todoconf && todotxt-machine"
 alias szsh="source ~/.zshrc"
 alias sbash="source ~/.bashrc"
 alias xreload="xrdb -load ~/.Xresources"
-
 alias :q="exit"
 alias quit="exit"
 alias la="ls -A"
-alias cls="colorls -sd"
-alias cla="colorls -sd -A"
 alias cdu="cd .."
 alias cduu="cd ../.."
 alias cdu2="cd ../.."
 alias cdu3="cd ../../.."
 alias cdu4="cd ../../../.."
 alias cdu5="cd ../../../../.."
+
+# ls replacements
+alias exa="exa --group-directories-first"
+alias exaa="exa -a"
+alias exal="exa -l"
+alias exall="exa -la"
+alias cls="colorls -sd"
+alias cla="colorls -sd -A"
 
 # open multiple files in Vim tabs
 alias vim &> /dev/null || alias vim="vim -p"
