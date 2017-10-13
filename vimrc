@@ -4,13 +4,15 @@ endif
 set nocompatible
 set number
 colorscheme wal
-" allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" vim-pathogen
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
 
 "" theme: deus
 "set t_Co=256
