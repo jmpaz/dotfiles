@@ -1,8 +1,3 @@
-# variables
-export DOTS="$HOME/.dotfiles" 
-export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
-export CBDIR="$HOME/.dotfiles/host-cb-xfce"
-
 # misc
 alias todo="todotxt-machine"
 alias toclip="xclip -selection c"

@@ -1,3 +1,9 @@
+# environment variables
+export DOTS="$HOME/.dotfiles" 
+export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
+export CBDIR="$HOME/.dotfiles/host-cb-xfce"
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+
 # Import colorscheme from wal, pick one:
 (wal -r &)
 # setsid wal -r
