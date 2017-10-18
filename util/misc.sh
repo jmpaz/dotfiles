@@ -16,4 +16,3 @@ else
 fi
 
 export PATH=$PATH:~/.cargo/bin
-export PATH=$PATH:~/.bin
