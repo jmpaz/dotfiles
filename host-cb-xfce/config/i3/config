@@ -238,6 +238,7 @@ exec_always --no-startup-id wal -tR
 exec_always --no-startup-id ~/.fehbg
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 # exec --no-startup-id indicator-kdeconnect
+exec --no-startup-id dropbox start
 exec --no-startup-id ~/bin/clipster -d
 exec --no-startup-id compton -b
 exec --no-startup-id ~/.scripts/blurme &
