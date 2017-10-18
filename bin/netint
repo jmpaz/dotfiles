@@ -1,1 +1,0 @@
-for f in /sys/class/net/*; do echo Interface $(cat $f/ifindex): $(basename $f); done

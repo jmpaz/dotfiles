@@ -67,6 +67,3 @@ alias duls="du -h -d1 | sort -hr"
 
 # print ip
 alias ip="curl ifconfig.co"
-
-# How much memory is Chrome using right now?
-alias chromemem="ps -ev | grep -i chrome | awk '{print \$12}' | awk '{for(i=1;i<=NF;i++)s+=\$i}END{print s}'"
