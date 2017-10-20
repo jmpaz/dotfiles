@@ -109,6 +109,7 @@ bindsym Control+$mod+9 [con_mark="scratch9"] scratchpad show
 bindsym $mod+grave workspace back_and_forth
 bindsym $mod+Shift+grave move container to workspace back_and_forth
 
+bindsym $mod+F2 exec ~/.config/i3/scripts/rename_workspace.sh
 bindsym $mod+Control+d exec --no-startup-id ~/.config/i3/scripts/empty_workspace.sh
 bindsym $mod+Control+Left workspace prev
 bindsym $mod+Control+Right workspace next
@@ -116,8 +117,12 @@ bindsym $mod+Shift+Left move container to workspace prev
 bindsym $mod+Shift+Right move container to workspace next
 bindsym $mod+Control+Shift+Left move container to workspace prev; workspace prev
 bindsym $mod+Control+Shift+Right move container to workspace next; workspace next
-bindsym $mod+F2 exec ~/.config/i3/scripts/rename_workspace.sh
-# ^ https://goo.gl/k6Wj9J
+bindsym $mod+Control+h workspace prev
+bindsym $mod+Control+l workspace next
+bindsym $mod+Shift+h move container to workspace prev
+bindsym $mod+Shift+l move container to workspace next
+bindsym $mod+Control+Shift+h move container to workspace prev; workspace prev
+bindsym $mod+Control+Shift+l move container to workspace next; workspace next
 
 bindsym $mod+Shift+space floating toggle     
 # ^ toggle floating window
@@ -140,7 +145,7 @@ mode "resize" {
         bindsym Down resize grow height 2 px or 2 ppt
         bindsym Up resize shrink height 2 px or 2 ppt
         bindsym Right resize grow width 2 px or 2 ppt
-	bindsym Shift+Left resize shrink width 6 px or 6 ppt
+	    bindsym Shift+Left resize shrink width 6 px or 6 ppt
         bindsym Shift+Down resize grow height 6 px or 6 ppt
         bindsym Shift+Up resize shrink height 6 px or 6 ppt
         bindsym Shift+Right resize grow width 6 px or 6 ppt
