@@ -228,8 +228,8 @@ bindsym Control+Shift+Escape exec xfce4-taskmanager
 bindsym Control+$alt+c exec ~/bin/clipster -sc
 bindsym $mod+Shift+c exec google-chrome
 bindsym $mod+Shift+f exec firefox
-bindsym $mod+space exec rofi -show combi -eh 2 -padding 300 -opacity "85"
-bindsym $alt+grave exec rofi -show window -eh 2 -padding 300 -opacity "85"
+bindsym $mod+space exec rofi -show combi -eh 2
+bindsym $alt+grave exec rofi -show window -eh 2
 
 # Floating windows -- as a reference: xprop's first part is the instance, 2nd is the class
 for_window [class="Indicator-kdeconnect-settings" instance="indicator-kdeconnect-settings"] floating enable
