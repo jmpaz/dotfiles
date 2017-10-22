@@ -1,9 +1,0 @@
-rofi.separator-style:   none
-rofi.fullscreen:        true
-rofi.padding:           130
-rofi.hide-scrollbar:    true
-rofi.line-margin:       5
-rofi.fake-transparency: false
-rofi.yoffset:           0
-rofi.xoffset:           0
-rofi.font:              SFNS Display Regular 15
