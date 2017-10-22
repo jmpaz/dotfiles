@@ -4,9 +4,11 @@ export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
 export CBDIR="$HOME/.dotfiles/host-cb-xfce"
 export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 
-# Import colorscheme from wal, pick one:
-(wal -r &)
-# setsid wal -r
+# import colorscheme from wal
+(wal -r &) # alt: setsid wal -r
+
+# get wal colors
+. "$HOME/.cache/wal/colors.sh"
 
 # Use Vim as the system-wide editor
 if which nvim &> /dev/null; then
