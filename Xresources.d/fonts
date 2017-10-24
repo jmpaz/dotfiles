@@ -1,8 +1,9 @@
-#define FNT SauceCodePro Nerd Font Mono
-#define STYL
+#define FNT Operator Mono
+#define STYL Light
 #define SIZ 9
 *.font: FNT STYL SIZ
 
+Xft: FNT
 Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true

@@ -4,8 +4,5 @@
 !#include ".Xresources.d/colors-one-dark"
 !#include ".Xresources.d/colors-breeze-dark"
 
-! Rofi
-#include ".Xresources.d/rofi"
-
 ! Fonts
 #include ".Xresources.d/fonts"
