@@ -1,5 +1,5 @@
-#define FNT Operator Mono
-#define STYL Light
+#define FNT SauceCodePro Nerd Font
+#define STYL
 #define SIZ 9
 *.font: FNT STYL SIZ
 
