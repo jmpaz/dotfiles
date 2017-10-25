@@ -110,14 +110,6 @@ type = internal/cpu
 format = <label>
 label = CPU %percentage%
 
-[module/temperature]
-type = internal/temperature
-interval = 0.5
-thermal-zone = 0
-warn-temperature = 60
-label = TEMP %temperature%
-label-padding = 3
-
 [module/title]
 type = internal/xwindow
 label-maxlen = 50
@@ -127,12 +119,5 @@ format-foreground = ${xrdb:color7}
 [module/wired-network]
 type = internal/network
 interface = ens33
-format-packetloss = <animation-packetloss>
-label-connected = %essid% %downspeed%
-
-[module/wireless-network]
-type = internal/network
-interface = wlan0
-format-disconnected = <label-disconnected>
 format-packetloss = <animation-packetloss>
 label-connected = %essid% %downspeed%
