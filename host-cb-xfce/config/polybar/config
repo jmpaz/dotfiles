@@ -1,0 +1,125 @@
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+[bar/traybar]
+width = 100%
+height = 25
+bottom = true
+
+background = #00000000
+foreground = #00000000
+
+modules-left =
+modules-center = date
+modules-right =
+
+tray-position = right
+tray-padding = 3
+tray-transparent = true
+
+override-redirect = false
+wm-restack = i3
+
+[bar/topbar1]
+width = 100%
+height = 25
+offset-x = 0
+offset-y = 5
+padding-right = 2
+padding-left = 1
+
+background = ${xrdb:color0}
+foreground = ${xrdb:color7}
+
+font-0 = SauceCodePro Nerd Font:size=10;1
+font-1 = FontAwesome:pixelsize=10;0
+
+modules-left = i3 title
+modules-center = date
+modules-right = wireless-network temperature cpu memory volume
+
+override-redirect = false
+wm-restack = i3
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[module/i3]
+# https://github.com/jaagr/polybar/issues/484 
+workspace-label = %index%
+label-focused = ${self.workspace-label}
+label-unfocused = ${self.workspace-label}
+label-urgent = ${self.workspace-label}
+label-visible = ${self.workspace-label}
+
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = true
+strip-wsnumbers = true
+pin-workspaces = false 
+
+label-focused-foreground = ${xrdb:color7}
+label-unfocused-padding = 1
+label-visible-foreground = ${xrdb:color4}
+label-visible-padding = 1
+label-unfocused-foreground = ${xrdb:color8}
+label-focused-padding = 1
+label-urgent-foreground = ${xrdb:color1}
+label-urgent-padding = 1
+
+[module/date]
+type = internal/date
+interval = 5
+date = "%m/%d/%y"
+date-alt = " %d"
+time = " %H:%M"
+time-alt =  %H:%M
+label = %time%, %date%
+
+[module/volume]
+type = internal/volume
+format-volume = <label-volume> <bar-volume>
+label-volume = ""
+label-volume-foreground = ${root.foreground}
+label-muted = muted
+bar-volume-width = 10
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+
+[module/wireless-network]
+type = internal/network
+interface = wlan0
+format-disconnected = <label-disconnected>
+format-packetloss = <animation-packetloss>
+label-connected = %essid% %downspeed%
+
+[module/cpu]
+type = internal/cpu
+format = <label>
+label = CPU %percentage%
+
+[module/memory]
+type = internal/memory
+label = %gb_used% / %gb_free%
+label-padding = 2
+
+[module/temperature]
+type = internal/temperature
+interval = 0.5
+thermal-zone = 0
+warn-temperature = 60
+label = %temperature%
+label-padding = 2
+
+[module/title]
+type = internal/xwindow
+label-maxlen = 50
+format-padding = 2
+format-foreground = ${xrdb:color7} 
