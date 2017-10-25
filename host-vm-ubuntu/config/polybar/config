@@ -103,7 +103,7 @@ bar-volume-empty-font = 2
 [module/memory]
 type = internal/memory
 label = %gb_used% / %gb_free%
-label-padding = 3
+label-padding = 2
 
 [module/cpu]
 type = internal/cpu
