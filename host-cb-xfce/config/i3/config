@@ -225,7 +225,7 @@ mode "passthrough" {
 
 bindsym $mod+Return exec termite
 bindsym Control+Shift+Escape exec xfce4-taskmanager
-bindsym Control+$alt+c exec ~/bin/clipster -sc
+bindsym Control+$alt+c exec ~/Dropbox/bin/clipster -sc
 bindsym $mod+Shift+c exec google-chrome
 bindsym $mod+Shift+f exec firefox
 bindsym $mod+space exec rofi -show combi -eh 2
@@ -244,6 +244,6 @@ exec_always --no-startup-id ~/.fehbg
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 # exec --no-startup-id indicator-kdeconnect
 exec --no-startup-id dropbox start
-exec --no-startup-id ~/bin/clipster -d
+exec --no-startup-id ~/Dropbox/bin/clipster -d
 exec --no-startup-id compton -b
 exec --no-startup-id ~/.scripts/blurme &
