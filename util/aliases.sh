@@ -9,8 +9,9 @@ alias walnobg="wal -n -ti"
 alias walxr="cat ~/.cache/wal/colors.Xresources"
 
 # config
-alias dots="cd $DOTS"
-alias .s="cd $DOTS"
+alias dots="cd ~/.dotfiles"
+alias .s="cd ~/.dotfiles"
+alias monconf="vim $DBIN/monitor.sh"
 alias zshconf="vim ~/.zshrc"
 alias alconf="vim ~/.util/aliases.sh"
 alias vmconf="vim $VMDIR/util/host.sh"
