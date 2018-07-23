@@ -6,7 +6,7 @@ export CBDIR="$HOME/.dotfiles/host-cb-xfce"
 export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 
 # import colorscheme from wal
-(wal -r &) # alt: setsid wal -r
+(cat ~/.cache/wal/sequences &)
 
 # get wal colors
 . "$HOME/.cache/wal/colors.sh"
