@@ -1,0 +1,4 @@
+EXCLUDES="README.md LICENSE"
+COPY_ALWAYS=weechat/*
+HOSTNAME="aspire-ubuntu"
+SYMLINK_DIRS="vim oh-my-zsh"

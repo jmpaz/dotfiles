@@ -1,0 +1,241 @@
+# i3 config file (v4)
+set $mod Mod4
+set $alt Mod1
+workspace_layout tabbed
+floating_modifier $mod
+set_from_resource $font font
+font pango: $font
+
+# i3-gaps
+for_window [class="^.*"] border pixel 0
+gaps inner 8 
+gaps outer 2
+smart_borders no_gaps
+# smart_gaps on
+# ^ only use gaps with >1 container
+
+# Get colors from ~/.Xresources
+set_from_resource $color0 color0 #000000
+set_from_resource $color1 color1 #000000
+set_from_resource $color2 color2 #000000
+set_from_resource $color3 color3 #000000
+set_from_resource $color4 color4 #000000
+set_from_resource $color5 color5 #000000
+set_from_resource $color6 color6 #000000
+set_from_resource $color7 color7 #000000
+set_from_resource $color8 color8 #000000
+
+# class                 border  bg      text    ind     child_border
+client.focused          $color0 $color0 $color7 $color4 $color0
+client.focused_inactive $color0 $color0 $color2 $color4 $color0
+client.unfocused        $color0 $color0 $color8 $color0 $color0
+client.urgent           $color1 $color1 $color7 $color1 $color1
+client.placeholder      $color0 $color0 $color7 $color0 $color0
+client.background       $color0
+
+bindsym $mod+Shift+q kill
+bindsym --release button2 kill
+
+bindsym $mod+a focus parent
+bindsym $mod+z focus child
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+bindsym $mod+$alt+h move left
+bindsym $mod+$alt+j move down
+bindsym $mod+$alt+k move up
+bindsym $mod+$alt+l move right
+bindsym $mod+$alt+Left move left
+bindsym $mod+$alt+Down move down
+bindsym $mod+$alt+Up move up
+bindsym $mod+$alt+Right move right
+bindsym $mod+f fullscreen toggle
+
+# Browser and Windows-inspired focus keybinds
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
+bindsym $mod+$alt+Tab move right
+bindsym $mod+$alt+Shift+Tab move left
+bindsym Control+$mod+Tab exec i3-alt-tab --next
+bindsym Control+$mod+Shift+Tab exec i3-alt-tab --prev
+bindsym $alt+Tab focus parent, focus right, focus child
+bindsym $alt+Shift+Tab focus parent, focus left, focus child
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym Control+$mod+Shift+1 mark "scratch1", move scratchpad
+bindsym Control+$mod+Shift+2 mark "scratch2", move scratchpad
+bindsym Control+$mod+Shift+3 mark "scratch3", move scratchpad
+bindsym Control+$mod+Shift+4 mark "scratch4", move scratchpad
+bindsym Control+$mod+Shift+5 mark "scratch5", move scratchpad
+bindsym Control+$mod+Shift+6 mark "scratch6", move scratchpad
+bindsym Control+$mod+Shift+7 mark "scratch7", move scratchpad
+bindsym Control+$mod+Shift+8 mark "scratch8", move scratchpad
+bindsym Control+$mod+Shift+9 mark "scratch9", move scratchpad
+bindsym Control+$mod+1 [con_mark="scratch1"] scratchpad show
+bindsym Control+$mod+2 [con_mark="scratch2"] scratchpad show
+bindsym Control+$mod+3 [con_mark="scratch3"] scratchpad show
+bindsym Control+$mod+4 [con_mark="scratch4"] scratchpad show
+bindsym Control+$mod+5 [con_mark="scratch5"] scratchpad show
+bindsym Control+$mod+6 [con_mark="scratch6"] scratchpad show
+bindsym Control+$mod+7 [con_mark="scratch7"] scratchpad show
+bindsym Control+$mod+8 [con_mark="scratch8"] scratchpad show
+bindsym Control+$mod+9 [con_mark="scratch9"] scratchpad show
+
+bindsym $mod+grave workspace back_and_forth
+bindsym $mod+Shift+grave move container to workspace back_and_forth
+
+bindsym $mod+F2 exec ~/.config/i3/scripts/rename_workspace.sh
+bindsym $mod+Control+d exec --no-startup-id ~/.config/i3/scripts/empty_workspace.sh
+bindsym $mod+Control+Left workspace prev
+bindsym $mod+Control+Right workspace next
+bindsym $mod+Shift+Left move container to workspace prev
+bindsym $mod+Shift+Right move container to workspace next
+bindsym $mod+Control+Shift+Left move container to workspace prev; workspace prev
+bindsym $mod+Control+Shift+Right move container to workspace next; workspace next
+bindsym $mod+Control+h workspace prev
+bindsym $mod+Control+l workspace next
+bindsym $mod+Shift+h move container to workspace prev
+bindsym $mod+Shift+l move container to workspace next
+bindsym $mod+Control+Shift+h move container to workspace prev; workspace prev
+bindsym $mod+Control+Shift+l move container to workspace next; workspace next
+
+bindsym $mod+Shift+space floating toggle     
+# ^ toggle floating window
+bindsym $mod+Control+space focus mode_toggle 
+# ^ switch focus between tiling/floating windows
+bindsym $mod+Control+s sticky toggle
+# ^ keep a floating window on all workspaces
+
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+        bindsym Shift+h resize shrink width 6 px or 6 ppt
+        bindsym Shift+jresize grow height 6 px or 6 ppt
+        bindsym Shift+k resize shrink height 6 px or 6 ppt
+        bindsym Shift+l resize grow width 6 px or 6 ppt
+        bindsym Left resize shrink width 2 px or 2 ppt
+        bindsym Down resize grow height 2 px or 2 ppt
+        bindsym Up resize shrink height 2 px or 2 ppt
+        bindsym Right resize grow width 2 px or 2 ppt
+	    bindsym Shift+Left resize shrink width 6 px or 6 ppt
+        bindsym Shift+Down resize grow height 6 px or 6 ppt
+        bindsym Shift+Up resize shrink height 6 px or 6 ppt
+        bindsym Shift+Right resize grow width 6 px or 6 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+set $layoutmenu "layout: [s]tacked   [tab]bed   [h]-split   [v]-split"
+bindsym $mod+e mode $layoutmenu
+mode $layoutmenu {
+    bindsym s layout stacking ; mode "default"
+    bindsym Tab layout tabbed  ; mode "default"
+    bindsym h layout splith ; mode "default"
+    bindsym v layout splitv ; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $gapsmenu "gaps: [0]  [1]  [2]"
+bindsym $mod+g mode $gapsmenu
+mode $gapsmenu {
+    bindsym 0 gaps inner current set 0; gaps outer current set 0 ; mode "default"
+    bindsym 1 gaps inner current set 8; gaps outer current set 2 ; mode "default"
+    bindsym 2 gaps inner current set 20; gaps outer current set 15 ; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $sysmenu "system:  [r]eload  [l]ock  [p]oweroff  re[b]oot"
+bindsym Control+$alt+x mode $sysmenu
+mode $sysmenu {
+    bindsym r reload
+    bindsym g mode $gapsmenu
+    bindsym Control+r restart
+    bindsym c exec vim ~/.config/i3/config ; mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/lock.sh ; mode "default"
+    bindsym p exec shutdown -P now
+    bindsym b exec shutdown -r now
+    
+    bindsym Control+Escape exit
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $launchmenu "launch: [c]hrome [f]irefox e[x]plorer [t]odo"
+bindsym $alt+space mode $launchmenu
+mode $launchmenu {
+    bindsym c exec google-chrome ; mode "default"
+    bindsym f exec firefox ; mode "default"
+    bindsym x exec thunar ; mode "default"
+    bindsym t exec google-chrome --app=https://todoist.com ; mode "default"
+    bindsym Shift+t exec terminator -e todotxt-machine ; mode "default"
+    bindsym Return exec terminator ; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Escape mode "passthrough"
+mode "passthrough" {
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Return exec termite
+bindsym Control+Shift+Escape exec xfce4-taskmanager
+bindsym Control+$alt+c exec ~/bin/clipster -sc
+bindsym $mod+Shift+c exec google-chrome
+bindsym $mod+Shift+f exec firefox
+bindsym $mod+space exec rofi -show combi -eh 2
+bindsym $alt+grave exec rofi -show window -eh 2
+
+# Floating windows -- as a reference: xprop's first part is the instance, 2nd is the class
+for_window [class="Indicator-kdeconnect-settings" instance="indicator-kdeconnect-settings"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="Menu"] floating enable
+for_window [title="Preferences$"] floating enable
+# removing this one for chrome reasons: for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable                                     
+# Autostart
+exec_always --no-startup-id wal -tR
+exec_always --no-startup-id ~/.fehbg
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always rclone sync dropbox:Wallpapers /home/josh/Pictures/Wallpapers
+exec_always rclone sync dropbox:bin /home/josh/.bin
+exec --no-startup-id indicator-kdeconnect
+exec --no-startup-id ~/bin/clipster -d
+exec --no-startup-id compton -b
+exec --no-startup-id ~/.scripts/blurme &
+exec --no-startup-id rclone mount dropbox: /home/josh/Dropbox
+
