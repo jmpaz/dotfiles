@@ -1,6 +1,7 @@
 # environment variables
 export DOTS="$HOME/.dotfiles" 
 export VMDIR="$HOME/.dotfiles/host-vm-ubuntu"
+export ASPIREDIR="$HOME/.dotfiles/host-aspire-ubuntu"
 export CBDIR="$HOME/.dotfiles/host-cb-xfce"
 export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 
