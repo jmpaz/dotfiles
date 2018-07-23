@@ -177,7 +177,7 @@ mode $gapsmenu {
     bindsym Escape mode "default"
 }
 
-set $sysmenu "system:  [r]eload  [l]ock  [p]oweroff  re[b]oot"
+set $sysmenu "system:  [r]eload  [l]ock  log[o]ut  [p]oweroff  re[b]oot"
 bindsym Control+$alt+x mode $sysmenu
 mode $sysmenu {
     bindsym r reload
@@ -185,6 +185,7 @@ mode $sysmenu {
     bindsym Control+r restart
     bindsym c exec vim ~/.config/i3/config ; mode "default"
     bindsym l exec --no-startup-id ~/.config/i3/scripts/lock.sh ; mode "default"
+    bindsym o exec i3-msg exit
     bindsym p exec shutdown -P now
     bindsym b exec shutdown -r now
     
@@ -194,7 +195,7 @@ mode $sysmenu {
 }
 
 set $launchmenu "launch: [c]hrome [f]irefox e[x]plorer [t]odo"
-bindsym $alt+space mode $launchmenu
+bindsym Control+space mode $launchmenu
 mode $launchmenu {
     bindsym c exec google-chrome ; mode "default"
     bindsym f exec firefox ; mode "default"
@@ -214,10 +215,10 @@ mode "passthrough" {
 
 bindsym $mod+Return exec termite
 bindsym Control+Shift+Escape exec xfce4-taskmanager
-bindsym Control+$alt+c exec ~/bin/clipster -sc
+bindsym Control+$alt+c exec ~/Dropbox/bin/clipster -sc
 bindsym $mod+Shift+c exec google-chrome
 bindsym $mod+Shift+f exec firefox
-bindsym $mod+space exec rofi -show combi -eh 2
+bindsym $mod+space exec rofi -show run -eh 2
 bindsym $alt+grave exec rofi -show window -eh 2
 
 # Floating windows -- as a reference: xprop's first part is the instance, 2nd is the class
@@ -228,14 +229,11 @@ for_window [title="Preferences$"] floating enable
 # removing this one for chrome reasons: for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable                                     
 # Autostart
+exec --no-startup-id ~/Dropbox/bin/monitor.sh
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id wal -tR
 exec_always --no-startup-id ~/.fehbg
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec_always rclone sync dropbox:Wallpapers /home/josh/Pictures/Wallpapers
-exec_always rclone sync dropbox:bin /home/josh/.bin
-exec --no-startup-id indicator-kdeconnect
-exec --no-startup-id ~/bin/clipster -d
-exec --no-startup-id compton -b
-exec --no-startup-id ~/.scripts/blurme &
-exec --no-startup-id rclone mount dropbox: /home/josh/Dropbox
-
+# exec --no-startup-id indicator-kdeconnect
+# exec --no-startup-id ~/Dropbox/bin/clipster -d
+# exec --no-startup-id compton -b
+# exec --no-startup-id ~/Dropbox/bin/blurme &
