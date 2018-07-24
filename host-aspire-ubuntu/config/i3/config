@@ -177,7 +177,7 @@ mode $gapsmenu {
     bindsym Escape mode "default"
 }
 
-set $sysmenu "system:  [r]eload  [l]ock  log[o]ut  [p]oweroff  re[b]oot"
+set $sysmenu "system:  [r]eload  [l]ock  [s]uspend  log[o]ut  [p]oweroff  re[b]oot"
 bindsym Control+$alt+x mode $sysmenu
 mode $sysmenu {
     bindsym r reload
@@ -185,6 +185,7 @@ mode $sysmenu {
     bindsym Control+r restart
     bindsym c exec vim ~/.config/i3/config ; mode "default"
     bindsym l exec --no-startup-id ~/.config/i3/scripts/lock.sh ; mode "default"
+    bindsym s exec --no-startup-id systemctl suspend ; mode "default"
     bindsym o exec i3-msg exit
     bindsym p exec shutdown -P now
     bindsym b exec shutdown -r now
