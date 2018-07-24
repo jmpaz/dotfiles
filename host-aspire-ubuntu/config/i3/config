@@ -209,6 +209,16 @@ mode $launchmenu {
     bindsym Escape mode "default"
 }
 
+set $appmenu "apps: [s]potify  [d]iscord" 
+bindsym Control+$alt+a mode $appmenu
+mode $appmenu {
+    bindsym s exec --no-startup-id raiseorlaunch -c spotify -e "flatpak run com.spotify.Client" ; mode "default"
+    bindsym s exec --no-startup-id raiseorlaunch -c discord -e "flatpak run com.discordapp.Discord" ; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 bindsym $mod+Escape mode "passthrough"
 mode "passthrough" {
     bindsym Escape mode "default"
