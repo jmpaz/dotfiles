@@ -228,12 +228,16 @@ for_window [class="Menu"] floating enable
 for_window [title="Preferences$"] floating enable
 # removing this one for chrome reasons: for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable                                     
+
 # Autostart
+exec --no-startup-id nm-applet
+exec --no-startup-id dropbox start
 exec --no-startup-id ~/Dropbox/bin/monitor.sh
 exec --no-startup-id compton -b
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id ckb-next -b
 exec_always --no-startup-id wal -tR
 exec_always --no-startup-id ~/.fehbg
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 # exec --no-startup-id indicator-kdeconnect
 # exec --no-startup-id ~/Dropbox/bin/clipster -d
 # exec --no-startup-id ~/Dropbox/bin/blurme &
