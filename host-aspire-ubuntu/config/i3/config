@@ -131,13 +131,12 @@ bindsym $mod+Control+space focus mode_toggle
 bindsym $mod+Control+s sticky toggle
 # ^ keep a floating window on all workspaces
 
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% 
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
-bindsym XF86AudioPlay exec sp play
-bindsym XF86AudioNext exec sp next
-bindsym XF86AudioPrev exec sp prev
-
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% 
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioPlay exec --no-startup-id sp play
+bindsym XF86AudioNext exec --no-startup-id sp next
+bindsym XF86AudioPrev exec --no-startup-id sp prev
 
 bindsym $mod+r mode "resize"
 mode "resize" {
