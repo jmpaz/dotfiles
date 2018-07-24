@@ -131,6 +131,14 @@ bindsym $mod+Control+space focus mode_toggle
 bindsym $mod+Control+s sticky toggle
 # ^ keep a floating window on all workspaces
 
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% 
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+bindsym XF86AudioPlay exec sp play
+bindsym XF86AudioNext exec sp next
+bindsym XF86AudioPrev exec sp prev
+
+
 bindsym $mod+r mode "resize"
 mode "resize" {
         bindsym h resize shrink width 10 px or 10 ppt
@@ -209,11 +217,12 @@ mode $launchmenu {
     bindsym Escape mode "default"
 }
 
-set $appmenu "apps: [s]potify  [d]iscord" 
+set $appmenu "apps: [s]potify  [d]iscord  s[t]eam" 
 bindsym Control+$alt+a mode $appmenu
 mode $appmenu {
     bindsym s exec --no-startup-id raiseorlaunch -c spotify -e "flatpak run com.spotify.Client" ; mode "default"
-    bindsym s exec --no-startup-id raiseorlaunch -c discord -e "flatpak run com.discordapp.Discord" ; mode "default"
+    bindsym d exec --no-startup-id raiseorlaunch -c discord -e "flatpak run com.discordapp.Discord" ; mode "default"
+    bindsym t exec --no-startup-id raiseorlaunch -c steam -e "flatpak run com.valvesoftware.Steam" ; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
