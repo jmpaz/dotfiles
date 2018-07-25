@@ -258,6 +258,6 @@ exec --no-startup-id redshift-gtk
 exec_always --no-startup-id wal -tR
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id sleep 3 && ~/.fehbg
-# exec --no-startup-id indicator-kdeconnect
+exec --no-startup-id indicator-kdeconnect
 # exec --no-startup-id ~/Dropbox/bin/clipster -d
 # exec --no-startup-id ~/Dropbox/bin/blurme &
