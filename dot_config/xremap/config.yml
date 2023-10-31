@@ -1,0 +1,29 @@
+modmap:
+  - remap:
+      CapsLock:
+        alone: Esc
+        held: CapsLock
+      Esc: Grave
+
+virtual_modifiers:
+  - CapsLock
+
+keymap:
+  - name: general keybindings
+    remap:
+      CapsLock-h: Left
+      CapsLock-k: Up
+      CapsLock-j: Down
+      CapsLock-l: Right
+
+      Left: h
+      Up: k
+      Down: j
+      Right: l
+
+      # super-d:
+      #   remap:
+      #     f:
+      #       launch: ["bash", "-c", "firefox"]
+      #     s:
+      #       launch: ["bash", "-c", "appimage-launch", "obsidian"]
