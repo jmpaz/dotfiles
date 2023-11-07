@@ -1,6 +1,8 @@
 source ~/.config/fish/alias.fish
 source ~/.asdf/asdf.fish
 
+set -U fish_greeting "do great things."
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
@@ -16,15 +18,26 @@ end
 # set paths
 fish_add_path /home/josh/bin
 fish_add_path /home/josh/.local/bin
-fish_add_path /home/josh/.cargo/bin
-fish_add_path /home/josh/go/bin
+fish_add_path /home/josh/Tools/consciousdata-cli/bin
+
 
 # pyenv
 pyenv init - | source
 fish_add_path $PYENV_ROOT/bin
 
+# cargo, go
+fish_add_path /home/josh/.cargo/bin
+fish_add_path /home/josh/go/bin
+
+
 # Configure Jump
 status --is-interactive; and source (jump shell fish | psub)
+
+# Set InvokeAI path
+set -gx INVOKEAI_ROOT /home/josh/Tools/invokeai/
+
+# Set editor
+set -gx EDITOR nvim
 
 # Add flatpak dirs to path
 set -gx XDG_DATA_DIRS $XDG_DATA_DIRS ~/.nix-profile/share/applications
