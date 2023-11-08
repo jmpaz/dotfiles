@@ -1,4 +1,27 @@
-include *.conf
+# Load Xresources
+exec xrdb -merge ~/.Xresources.d/colors.xresources
+exec i3-msg restart
+
+# Fetch colors
+set_from_resource $color0 color0 #000000
+set_from_resource $color1 color1 #000000
+set_from_resource $color2 color2 #000000
+set_from_resource $color3 color3 #000000
+set_from_resource $color4 color4 #000000
+set_from_resource $color5 color5 #000000
+set_from_resource $color6 color6 #000000
+set_from_resource $color7 color7 #000000
+set_from_resource $color8 color8 #000000
+
+# Set colors
+# class                 border  bg      text    ind     child_border
+client.focused          $color0 $color0 $color7 $color4 $color0
+client.focused_inactive $color0 $color0 $color2 $color4 $color0
+client.unfocused        $color0 $color0 $color8 $color0 $color0
+client.urgent           $color1 $color1 $color7 $color1 $color1
+client.placeholder      $color0 $color0 $color7 $color0 $color0
+client.background       $color0
+
 
 workspace_layout tabbed
 workspace 1 output DP-0
