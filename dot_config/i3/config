@@ -23,8 +23,16 @@ client.placeholder      $color0 $color0 $color7 $color0 $color0
 client.background       $color0
 
 
+# Set workspaces
 workspace_layout tabbed
 workspace 1 output DP-0
 workspace 2 output DP-0
 workspace 3 output HDMI-1
 workspace 4 output HDMI-1
+
+
+# Initialize environment
+include *.conf
+
+exec_always --no-startup-id $HOME/bin/startup/polybar.sh
+exec_always --no-startup-id picom -b
