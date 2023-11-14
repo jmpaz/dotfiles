@@ -1,7 +1,7 @@
 source ~/.config/fish/alias.fish
 source ~/.asdf/asdf.fish
 
-set -U fish_greeting "do great things."
+set -U fish_greeting ""
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
@@ -32,9 +32,6 @@ fish_add_path /home/josh/go/bin
 
 # Configure Jump
 status --is-interactive; and source (jump shell fish | psub)
-
-# Set InvokeAI path
-set -gx INVOKEAI_ROOT /home/josh/Tools/invokeai/
 
 # Set editor
 set -gx EDITOR nvim
