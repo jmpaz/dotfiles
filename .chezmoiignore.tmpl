@@ -1,0 +1,14 @@
+{{- if eq .chezmoi.os "darwin" }}
+# Ignore directories for MacOS
+dot_config/i3/
+dot_config/polybar/
+dot_config/picom/
+dot_config/rofi/
+dot_config/xremap/
+{{- end }}
+
+{{- if eq .chezmoi.os "linux" }}
+# Ignore directories for Linux (Ubuntu)
+#
+{{- end }}
+
