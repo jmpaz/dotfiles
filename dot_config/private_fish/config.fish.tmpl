@@ -13,28 +13,14 @@ function fish_user_key_bindings
     fish_vi_key_bindings --no-erase insert
 end
 
+{{ if eq .chezmoi.os "darwin" -}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+set PYENV_ROOT /Users/josh/.pyenv
 
-
-# set paths
-fish_add_path /home/josh/bin
+{{ else if eq .chezmoi.os "linux" -}}
 fish_add_path /home/josh/.local/bin
 fish_add_path /home/josh/Tools/consciousdata-cli/bin
 
-
-# pyenv
-pyenv init - | source
-fish_add_path $PYENV_ROOT/bin
-
-# cargo, go
-fish_add_path /home/josh/.cargo/bin
-fish_add_path /home/josh/go/bin
-
-
-# Configure Jump
-status --is-interactive; and source (jump shell fish | psub)
-
-# Set editor
-set -gx EDITOR nvim
 
 # Add flatpak dirs to path
 set -gx XDG_DATA_DIRS $XDG_DATA_DIRS ~/.nix-profile/share/applications
@@ -47,6 +33,25 @@ for flatpakdir in ~/.local/share/flatpak/exports/bin /var/lib/flatpak/exports/bi
         contains $flatpakdir $PATH; or set -a PATH $flatpakdir
     end
 end
+
+
+fish_add_path /home/josh/go/bin
+{{ end -}}
+
+fish_add_path -P ~/bin
+fish_add_path -P ~/.cargo/bin
+
+# pyenv
+pyenv init - | source
+fish_add_path $PYENV_ROOT/bin
+
+
+# Configure Jump
+status --is-interactive; and source (jump shell fish | psub)
+
+# Set editor
+set -gx EDITOR nvim
+
 
 # Syntax highlighting
 set -g fish_color_autosuggestion 555 brblack
