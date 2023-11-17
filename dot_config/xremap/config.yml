@@ -16,11 +16,6 @@ keymap:
       CapsLock-j: Down
       CapsLock-l: Right
 
-      Left: h
-      Up: k
-      Down: j
-      Right: l
-
       # super-d:
       #   remap:
       #     f:
