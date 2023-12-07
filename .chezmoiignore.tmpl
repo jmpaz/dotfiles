@@ -1,5 +1,6 @@
+# Directories to ignore on Mac/Linux
+
 {{- if eq .chezmoi.os "darwin" }}
-# Ignore directories for MacOS
 .config/i3/
 .config/polybar/
 .config/picom/
@@ -8,6 +9,8 @@
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
-#
+.config/yabai/
+.config/skhd/
+.config/spacebar/
 {{- end }}
 
