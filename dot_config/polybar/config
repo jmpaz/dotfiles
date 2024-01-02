@@ -6,6 +6,7 @@ margin-bottom = 5
 
 [bar/main]
 monitor = ${env:MONITOR:}
+bottom = ${env:BOTTOM:false}
 width = 100%
 height = 25
 offset-x = 0
