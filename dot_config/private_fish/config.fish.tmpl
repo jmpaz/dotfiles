@@ -17,6 +17,7 @@ end
 eval "$(/opt/homebrew/bin/brew shellenv)"
 set PYENV_ROOT /Users/josh/.pyenv
 fish_add_path /Users/josh/.local/bin
+fish_add_path /Applications/WezTerm.app/Contents/MacOS
 
 {{ else if eq .chezmoi.os "linux" -}}
 fish_add_path /home/josh/.local/bin
