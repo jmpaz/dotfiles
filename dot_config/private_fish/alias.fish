@@ -1,5 +1,5 @@
 alias ls='lsd'
-alias cm='chezmoi'
+alias cz='chezmoi'
 alias lg='lazygit'
 
 alias copy='xclip -selection clipboard'
