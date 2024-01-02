@@ -1,7 +1,11 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
-return {
+-- Load from module
+local ssh_config = require("ssh")
+
+-- Base config
+local config = {
 	color_scheme = "Catppuccin Mocha",
 
 	default_cursor_style = "BlinkingBar",
@@ -142,3 +146,10 @@ return {
 		}))
 	end),
 }
+
+-- Merge ssh_config into main config
+for k, v in pairs(ssh_config) do
+	config[k] = v
+end
+
+return config
