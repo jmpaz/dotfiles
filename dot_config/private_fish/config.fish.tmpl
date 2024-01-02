@@ -4,7 +4,12 @@ source ~/.asdf/asdf.fish
 set -U fish_greeting ""
 
 if status is-interactive
-    # Commands to run in interactive sessions can go here
+    atuin init fish --disable-up-arrow | source
+
+    # ctrl + up
+    bind \e\[1\;5A _atuin_search
+    bind -M insert \e\[1\;5A _atuin_search
+
 end
 
 # vi + emacs bindings
@@ -81,3 +86,6 @@ set -g fish_color_valid_path --underline
 
 # Prompt
 starship init fish | source
+
+export DIRENV_LOG_FORMAT="$(printf "\033[34mdirenv: %%s")"
+direnv hook fish | source
