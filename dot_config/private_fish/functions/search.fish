@@ -28,7 +28,11 @@ function search
         case metaphor
             set url "https://search.metaphor.systems/search?q=$query&filters=%7B%22domainFilterType%22%3A%22include%22%2C%22timeFilterOption%22%3A%22any_time%22%2C%22activeTabFilter%22%3A%22all%22%7D"
         case are.na
-            set url "https://sander.are.na/search?q={%22term%22%3A{%22facet%22%3A$query}}"
+            set url "https://sander.are.na/search?q={%22term%22%3A{%22facet%22%3A%22$query%22}}"
+        case github
+            set url "https://github.com/search?q=$query&type=code"
+        case sourcegraph
+            set url "https://sourcegraph.com/search?q=$query"
         case '*'
             echo "Unsupported search engine: $engine"
             return 1
