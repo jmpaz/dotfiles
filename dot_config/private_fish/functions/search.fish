@@ -2,11 +2,24 @@ function search
     set -l engine perplexity # Default search engine
     set -l query ""
 
-    # Parsing arguments
+    # Parse arguments
     set -l next_is_engine 0
     for arg in $argv
         if test $next_is_engine -eq 1
-            set engine $arg
+            switch $arg
+                case -a
+                    set engine "are.na"
+                case -p
+                    set engine perplexity
+                case -m
+                    set engine metaphor
+                case -gh
+                    set engine github
+                case -sg
+                    set engine sourcegraph
+                case '*'
+                    set engine $arg
+            end
             set next_is_engine 0
             continue
         end
