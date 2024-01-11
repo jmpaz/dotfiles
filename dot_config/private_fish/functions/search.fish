@@ -21,7 +21,7 @@ function search
         end
     end
 
-    # Constuct URL based on the selected search engine
+    # Construct URL based on the selected search engine
     switch $engine
         case perplexity
             set url "https://www.perplexity.ai/search?q=$query&focus=internet&copilot=true"
@@ -38,6 +38,10 @@ function search
             return 1
     end
 
-    # Open the constructed URL
-    xdg-open $url
+    # Determine the OS and use the appropriate command to open the URL
+    if uname | grep -iq darwin
+        open $url
+    else
+        xdg-open $url
+    end
 end
