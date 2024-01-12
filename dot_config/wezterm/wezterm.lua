@@ -6,7 +6,7 @@ local ssh_config = require("ssh")
 
 -- Base config
 local config = {
-	color_scheme = "Catppuccin Mocha",
+	color_scheme = "Rosé Pine (base16)",
 
 	default_cursor_style = "BlinkingBar",
 	animation_fps = 60,
