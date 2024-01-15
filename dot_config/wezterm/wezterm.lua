@@ -145,6 +145,12 @@ local config = {
 			{ Text = " |" },
 		}))
 	end),
+
+	unix_domains = {
+		{
+			name = "unix",
+		},
+	},
 }
 
 -- Merge ssh_config into main config
