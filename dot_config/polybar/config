@@ -28,8 +28,8 @@ modules-right = cpu memory volume
 override-redirect = false
 wm-restack = i3
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+scroll-down = i3wm-wsnext
+scroll-up = i3wm-wsprev
 
 enable-ipc = true
 
