@@ -22,13 +22,13 @@ function venv
         switch $choice
             case '' Y y
                 echo "Creating a new virtual environment..."
-                python -m venv .venv --system-site-packages
+                python -m venv .venv
                 echo "Virtual environment created."
 
                 if test $no_direnv_flag -eq 0
                     # If --no_direnv was not passed, create and allow .envrc file
-                    echo 'export VIRTUAL_ENV=./.venv' >.envrc
-                    echo 'export PATH=./.venv/bin:$PATH' >>.envrc
+                    echo 'export VIRTUAL_ENV=.venv' >.envrc
+                    echo 'layout python' >>.envrc
                     echo ".envrc file created."
                     direnv allow
                 else
