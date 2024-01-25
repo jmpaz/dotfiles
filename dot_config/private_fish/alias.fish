@@ -3,7 +3,7 @@ alias cz='chezmoi'
 alias lg='lazygit'
 
 alias copy='xclip -selection clipboard'
-alias clip='xclip -selection clipboard'
+alias cpimg='copy -t image/png -i'
 
 alias neovide="/home/josh/Applications/neovide.AppImage"
 alias nv="neovide"
