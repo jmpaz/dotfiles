@@ -50,8 +50,10 @@ fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
 
 # pyenv
-pyenv init - | source
+set PYENV_ROOT /home/josh/.pyenv
+set PYTHON_CONFIGURE_OPTS "--with-tcltk-includes='-I/usr/include' --with-tcltk-libs='-L/usr/lib64'"
 fish_add_path $PYENV_ROOT/bin
+pyenv init - | source
 
 
 # Configure Jump
