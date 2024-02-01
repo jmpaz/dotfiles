@@ -3,30 +3,26 @@ function search
     set -l query ""
 
     # Parse arguments
-    set -l next_is_engine 0
     for arg in $argv
-        if test $next_is_engine -eq 1
-            switch $arg
-                case -a
-                    set engine "are.na"
-                case -p
-                    set engine perplexity
-                case -m
-                    set engine metaphor
-                case -gh
-                    set engine github
-                case -sg
-                    set engine sourcegraph
-                case '*'
-                    set engine $arg
-            end
-            set next_is_engine 0
-            continue
-        end
-
         switch $arg
+            case -a
+                set engine "are.na"
+            case -p
+                set engine perplexity
+            case -m
+                set engine metaphor
+            case -gh
+                set engine github
+            case -sg
+                set engine sourcegraph
             case --dest -d
-                set next_is_engine 1
+                if set -q argv[2]
+                    set engine $argv[2]
+                    set argv $argv[2..-1]
+                else
+                    echo "Error: No search engine specified after --dest or -d"
+                    return 1
+                end
             case '*'
                 if test -z $query
                     set query $arg
