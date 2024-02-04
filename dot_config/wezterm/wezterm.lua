@@ -72,6 +72,7 @@ local config = {
 		{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 
 		{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+		{ key = "p", mods = "ALT", action = act.ActivateCommandPalette },
 
 		-- Key tables
 		{
