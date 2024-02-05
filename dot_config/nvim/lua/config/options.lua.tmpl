@@ -5,6 +5,22 @@
 --- General
 vim.opt.clipboard = { exclude = ".*" }
 
+{{ if eq .chezmoi.hostname "asahi" -}}
+--- Wayland
+vim.g.clipboard = {
+  name = "wl-clipboard",
+  copy = {
+    ["+"] = { "wl-copy", "--foreground", "--trim-newline" },
+    ["*"] = { "wl-copy", "--foreground", "--trim-newline", "--primary" },
+  },
+  paste = {
+    ["+"] = { "wl-paste", "--no-newline" },
+    ["*"] = { "wl-paste", "--no-newline", "--primary" },
+  },
+  cache_enabled = 1,
+}
+{{- end }}
+
 --- Neovide
 vim.g.neovide_scale_factor = 0.8
 vim.g.neovide_hide_mouse_when_typing = true
