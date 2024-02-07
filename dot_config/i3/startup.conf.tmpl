@@ -1,9 +1,26 @@
-# vim: set filetype=i3config :
-
+# vim: set filetype=swayconfig :
+{{ if eq .displayServer "X11" }}
 exec --no-startup-id ~/bin/startup/screens.sh
 exec --no-startup-id ~/bin/startup/rclone_mount.sh
 
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id darkman run
 exec --no-startup-id /home/josh/.nix-profile/bin/redshift
+{{ else if eq .displayServer "wayland" }}
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_2048x1536.png fill
+output eDP-1 scale 1.5
 
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +$(cat /sys/class/power_supply/macsmc-battery/capacity)%' | %Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+{{ end -}}

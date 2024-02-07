@@ -27,20 +27,21 @@ mode "gaps" {
     bindsym r reload
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym Tab    mode "default"
 
 }
 
 set $screenshotmenu "screenshot: [r]egion  [w]indow  [f]ullscreen"
 bindsym $mod+s mode $screenshotmenu
 mode $screenshotmenu {
-    # select region or given window
+{{- if and (eq .displayServer "X11") (eq .chezmoi.hostname "cd-tower") }}
     bindsym r --release exec --no-startup-id screenshot select; mode "screenshot"; mode "default"
-    # currently-focused window
     bindsym w --release exec --no-startup-id screenshot window; mode "screenshot"; mode "default"
-    # full screen
     bindsym f --release exec --no-startup-id screenshot full; mode "screenshot"; mode "default"
-
+{{ else if eq .displayServer "wayland" }}
+    bindsym r exec shotman --capture region; mode "default"
+    bindsym w exec shotman --capture window; mode "default"
+    bindsym f exec shotman --capture output; mode "default"
+{{ end }}
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -60,7 +61,6 @@ mode $layoutmenu {
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym Tab    mode "default"
 }
 
 set $sysmenu "system:  [r]eload  [l]ock  [p]oweroff  re[b]oot"

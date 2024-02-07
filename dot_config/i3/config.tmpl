@@ -1,18 +1,23 @@
+{{- if eq .displayServer "X11" }}
 # Load Xresources
 exec xrdb -merge ~/.Xresources.d/colors.xresources
 exec i3-msg restart
+{{ end -}}
 
 
 # Set workspaces
 workspace_layout default
+{{- if eq .chezmoi.hostname "cd-tower" }}
 workspace 0 output HDMI-1
 workspace 1 output HDMI-1
 workspace 2 output DP-0
+{{ end }}
 
 
 # Initialize environment
 include *.conf
-
+{{- if eq .displayServer "X11" }}
 exec_always --no-startup-id $HOME/bin/startup/polybar.sh
 exec_always --no-startup-id picom -b
 exec_always --no-startup-id autotiling
+{{ end }}

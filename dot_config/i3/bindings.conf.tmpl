@@ -33,6 +33,7 @@ bindsym $mod+z focus child
 bindsym $mod+v split v
 bindsym $mod+b split h
 
+bindsym $mod+Shift+c reload
 bindsym $mod+Shift+q kill
 bindsym $mod+f fullscreen toggle
 
@@ -40,9 +41,11 @@ bindsym --release button2 kill
 
 
 bindsym $mod+Return exec --no-startup-id wezterm
+{{- if eq .displayServer "X11" }}
 bindsym $mod+space exec --no-startup-id "rofi -modi drun,run -show drun"
-bindsym $mod+d exec /usr/bin/dmenu_run
-
+{{ else if eq .displayServer "wayland" }}
+bindsym $mod+space exec "fuzzel"
+{{ end }}
 
 # Floating
 bindsym $mod+$alt+f floating toggle
@@ -121,10 +124,18 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 include modes.conf
 
 
-## Things I'd like to move to xremap
-# Volume
+# Volume/Brightness
+{{- if eq .displayServer "X11" }}
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+{{ else if eq .displayServer "wayland" }}
+bindsym XF86MonBrightnessUp exec light -A 2
+bindsym XF86MonBrightnessDown exec light -U 2
+bindsym XF86AudioRaiseVolume exec pulsemixer --unmute --change-volume +5 --max-volume 100
+bindsym XF86AudioLowerVolume exec pulsemixer --change-volume -5
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+{{ end -}}

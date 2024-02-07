@@ -5,6 +5,7 @@ font pango:Monaspace Neon Light 8
 gaps outer 5
 gaps inner 15
 
+{{- if eq .displayServer "X11" }}
 # Fetch colors
 set_from_resource $color0 color0 #000000
 set_from_resource $color1 color1 #000000
@@ -24,6 +25,7 @@ client.unfocused        $color0 $color0 $color8 $color0 $color0
 client.urgent           $color1 $color1 $color7 $color1 $color1
 client.placeholder      $color0 $color0 $color7 $color0 $color0
 client.background       $color0
+{{ end }}
 
 # Border
 title_align center
