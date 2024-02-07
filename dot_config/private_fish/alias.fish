@@ -12,4 +12,4 @@ alias nv="neovide"
 alias pip='pip_wrapper'
 
 # List files being tracked by git
-alias print-staged='git ls-files --stage | awk "{print \$4}"'
+alias print-staged='git ls-files --stage | awk "{print \$4}" | grep -v -e "__init__.py" -e "requirements.txt" -e ".gitignore"'
