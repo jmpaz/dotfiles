@@ -7,8 +7,43 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id darkman run
 exec --no-startup-id /home/josh/.nix-profile/bin/redshift
 {{ else if eq .displayServer "wayland" }}
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_2048x1536.png fill
-output eDP-1 scale 1.5
+output * bg $HOME/.local/share/wallpapers/catppuccin.png fill
+output eDP-1 scale 1.4
+
+input type:touchpad {
+    tap enabled
+    drag enabled
+    middle_emulation enabled
+    natural_scroll enabled
+    scroll_factor 0.3
+    pointer_accel 0.08
+    accel_profile adaptive
+}
+
+# Allow switching between workspaces with four-finger left and right swipes
+bindgesture swipe:4:right workspace prev
+bindgesture swipe:4:left workspace next
+
+# Cycle through scratchpad windows by "scrubbing" up and down with four fingers
+bindgesture swipe:4:up scratchpad show
+bindgesture swipe:4:down scratchpad show
+
+# Focus
+bindgesture swipe:3:up focus up
+bindgesture swipe:3:left focus left
+bindgesture swipe:3:right focus right
+bindgesture swipe:3:down focus down
+bindgesture pinch:3:inward focus child
+bindgesture pinch:3:outward focus parent
+
+# Toggle fullscreen
+bindgesture pinch:4:outward fullscreen enable
+bindgesture pinch:4:inward fullscreen disable
+
+input type:keyboard {
+    repeat_delay 250
+    repeat_rate 30
+}
 
 bar {
     position top
@@ -23,4 +58,13 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+exec swayidle -w \
+	timeout 900 'swaylock -f' \
+	timeout 905 'swaymsg "output * power off"' \
+	resume 'swaymsg "output * power on"' \
+  before-sleep 'swaylock' \
+  before-sleep 'playerctl pause'
+
+bindswitch --reload --locked lid:on exec swaylock
 {{ end -}}

@@ -15,7 +15,7 @@ local config = {
 		{ family = "Geist Mono" },
 		{ family = "Monaspace Argon" },
 	}),
-	font_size = 16,
+	font_size = 15,
 
 	scrollback_lines = 10000,
 
