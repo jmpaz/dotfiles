@@ -38,3 +38,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.wo.conceallevel = 0
   end,
 })
+
+-- Python
+vim.g.python3_host_prog = vim.fn.expand("~/.local/lib/virtualenvs/neovim/bin/python3")
