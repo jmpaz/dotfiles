@@ -3,15 +3,6 @@ source ~/.asdf/asdf.fish
 
 set -U fish_greeting ""
 
-if status is-interactive
-    atuin init fish --disable-up-arrow | source
-
-    # ctrl + up
-    bind \e\[1\;5A _atuin_search
-    bind -M insert \e\[1\;5A _atuin_search
-
-end
-
 # vi + emacs bindings
 function fish_user_key_bindings
     fish_default_key_bindings -M insert
@@ -48,6 +39,15 @@ fish_add_path /home/josh/go/bin
 
 fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
+
+if status is-interactive
+    atuin init fish --disable-up-arrow | source
+
+    # ctrl + up
+    bind \e\[1\;5A _atuin_search
+    bind -M insert \e\[1\;5A _atuin_search
+
+end
 
 # pyenv
 set PYENV_ROOT /home/josh/.pyenv
