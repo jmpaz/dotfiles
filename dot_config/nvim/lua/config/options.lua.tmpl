@@ -30,3 +30,11 @@ vim.g.neovide_refresh_rate_idle = 5
 -- Treesitter-based folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+-- Markdown
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.md", "*.qmd" },
+  callback = function()
+    vim.wo.conceallevel = 0
+  end,
+})
