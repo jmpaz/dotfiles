@@ -36,8 +36,13 @@ return {
       vim.keymap.set("n", "<localleader>mfe", ":MoltenExportOutput<CR>", { silent = true })
       vim.keymap.set("n", "<localleader>mfi", ":MoltenImportOutput<CR>", { silent = true })
 
-      vim.keymap.set("v", "<localleader><cr>", ":<C-u>MoltenEvaluateVisual<CR>", { silent = true })
       vim.keymap.set("n", "<localleader>mi", ":MoltenInfo<CR>", { silent = true })
+      vim.keymap.set(
+        "v",
+        "<localleader>m",
+        ":<C-u>MoltenEvaluateVisual<CR>",
+        { silent = true, desc = "Evaluate selection (Molten)" }
+      )
 
       -- which-key menu definition
       wk.register({
@@ -78,7 +83,7 @@ return {
             e = "Export to .ipynb",
             i = "Import from .ipynb",
           },
-          i = "Show Info",
+          i = "Info",
         },
       }, { prefix = "<localleader>" })
     end,

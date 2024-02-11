@@ -21,11 +21,25 @@ return {
     },
     init = function()
       local runner = require("quarto.runner")
-      vim.keymap.set("n", "<localleader>rc", runner.run_cell, { desc = "run cell", silent = true })
-      vim.keymap.set("n", "<localleader>ra", runner.run_above, { desc = "run cell and above", silent = true })
-      vim.keymap.set("n", "<localleader>rA", runner.run_all, { desc = "run all cells", silent = true })
-      vim.keymap.set("n", "<localleader>rl", runner.run_line, { desc = "run line", silent = true })
-      vim.keymap.set("v", "<localleader>rr", runner.run_range, { desc = "run visual range", silent = true })
+
+      -- bindings
+      vim.keymap.set("n", "<localleader>rc", runner.run_cell, { silent = true })
+      vim.keymap.set("n", "<localleader>ra", runner.run_above, { silent = true })
+      vim.keymap.set("n", "<localleader>rA", runner.run_all, { silent = true })
+      vim.keymap.set("n", "<localleader>rl", runner.run_line, { silent = true })
+      vim.keymap.set("v", "<localleader>r", runner.run_range, { silent = true, desc = "Evaluate selection (Quarto)" })
+
+      -- which-key
+      local wk = require("which-key")
+      wk.register({
+        r = {
+          name = "Run (Quarto)",
+          c = "Run Cell",
+          a = "Run Cell + Above",
+          A = "Run All Cells",
+          l = "Run Line",
+        },
+      }, { prefix = "<localleader>" })
     end,
   },
   {
