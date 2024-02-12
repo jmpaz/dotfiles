@@ -86,6 +86,14 @@ local config = {
 			mods = "LEADER",
 			action = act.ActivateKeyTable({ name = "shift", one_shot = false, timeout_milliseconds = 2000 }),
 		},
+		{
+			-- navigate prompt history (expects '❯')
+			key = "~",
+			mods = "ALT|SHIFT",
+			action = wezterm.action.Search({
+				Regex = [[^❯ .*(?:\n(?!❯ ).*)*]],
+			}),
+		},
 	},
 
 	key_tables = {
