@@ -25,13 +25,15 @@ local config = {
 	},
 
 	use_fancy_tab_bar = false,
+	hide_tab_bar_if_only_one_tab = true,
+
 	window_decorations = "RESIZE",
 	window_background_opacity = 0.9,
 
 	window_padding = {
-		left = 15,
+		top = "0cell",
+		left = 20,
 		right = 15,
-		top = 10,
 		bottom = 0,
 	},
 
@@ -69,11 +71,32 @@ local config = {
 			}),
 		},
 		{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
-		{ key = "t", mods = "LEADER", action = act.ShowTabNavigator },
 		{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 
-		{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+		-- launchers
+		{
+			key = "k",
+			mods = "LEADER",
+			action = act.ShowLauncherArgs({ flags = "FUZZY|KEY_ASSIGNMENTS", title = "Commands" }),
+		},
+		{ key = "k", mods = "LEADER|ALT", action = wezterm.action.ShowLauncher },
 		{ key = "p", mods = "ALT", action = act.ActivateCommandPalette },
+
+		{
+			key = "o",
+			mods = "ALT",
+			action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|TABS", title = "[tabs]" }),
+		},
+		{
+			key = "o",
+			mods = "LEADER|SHIFT",
+			action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES", title = "[workspaces]" }),
+		},
+		{
+			key = "o",
+			mods = "LEADER|ALT|SHIFT",
+			action = act.ShowLauncherArgs({ flags = "FUZZY|DOMAINS", title = "[domains]" }),
+		},
 
 		-- Key tables
 		{
