@@ -3,11 +3,11 @@ source ~/.asdf/asdf.fish
 
 set -U fish_greeting ""
 
-# zellij
-if set -q ZELLIJ
-else
-    zellij
-end
+# # zellij
+# if set -q ZELLIJ
+# else
+#     zellij
+# end
 
 # vi + emacs bindings
 function fish_user_key_bindings
@@ -47,12 +47,12 @@ fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
 
 if status is-interactive
+    eval (zellij setup --generate-auto-start fish | string collect)
     atuin init fish --disable-up-arrow | source
 
     # ctrl + up
     bind \e\[1\;5A _atuin_search
     bind -M insert \e\[1\;5A _atuin_search
-
 end
 
 # pyenv
