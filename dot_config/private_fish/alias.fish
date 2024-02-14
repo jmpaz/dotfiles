@@ -1,4 +1,4 @@
-alias ls='lsd'
+alias ls='eza --icons'
 alias yz='yazi'
 alias cz='chezmoi'
 alias lg='lazygit'
