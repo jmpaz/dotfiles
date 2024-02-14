@@ -17,8 +17,6 @@ local config = {
 	}),
 	font_size = 15,
 
-	scrollback_lines = 10000,
-
 	inactive_pane_hsb = {
 		saturation = 0.55,
 		brightness = 0.45,
@@ -37,7 +35,16 @@ local config = {
 		bottom = 0,
 	},
 
-	keys = {},
+	keys = {
+		{ key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
+		{ key = "m", mods = "SUPER", action = act.DisableDefaultAssignment },
+		{ key = "n", mods = "SUPER", action = act.DisableDefaultAssignment },
+		{ key = "t", mods = "SUPER", action = act.DisableDefaultAssignment },
+		{ key = "w", mods = "SUPER", action = act.DisableDefaultAssignment },
+		{ key = "c", mods = "SUPER", action = act.DisableDefaultAssignment },
+		{ key = "v", mods = "SUPER", action = act.DisableDefaultAssignment },
+	},
+
 	key_tables = {},
 
 	unix_domains = { { name = "unix" } },
