@@ -71,10 +71,12 @@ keybinds clear-defaults=true {
     }
     pane {
         bind "Alt a" { SwitchToMode "Normal"; }
-        bind "h" "Left" { MoveFocus "Left"; }
+        bind "h" { MoveFocus "Left"; }
         bind "l" { MoveFocus "Right"; }
         bind "j" { MoveFocus "Down"; }
         bind "k" { MoveFocus "Up"; }
+        bind "Left" { GoToPreviousTab; }
+        bind "Right" { GoToNextTab; }
         bind "p" { SwitchFocus; }
         bind "n" { NewPane; SwitchToMode "Normal"; }
         bind "v" { NewPane "Down"; SwitchToMode "Normal"; }
@@ -88,8 +90,6 @@ keybinds clear-defaults=true {
         bind "w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
         bind "r" { SwitchToMode "RenamePane"; PaneNameInput 0;}
-        bind "Left" { GoToPreviousTab; }
-        bind "Right" { GoToNextTab; }
     }
     move {
         bind "Alt g" { SwitchToMode "Normal"; }
@@ -154,7 +154,7 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" {
         bind "Alt 0" { SwitchToMode "Locked"; }
-        bind "Alt q" { Quit; }
+        bind "Alt Q" { Quit; }
         bind "Alt n" { NewPane; }
         bind "Alt h" "Alt Left" { MoveFocus "Left"; }
         bind "Alt l" "Alt Right" { MoveFocus "Right"; }
