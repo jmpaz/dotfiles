@@ -3,6 +3,12 @@ source ~/.asdf/asdf.fish
 
 set -U fish_greeting ""
 
+# zellij
+if set -q ZELLIJ
+else
+    zellij
+end
+
 # vi + emacs bindings
 function fish_user_key_bindings
     fish_default_key_bindings -M insert

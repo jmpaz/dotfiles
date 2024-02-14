@@ -1,6 +1,8 @@
 alias ls='lsd'
+alias yz='yazi'
 alias cz='chezmoi'
 alias lg='lazygit'
+alias zj='zellij'
 
 alias copy='xclip -selection clipboard'
 alias cpimg='copy -t image/png -i'
