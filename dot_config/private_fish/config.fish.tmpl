@@ -45,7 +45,7 @@ fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
 
 if status is-interactive
-    {{- if eq .displayServer "wayland" }}
+    {{ if eq .displayServer "wayland" -}}
     sleep 0.05 # Workaround for zellij-org/zellij#2126
     {{ end -}}
     eval (zellij setup --generate-auto-start fish | string collect)
