@@ -14,14 +14,12 @@ function fish_user_key_bindings
     fish_default_key_bindings -M insert
     fish_vi_key_bindings --no-erase insert
 end
-
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.os "darwin" }}
 eval "$(/opt/homebrew/bin/brew shellenv)"
 set PYENV_ROOT /Users/josh/.pyenv
 fish_add_path /Users/josh/.local/bin
 fish_add_path /Applications/WezTerm.app/Contents/MacOS
-
-{{ else if eq .chezmoi.os "linux" -}}
+{{ else if eq .chezmoi.os "linux" }}
 fish_add_path /home/josh/.local/bin
 fish_add_path /home/josh/.nix-profile/bin
 fish_add_path /home/josh/Tools/consciousdata-cli/bin
@@ -47,6 +45,9 @@ fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
 
 if status is-interactive
+    {{- if eq .displayServer "wayland" }}
+    sleep 0.05 # Workaround for zellij-org/zellij#2126
+    {{ end -}}
     eval (zellij setup --generate-auto-start fish | string collect)
     atuin init fish --disable-up-arrow | source
 
