@@ -22,13 +22,25 @@ layout {
             tab_active_sync       "#[fg=#9399B2,bold,italic] {name}  "
             tab_active_fullscreen "#[fg=#9399B2,bold,italic] {name}  "
 
+            mode_normal        "#[bg=#89B4FA] "
+            mode_pane          "#[bg=#89B4FA] pane "
+            mode_tab           "#[bg=#89B4FA] tab "
+            mode_rename_tab    "#[bg=#89B4FA]   tab "
+            mode_rename_pane   "#[bg=#89B4FA]   pane "
+            mode_resize        "#[bg=#89B4FA] resize "
+            mode_move          "#[bg=#89B4FA] move "
+            mode_scroll        "#[bg=#89B4FA] scroll "
+            mode_search        "#[bg=#89B4FA] search "
+            mode_enter_search  "#[bg=#89B4FA]   scroll "
+            mode_session       "#[bg=#89B4FA] session "
+            mode_prompt        "#[bg=#89B4FA] prompt "
+            mode_locked        "#[bg=#cd5c5c] locked "
+            mode_tmux          "#[bg=#ffc387] "
+
             datetime        "#[fg=#6C7086,bold] {format} "
             datetime_format "%a, %d %b • %-l:%M%P"
             datetime_timezone "America/New_York"
         }
     }
     pane
-    pane size=2 borderless=true {
-        plugin location="zellij:status-bar"
-    }
 }
