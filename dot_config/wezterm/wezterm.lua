@@ -37,6 +37,8 @@ local config = {
 
 	keys = {
 		{ key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
+		{ key = "t", mods = "CTRL|SHIFT", action = act.DisableDefaultAssignment },
+		{ key = "w", mods = "CTRL|SHIFT", action = act.DisableDefaultAssignment },
 		{ key = "m", mods = "SUPER", action = act.DisableDefaultAssignment },
 		{ key = "n", mods = "SUPER", action = act.DisableDefaultAssignment },
 		{ key = "t", mods = "SUPER", action = act.DisableDefaultAssignment },
