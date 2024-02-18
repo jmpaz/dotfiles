@@ -44,6 +44,8 @@ fish_add_path /home/josh/go/bin
 fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
 
+zoxide init fish --cmd cd | source
+
 if status is-interactive
     {{ if eq .displayServer "wayland" -}}
     sleep 0.05 # Workaround for zellij-org/zellij#2126
