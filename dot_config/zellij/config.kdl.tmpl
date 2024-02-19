@@ -6,9 +6,11 @@ default_layout "main"
 scroll_buffer_size 10000
 scrollback_lines_to_serialize 10000
 serialize_pane_viewport true
-
+{{ if eq .displayServer "X11" }}
 copy_command "xclip -selection clipboard"
-
+{{ else if eq .displayServer "wayland" }}
+copy_command "wl-copy"
+{{ end }}
 theme "nord"
 themes {
     dracula {
