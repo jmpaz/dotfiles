@@ -45,19 +45,7 @@ input type:keyboard {
     repeat_rate 30
 }
 
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +$(cat /sys/class/power_supply/macsmc-battery/capacity)%' | %Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+exec waybar
 
 exec swayidle -w \
 	timeout 900 'swaylock -f' \
