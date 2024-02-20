@@ -2,6 +2,7 @@ alias cat='bat'
 alias ls='eza --icons'
 alias tree='eza --tree'
 
+alias fe='yazi'
 alias yz='yazi'
 alias cz='chezmoi'
 alias lg='lazygit'
