@@ -1,4 +1,7 @@
+alias cat='bat'
 alias ls='eza --icons'
+alias tree='eza --tree'
+
 alias yz='yazi'
 alias cz='chezmoi'
 alias lg='lazygit'
@@ -6,9 +9,6 @@ alias zj='zellij'
 
 alias copy='xclip -selection clipboard'
 alias cpimg='copy -t image/png -i'
-
-alias neovide="/home/josh/Applications/neovide.AppImage"
-alias nv="neovide"
 
 # Warn when about to pip install globally
 alias pip='pip_wrapper'
