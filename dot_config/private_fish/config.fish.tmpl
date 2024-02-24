@@ -96,6 +96,7 @@ set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
 # Prompt
+export STARSHIP_CONFIG=/home/josh/.config/starship/starship.toml
 starship init fish | source
 
 export DIRENV_LOG_FORMAT="$(printf "\033[34mdirenv: %%s")"
