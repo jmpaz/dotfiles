@@ -28,6 +28,11 @@ bindsym $mod+Shift+$alt+s move down
 bindsym $mod+Shift+$alt+a move left
 bindsym $mod+Shift+$alt+d move right
 
+bindsym $mod+$alt+h move window to output left
+bindsym $mod+$alt+l move window to output right
+bindsym Control+$mod+$alt+Shift+h move workspace to output left
+bindsym Control+$mod+$alt+Shift+l move workspace to output right
+
 bindsym $mod+a focus parent
 bindsym $mod+z focus child
 bindsym $mod+v split v
@@ -50,8 +55,9 @@ bindsym $mod+space exec "fuzzel"
 # Floating
 bindsym $mod+$alt+f floating toggle
 
-# change focus between tiling / floating windows
+# cycle focus between monitors // tiling/floating
 bindsym $mod+$alt+space focus mode_toggle
+bindsym Control+$mod+$alt+space focus output right
 
 # keep a floating window on all workspaces
 bindsym $mod+$alt+t sticky toggle

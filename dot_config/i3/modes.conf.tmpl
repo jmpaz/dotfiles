@@ -12,7 +12,30 @@ mode "resize" {
     bindsym $mod+r mode "default"
 }
 
-bindsym $mod+g mode "gaps"
+set $movemenu "move: [dir] increments • [c]enter, [m]ouse"
+bindsym $mod+g mode $movemenu
+mode $movemenu {
+    # similar to tmux modal bindings, but for floating windows.
+    # we support moving to center, screen corners+edges, and by increments.
+    bindsym $left move left 9 ppt
+    bindsym $down move down 9 ppt
+    bindsym $up move up 9 ppt
+    bindsym $right move right 9 ppt
+
+    bindsym Shift+$left move left 3 ppt
+    bindsym Shift+$down move down 3 ppt
+    bindsym Shift+$up move up 3 ppt
+    bindsym Shift+$right move right 3 ppt
+
+    bindsym c move position center
+    bindsym m move position mouse
+
+    bindsym r reload
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+shift+g mode "gaps"
 mode "gaps" {
     bindsym $up gaps inner all plus 5
     bindsym $down gaps inner all minus 5
