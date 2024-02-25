@@ -1,12 +1,34 @@
 # vim: set filetype=i3config :
 
-bindsym $mod+r mode "resize"
-mode "resize" {
-    bindsym $left       resize shrink width 10 px or 10 ppt
-    bindsym $down       resize grow height 10 px or 10 ppt
-    bindsym $up         resize shrink height 10 px or 10 ppt
-    bindsym $right      resize grow width 10 px or 10 ppt
+set $resizemenu "resize: [dir] increments • [1-3] horizontal, [4-6] vertical"
+bindsym $mod+r mode $resizemenu
+mode $resizemenu {
+    bindsym $left        resize grow left 300 px or 10 ppt
+    bindsym $down        resize grow down 300 px or 10 ppt
+    bindsym $up          resize grow up 300 px or 10 ppt
+    bindsym $right       resize grow right 300 px or 10 ppt
+    bindsym Shift+$left  resize shrink left 300 px or 10 ppt
+    bindsym Shift+$down  resize shrink down 300 px or 10 ppt
+    bindsym Shift+$up    resize shrink up 300 px or 10 ppt
+    bindsym Shift+$right resize shrink right 300 px or 10 ppt
 
+    bindsym $alt+$left        resize grow left 100 px or 5 ppt
+    bindsym $alt+$down        resize grow down 100 px or 5 ppt
+    bindsym $alt+$up          resize grow up 100 px or 5 ppt
+    bindsym $alt+$right       resize grow right 100 px or 5 ppt
+    bindsym Shift+$alt+$left  resize shrink left 100 px or 5 ppt
+    bindsym Shift+$alt+$down  resize shrink down 100 px or 5 ppt
+    bindsym Shift+$alt+$up    resize shrink up 100 px or 5 ppt
+    bindsym Shift+$alt+$right resize shrink right 100 px or 5 ppt
+    
+    bindsym 1 resize set width 35 ppt
+    bindsym 2 resize set width 50 ppt
+    bindsym 3 resize set width 75 ppt
+    bindsym 4 resize set height 35 ppt
+    bindsym 5 resize set height 50 ppt
+    bindsym 6 resize set height 75 ppt
+
+    bindsym g mode $movemenu
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
@@ -15,22 +37,20 @@ mode "resize" {
 set $movemenu "move: [dir] increments • [c]enter, [m]ouse"
 bindsym $mod+g mode $movemenu
 mode $movemenu {
-    # similar to tmux modal bindings, but for floating windows.
-    # we support moving to center, screen corners+edges, and by increments.
-    bindsym $left move left 9 ppt
-    bindsym $down move down 9 ppt
-    bindsym $up move up 9 ppt
-    bindsym $right move right 9 ppt
+    bindsym $left move left 10 ppt
+    bindsym $down move down 10 ppt
+    bindsym $up move up 10 ppt
+    bindsym $right move right 10 ppt
 
-    bindsym Shift+$left move left 3 ppt
-    bindsym Shift+$down move down 3 ppt
-    bindsym Shift+$up move up 3 ppt
-    bindsym Shift+$right move right 3 ppt
+    bindsym $alt+$left move left 2 ppt
+    bindsym $alt+$down move down 2 ppt
+    bindsym $alt+$up move up 2 ppt
+    bindsym $alt+$right move right 2 ppt
 
     bindsym c move position center
     bindsym m move position mouse
 
-    bindsym r reload
+    bindsym r mode $resizemenu
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
