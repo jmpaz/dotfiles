@@ -1,7 +1,6 @@
 mouse_warping none
 focus_wrapping no
-
-{{- if eq .displayServer "X11" }}
+{{ if eq .displayServer "X11" }}
 # Load Xresources
 exec xrdb -merge ~/.Xresources.d/colors.xresources
 exec i3-msg restart
