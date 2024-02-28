@@ -1,10 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
--- Load from module
-local ssh_config = require("ssh")
-
--- Base config
 local config = {
 	enable_wayland = false,
 	color_scheme = "Rosé Pine (base16)",
@@ -52,9 +48,18 @@ local config = {
 	unix_domains = { { name = "unix" } },
 }
 
--- Merge ssh_config into main config
-for k, v in pairs(ssh_config) do
-	config[k] = v
+-- Load modules
+local colors = require("colors")
+local ssh_cfg = require("ssh")
+
+local function merge_configs(base_cfg, ...)
+	for _, additional_config in ipairs({ ... }) do
+		for k, v in pairs(additional_config) do
+			base_cfg[k] = v
+		end
+	end
 end
+
+merge_configs(config, colors, ssh_cfg)
 
 return config

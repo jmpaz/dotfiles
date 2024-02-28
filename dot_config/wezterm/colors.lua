@@ -1,0 +1,2 @@
+local colors = {}
+return colors
