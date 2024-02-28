@@ -3,7 +3,6 @@ local act = wezterm.action
 
 local config = {
 	enable_wayland = false,
-	color_scheme = "Rosé Pine (base16)",
 
 	default_cursor_style = "BlinkingBlock",
 	animation_fps = 60,
