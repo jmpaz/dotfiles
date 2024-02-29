@@ -4,9 +4,12 @@ alias tree='eza --tree'
 
 alias fe='yazi'
 alias yz='yazi'
-alias cz='chezmoi'
 alias lg='lazygit'
 alias zj='zellij'
+
+alias cz='chezmoi'
+alias cza='chezmoi apply'
+alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates'
 
 alias copy='xclip -selection clipboard'
 alias cpimg='copy -t image/png -i'
