@@ -5,19 +5,22 @@ font pango:Monaspace Neon Light 8
 gaps outer 5
 gaps inner 15
 
-{{- if eq .displayServer "X11" }}
-# Fetch colors
-set_from_resource $color0 color0 #000000
-set_from_resource $color1 color1 #000000
-set_from_resource $color2 color2 #000000
-set_from_resource $color3 color3 #000000
-set_from_resource $color4 color4 #000000
-set_from_resource $color5 color5 #000000
-set_from_resource $color6 color6 #000000
-set_from_resource $color7 color7 #000000
-set_from_resource $color8 color8 #000000
+# Border
+title_align center
+default_border pixel 2
+default_floating_border pixel 2
 
-# Set colors
+# Colors
+set $color0 {{ .color0 }}
+set $color1 {{ .color1 }}
+set $color1 {{ .color2 }}
+set $color3 {{ .color3 }}
+set $color4 {{ .color4 }}
+set $color5 {{ .color5 }}
+set $color6 {{ .color6 }}
+set $color7 {{ .color7 }}
+set $color8 {{ .color8 }}
+
 # class                 border  bg      text    ind     child_border
 client.focused          $color0 $color0 $color7 $color2 $color5
 client.focused_inactive $color0 $color0 $color2 $color4 $color0
@@ -25,10 +28,4 @@ client.unfocused        $color0 $color0 $color8 $color0 $color0
 client.urgent           $color1 $color1 $color7 $color1 $color1
 client.placeholder      $color0 $color0 $color7 $color0 $color0
 client.background       $color0
-{{ end }}
-
-# Border
-title_align center
-default_border pixel 2
-default_floating_border pixel 2
 
