@@ -38,5 +38,6 @@ filter = "dark16"
 
 
 [templates]
-xresources = { src = 'templates/colors.xresources', target = '~/.Xresources.d/colors.xresources' }
 wezterm = { src = 'templates/wezterm.lua', target = '~/.config/wezterm/colors.lua', new_engine = true }
+chezmoi = { src = 'templates/chezmoi.toml', target = '~/.local/share/chezmoi/.toml/colors.toml', new_engine = true }
+xresources = { src = 'templates/colors.xresources', target = '~/.Xresources.d/colors.xresources' }
