@@ -3,27 +3,15 @@ source ~/.asdf/asdf.fish
 
 set -U fish_greeting ""
 
-# # zellij
-# if set -q ZELLIJ
-# else
-#     zellij
-# end
-
 # vi + emacs bindings
 function fish_user_key_bindings
     fish_default_key_bindings -M insert
     fish_vi_key_bindings --no-erase insert
 end
-{{ if eq .chezmoi.os "darwin" }}
-eval "$(/opt/homebrew/bin/brew shellenv)"
-set PYENV_ROOT /Users/josh/.pyenv
-fish_add_path /Users/josh/.local/bin
-fish_add_path /Applications/WezTerm.app/Contents/MacOS
-{{ else if eq .chezmoi.os "linux" }}
+
 fish_add_path /home/josh/.local/bin
 fish_add_path /home/josh/.nix-profile/bin
 fish_add_path /home/josh/Tools/consciousdata-cli/bin
-
 
 # Add flatpak dirs to path
 set -gx XDG_DATA_DIRS $XDG_DATA_DIRS ~/.nix-profile/share/applications
@@ -39,7 +27,6 @@ end
 
 
 fish_add_path /home/josh/go/bin
-{{ end -}}
 
 fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
