@@ -5,7 +5,9 @@ alias tree='eza --tree'
 alias fe='yazi'
 alias yz='yazi'
 alias lg='lazygit'
+
 alias zj='zellij'
+alias zr='zellij_refresh'
 
 alias cz='chezmoi'
 alias cza='chezmoi apply'
