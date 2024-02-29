@@ -20,12 +20,13 @@ set $color5 {{ .color5 }}
 set $color6 {{ .color6 }}
 set $color7 {{ .color7 }}
 set $color8 {{ .color8 }}
+set $color15 {{ .color15 }}
 
 # class                 border  bg      text    ind     child_border
-client.focused          $color0 $color0 $color7 $color2 $color5
-client.focused_inactive $color0 $color0 $color2 $color4 $color0
+client.focused          $color0 $color0 $color7 $color5 $color1
+client.focused_inactive $color0 $color0 $color2 $color8 $color8
 client.unfocused        $color0 $color0 $color8 $color0 $color0
-client.urgent           $color1 $color1 $color7 $color1 $color1
+client.urgent           $color1 $color1 $color7 $color1 $color2
 client.placeholder      $color0 $color0 $color7 $color0 $color0
 client.background       $color0
 
