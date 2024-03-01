@@ -1,3 +1,4 @@
+{{- if eq .displayServer "wayland" }}alias i3-msg='swaymsg'{{ end }}
 alias cat='bat'
 alias ls='eza --icons'
 alias tree='eza --tree'
@@ -11,7 +12,7 @@ alias zr='zellij_refresh'
 
 alias cz='chezmoi'
 alias cza='chezmoi apply'
-alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates'
+alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates && i3-msg reload'
 
 alias copy='xclip -selection clipboard'
 alias cpimg='copy -t image/png -i'
