@@ -1,4 +1,7 @@
 [data]
+    cursorColor = "{{cursor}}"
+    fgColor = "{{foreground}}"
+    bgColor = "{{background}}"
     color0 = "{{color0}}"
     color1 = "{{color1}}"
     color2 = "{{color2}}"
@@ -15,6 +18,7 @@
     color13 = "{{color13}}"
     color14 = "{{color14}}"
     color15 = "{{color15}}"
-    fgColor = "{{foreground}}"
-    bgColor = "{{background}}"
-    cursorColor = "{{cursor}}"
+    wl_source = "{{wallpaper}}"
+    wl_colorspace = "{{colorspace}}"
+    wl_palette = "{{palette}}"
+    wl_alpha = "{{alpha}}"
