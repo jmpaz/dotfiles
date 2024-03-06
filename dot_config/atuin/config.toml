@@ -1,1 +1,9 @@
-keymap_mode = "vim-normal"
+style = "compact"
+inline_height = 20
+show_preview = true
+invert = true
+show_help = false
+enter_accept = true
+search_mode = "skim"
+keymap_mode = "vim-insert"
+keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
