@@ -15,6 +15,7 @@ keymap:
       CapsLock-k: Up
       CapsLock-j: Down
       CapsLock-l: Right
+      CapsLock-Backslash: Backspace
 
       # super-d:
       #   remap:
