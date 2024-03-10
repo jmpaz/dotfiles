@@ -7,7 +7,9 @@ vimcmd_visual_symbol = '[✜](bold purple)'
 
 [aws]
 symbol = "  "
-
+{{- if or (eq .chezmoi.hostname "cd-tower") (eq .chezmoi.hostname "asahi") }}
+disabled = true
+{{ end }}
 [buf]
 symbol = " "
 
@@ -34,7 +36,10 @@ symbol = " "
 
 [fossil_branch]
 symbol = " "
-
+{{ if or (eq .chezmoi.hostname "cd-tower") (eq .chezmoi.hostname "asahi") }}
+[gcloud]
+disabled = true
+{{ end }}
 [git_branch]
 symbol = " "
 
