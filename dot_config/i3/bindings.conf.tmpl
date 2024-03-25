@@ -45,7 +45,7 @@ bindsym $mod+f fullscreen toggle
 bindsym --release button2 kill
 
 
-bindsym $mod+Return exec --no-startup-id wezterm
+bindsym $mod+Return exec --no-startup-id kitty
 {{- if eq .displayServer "X11" }}
 bindsym $mod+space exec --no-startup-id "rofi -modi drun,run -show drun"
 {{ else if eq .displayServer "wayland" }}
