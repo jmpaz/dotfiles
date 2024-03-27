@@ -48,6 +48,8 @@ bindsym --release button2 kill
 bindsym $mod+Return exec --no-startup-id kitty
 {{- if eq .displayServer "X11" }}
 bindsym $mod+space exec --no-startup-id "rofi -modi drun,run -show drun"
+bindsym $mod+Tab exec --no-startup-id "rofi -show window"
+bindsym $alt+grave exec --no-startup-id "rofi -show windowcd"
 {{ else if eq .displayServer "wayland" }}
 bindsym $mod+space exec "fuzzel"
 {{ end }}
