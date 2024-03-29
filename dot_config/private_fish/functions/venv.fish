@@ -22,7 +22,7 @@ function venv
         switch $choice
             case '' Y y
                 echo "Creating a new virtual environment..."
-                python -m venv .venv
+                uv venv
                 echo "Virtual environment created."
 
                 if test $no_direnv_flag -eq 0
