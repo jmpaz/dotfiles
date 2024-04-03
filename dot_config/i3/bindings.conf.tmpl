@@ -53,6 +53,7 @@ bindsym $alt+grave exec --no-startup-id "rofi -show windowcd"
 {{ else if eq .displayServer "wayland" }}
 bindsym $mod+space exec "fuzzel"
 {{ end }}
+bindsym $mod+Shift+s exec "kitty sh -c 'fish -c nvim-scratch'"
 
 # Floating
 bindsym $mod+$alt+f floating toggle
