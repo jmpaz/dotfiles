@@ -13,7 +13,13 @@ alias cz='chezmoi'
 alias cza='chezmoi apply'
 alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates && i3-msg reload'
 
+{{ if eq .chezmoi.os "darwin" }}
+alias copy='pbcopy'
+{{ else if eq .displayServer "wayland" }}
+alias copy='wl-copy'
+{{ else if eq .displayServer "X11" }}
 alias copy='xclip -selection clipboard'
+{{ end }}
 alias cpimg='copy -t image/png -i'
 
 # Warn when about to pip install globally

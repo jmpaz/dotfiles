@@ -9,9 +9,16 @@ function fish_user_key_bindings
     fish_vi_key_bindings --no-erase insert
 end
 
+{{ if eq .chezmoi.os "linux" }}
 fish_add_path /home/josh/.local/bin
 fish_add_path /home/josh/.nix-profile/bin
+fish_add_path /home/josh/go/bin
 fish_add_path /home/josh/Tools/consciousdata-cli/bin
+{{ else if eq .chezmoi.os "darwin" }}
+fish_add_path /Users/josh/.local/bin
+fish_add_path /Users/josh/.nix-profile/bin
+fish_add_path /opt/homebrew/bin
+{{ end }}
 
 # Add flatpak dirs to path
 set -gx XDG_DATA_DIRS $XDG_DATA_DIRS ~/.nix-profile/share/applications
@@ -26,7 +33,6 @@ for flatpakdir in ~/.local/share/flatpak/exports/bin /var/lib/flatpak/exports/bi
 end
 
 
-fish_add_path /home/josh/go/bin
 
 fish_add_path -P ~/bin
 fish_add_path -P ~/.cargo/bin
@@ -46,7 +52,11 @@ if status is-interactive
 end
 
 # pyenv
+{{ if eq .chezmoi.os "linux" }}
 set PYENV_ROOT /home/josh/.pyenv
+{{ else if eq .chezmoi.os "darwin" }}
+set PYENV_ROOT /Users/josh/.pyenv
+{{ end }}
 set PYTHON_CONFIGURE_OPTS "--with-tcltk-includes='-I/usr/include' --with-tcltk-libs='-L/usr/lib64'"
 fish_add_path $PYENV_ROOT/bin
 pyenv init - | source
@@ -83,7 +93,11 @@ set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
 # Prompt
+{{ if eq .chezmoi.os "linux" }}
 export STARSHIP_CONFIG=/home/josh/.config/starship/starship.toml
+{{ else if eq .chezmoi.os "darwin" }}
+export STARSHIP_CONFIG=/Users/josh/.config/starship/starship.toml
+{{ end }}
 starship init fish | source
 
 export DIRENV_LOG_FORMAT="$(printf "\033[34mdirenv: %%s")"
