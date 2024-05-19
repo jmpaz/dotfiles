@@ -39,10 +39,10 @@ filter = "dark16"
 
 [templates]
 wal = { src = 'templates/wal.json', target = '~/.cache/wal/colors.json', new_engine = true }
-rofi = { src = 'templates/rofi.rasi', target = '~/.config/rofi/wal.rasi', new_engine = true }
 wezterm = { src = 'templates/wezterm.lua', target = '~/.config/wezterm/colors.lua', new_engine = true }
 kitty = { src = 'templates/kitty.conf', target = '~/.config/kitty/colors.conf', new_engine = true }
 chezmoi = { src = 'templates/chezmoi.toml', target = '~/.local/share/chezmoi/.toml/colors.toml', new_engine = true }
 {{- if eq .displayServer "X11" }}
 xresources = { src = 'templates/colors.xresources', target = '~/.Xresources.d/colors.xresources' }
+rofi = { src = 'templates/rofi.rasi', target = '~/.config/rofi/wal.rasi', new_engine = true }
 {{ end -}}

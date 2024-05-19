@@ -11,7 +11,7 @@ alias zr='zellij_refresh'
 
 alias cz='chezmoi'
 alias cza='chezmoi apply'
-alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates && i3-msg reload'
+alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && i3-msg reload{{ end }}'
 
 {{ if eq .chezmoi.os "darwin" }}
 alias copy='pbcopy'

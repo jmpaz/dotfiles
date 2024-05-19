@@ -1,6 +1,10 @@
 pane_frames true
 auto_layout true
+{{ if eq .chezmoi.os "darwin" }}
+layout_dir "/Users/josh/.config/zellij/layouts"
+{{ else if eq .chezmoi.os "linux" }}
 layout_dir "/home/josh/.config/zellij/layouts"
+{{ end }}
 default_layout "main"
 
 scroll_buffer_size 10000
@@ -10,6 +14,8 @@ serialize_pane_viewport true
 copy_command "xclip -selection clipboard"
 {{ else if eq .displayServer "wayland" }}
 copy_command "wl-copy"
+else if eq .chezmoi.os "darwin" }}
+copy_command "pbcopy"
 {{ end }}
 theme "custom"
 themes {

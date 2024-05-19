@@ -1,6 +1,7 @@
 layout {
     pane size=1 borderless=true {
-        plugin location="file:/home/josh/.config/zellij/plugins/zjstatus.wasm" {
+
+        plugin location={{if eq .chezmoi.os "darwin" }}"file:/Users/josh/.config/zellij/plugins/zjstatus.wasm"{{ else }}"file:/home/josh/.config/zellij/plugins/zjstatus.wasm"{{ end }} {
             format_left  "{mode} #[fg=5,bold]{session} {tabs}"
             format_right "{datetime}"
             format_space ""
