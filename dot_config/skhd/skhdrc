@@ -1,56 +1,46 @@
 #!/usr/bin/env sh
 
-# Reload config
-shift + ctrl + fn - r : skhd --restart-service && yabai --restart-service
 ctrl + fn - r : skhd --restart-service
 
-# Applications
-alt - return : open -na "/Applications/WezTerm.app" ~
+alt - return : open -na "/Applications/kitty.app" ~
 alt - w : open -na "Firefox"
 
-# Layouts
-alt - i : yabai -m config layout "bsp"
-alt - o : yabai -m config layout "stack"
-alt - p : yabai -m config layout "float"
+fn - h : aerospace focus left
+fn - j : aerospace focus down
+fn - k : aerospace focus up
+fn - l : aerospace focus right
 
-# Window Management
-fn - f : yabai -m window --toggle float
-fn - t : yabai -m window --toggle float
+fn + ctrl - h : aerospace move left
+fn + ctrl - j : aerospace move down
+fn + ctrl - k : aerospace move up
+fn + ctrl - l : aerospace move right
 
-shift + fn - z : yabai -m window --toggle zoom-parent
-fn - z : yabai -m window --toggle zoom-fullscreen
-ctrl + fn - q : yabai -m window --close
+fn - s : aerospace layout v_accordion
+fn - w : aerospace layout h_accordion
+fn - e : aerospace layout tiles horizontal vertical  # toggle split
+fn - r : aerospace mode resize
 
-fn - v : yabai -m window --insert south
-fn - b : yabai -m window --insert east
-fn - s : yabai -m window --toggle split
+fn - f : aerospace fullscreen
+alt - f : aerospace layout floating tiling  # toggle floating window
 
-# Window Movement
-fn - h : yabai -m window --focus west
-fn - j : yabai -m window --focus south
-fn - k : yabai -m window --focus north
-fn - l : yabai -m window --focus east
+fn - 1 : aerospace workspace 1
+fn - 2 : aerospace workspace 2
+fn - 3 : aerospace workspace 3
+fn - 4 : aerospace workspace 4
+fn - 5 : aerospace workspace 5
+fn - 6 : aerospace workspace 6
+fn - 7 : aerospace workspace 7
+fn - 8 : aerospace workspace 8
+fn - 9 : aerospace workspace 9
+fn - 0 : aerospace workspace 10
 
-fn - n : yabai -m window --focus stack.next
-fn - p : yabai -m window --focus stack.prev
-
-ctrl + fn - h : yabai -m window --stack west
-ctrl + fn - j : yabai -m window --stack south
-ctrl + fn - k : yabai -m window --stack north
-ctrl + fn - l : yabai -m window --stack east
-
-shift + fn - h : yabai -m window --warp west
-shift + fn - j : yabai -m window --warp south
-shift + fn - k : yabai -m window --warp north
-shift + fn - l : yabai -m window --warp east
-
-# Workspaces
-shift + fn - 1 : yabai -m window --space 1
-shift + fn - 2 : yabai -m window --space 2
-shift + fn - 3 : yabai -m window --space 3
-shift + fn - 4 : yabai -m window --space 4
-shift + fn - 5 : yabai -m window --space 5
-shift + fn - 6 : yabai -m window --space 6
-shift + fn - 7 : yabai -m window --space 7
-shift + fn - 8 : yabai -m window --space 8
-shift + fn - 9 : yabai -m window --space 9
+shift + fn - 1 : aerospace move-node-to-workspace 1
+shift + fn - 2 : aerospace move-node-to-workspace 2
+shift + fn - 3 : aerospace move-node-to-workspace 3
+shift + fn - 4 : aerospace move-node-to-workspace 4
+shift + fn - 5 : aerospace move-node-to-workspace 5
+shift + fn - 6 : aerospace move-node-to-workspace 6
+shift + fn - 7 : aerospace move-node-to-workspace 7
+shift + fn - 8 : aerospace move-node-to-workspace 8
+shift + fn - 9 : aerospace move-node-to-workspace 9
+shift + fn - 0 : aerospace move-node-to-workspace 10
