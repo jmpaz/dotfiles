@@ -36,6 +36,9 @@ function venv
                     source .venv/bin/activate.fish
                     echo "Virtual environment activated."
                 end
+
+                # install packages
+                uv pip install jupyter_client ipykernel pynvim
             case '*'
                 echo "Virtual environment creation cancelled."
         end
