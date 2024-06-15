@@ -1,0 +1,34 @@
+//  https://zed.dev/docs/configuring-zed
+{
+  "theme": "Rosé Pine Moon",
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "never",
+    "use_multiline_find": true
+  },
+  "relative_line_numbers": true,
+
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  // "scrollbar": { "show": "never" },
+  "cursor_blink": false,
+  "vertical_scroll_margin": 0,
+
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  "context": "Dock",
+  "bindings": {
+    "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
+    "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
+    "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
+    "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"]
+  },
+
+  "terminal": {
+    "font_family": "SauceCodePro Nerd Font",
+    "font_size": 14
+  }
+}
