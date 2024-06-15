@@ -1,3 +1,5 @@
+# vim: set filetype=i3config :
+
 mouse_warping none
 focus_wrapping no
 {{ if eq .displayServer "X11" }}
@@ -12,7 +14,8 @@ workspace_layout default
 {{- if eq .chezmoi.hostname "cd-tower" }}
 workspace 0 output HDMI-1
 workspace 1 output HDMI-1
-workspace 2 output DP-0
+workspace 2 output HDMI-1
+workspace 3 output DP-0
 {{ end }}
 
 
