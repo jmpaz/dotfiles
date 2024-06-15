@@ -43,7 +43,11 @@ if status is-interactive
     {{ if eq .displayServer "wayland" -}}
     sleep 0.05 # Workaround for zellij-org/zellij#2126
     {{ end -}}
-    eval (zellij setup --generate-auto-start fish | string collect)
+
+    if test -z "$SKIP_ZELLIJ"  
+      eval (zellij setup --generate-auto-start fish | string collect)
+    end
+
     atuin init fish --disable-up-arrow | source
 
     # ctrl + up

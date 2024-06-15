@@ -1,8 +1,12 @@
+// This file is used to configure Zed keybindings.
+// 'VimWaiting' is a special context that is true when we are waiting for a key
+// 'menu' is a special context that is true when the command palette is open
 [
   {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
       // put key-bindings here if you want them to work in normal & visual mode
+      "g p": "editor::Paste"
     }
   },
   {
@@ -11,12 +15,25 @@
       // put key-bindings here if you want them to work only in normal mode
       // "down": ["workspace::SendKeystrokes", "4 j"]
       // "up": ["workspace::SendKeystrokes", "4 k"]
+      "\\ w": "editor::ToggleSoftWrap",
+      "\\ n": "editor::ToggleLineNumbers",
+      "shift-h": "pane::ActivatePrevItem",
+      "shift-l": "pane::ActivateNextItem",
+      "space e": "workspace::ToggleLeftDock",
+      "space f": "file_finder::Toggle",
+      "space s g": "pane::DeploySearch",
+      "space p": "outline::Toggle",
+      "space v": "editor::GoToDefinitionSplit",
+      "ctrl-w z": "workspace::ToggleZoom",
+      "ctrl-w t": "terminal_panel::ToggleFocus"
     }
   },
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
     "bindings": {
       // visual, visual line & visual block modes
+      "g y": "editor::Copy",
+      "g d": "editor::Cut"
     }
   },
   {
@@ -26,6 +43,35 @@
       // e.g.
       // "j j": "vim::NormalBefore" // remap jj in insert mode to escape.
       "j k": ["vim::SwitchMode", "Normal"]
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      "g e": "vim::PreviousSubwordEnd",
+      "g shift-r": "editor::FindAllReferences",
+      "g a": "editor::ToggleCodeActions",
+      "g r": "editor::Rename",
+      "space w": "workspace::Save",
+      "\\ g b": "editor::ToggleGitBlame"
+    }
+  },
+  {
+    "context": "Editor && !VimWaiting && !menu",
+    "bindings": {
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-x": "editor::Cut",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-w": "terminal_panel::ToggleFocus",
+      "ctrl-h": "workspace::ToggleBottomDock"
     }
   }
 ]
