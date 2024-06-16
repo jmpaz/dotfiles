@@ -4,30 +4,40 @@
     "diagnostics": false,
     "metrics": false
   },
-  "theme": {
-    "mode": "system",
-    "light": "Atelier Sulphurpool Light",
-    "dark": "Rosé Pine Moon"
-  },
+
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "never",
     "use_multiline_find": true
   },
   "relative_line_numbers": true,
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
-  // "scrollbar": { "show": "never" },
   "cursor_blink": false,
-  "vertical_scroll_margin": 0,
+
+  "theme": {
+    "mode": "system",
+    "light": "Rosé Pine Dawn",
+    "dark": "Rosé Pine Moon"
+  },
+  "experimental.theme_overrides": {
+    "syntax": {
+      "property": {
+        "font_weight": 700
+      }
+    }
+  },
+
+  "ui_font_size": 18,
+  "buffer_font_size": 18,
+  "buffer_font_family": "BerkeleyMono Nerd Font",
+
   "context": "Dock",
   "terminal": {
-    "font_family": "SauceCodePro Nerd Font",
-    "font_size": 14,
+    // "font_size": 17,
+    "font_weight": 500,
     "shell": {
       "with_arguments": {
         "program": "env",
-        "args": ["SKIP_ZELLIJ=1", "fish"] // don't open zellij
+        "args": ["SKIP_ZELLIJ=1", "fish"]
       }
     }
   }
