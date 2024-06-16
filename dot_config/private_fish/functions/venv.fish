@@ -1,6 +1,4 @@
-# Creates or activates a Python virtual environment in the current directory
-
-function venv
+function venv --description "create or activate a Python virtual environment in the current directory"
     # Check for the --no_direnv argument to determine if .envrc should be created
     set no_direnv_flag 0
     for arg in $argv
@@ -10,12 +8,30 @@ function venv
         end
     end
 
+    function activate_venv
+        set venv_path $argv[1]
+        source $venv_path/bin/activate.fish
+        echo "Virtual environment activated."
+    end
+
+    function create_pyproject_toml
+        echo "[tool.pyright]" > pyproject.toml
+        echo 'venvPath = "."' >> pyproject.toml
+        echo 'venv = ".venv"' >> pyproject.toml
+        echo "pyproject.toml file created."
+    end
+
+    function create_envrc
+        echo 'export VIRTUAL_ENV=.venv' > .envrc
+        echo 'layout python' >> .envrc
+        echo ".envrc file created."
+        direnv allow
+    end
+
     if test -d ".venv"
-        source .venv/bin/activate.fish
-        echo "Virtual environment activated."
-    else if test -d venv
-        source venv/bin/activate.fish
-        echo "Virtual environment activated."
+        activate_venv .venv
+    else if test -d "venv"
+        activate_venv venv
     else
         echo "Virtual environment not found. Create one? (Y/n)"
         read choice
@@ -26,16 +42,12 @@ function venv
                 echo "Virtual environment created."
 
                 if test $no_direnv_flag -eq 0
-                    # If --no_direnv was not passed, create and allow .envrc file
-                    echo 'export VIRTUAL_ENV=.venv' >.envrc
-                    echo 'layout python' >>.envrc
-                    echo ".envrc file created."
-                    direnv allow
+                    create_envrc
                 else
-                    # Activate the environment immediately if --no_direnv was passed
-                    source .venv/bin/activate.fish
-                    echo "Virtual environment activated."
+                    activate_venv .venv
                 end
+
+                create_pyproject_toml
 
                 # install packages
                 uv pip install jupyter_client ipykernel pynvim
