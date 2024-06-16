@@ -1,20 +1,32 @@
-// This file is used to configure Zed keybindings.
-// 'VimWaiting' is a special context that is true when we are waiting for a key
-// 'menu' is a special context that is true when the command palette is open
 [
   {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
-      // put key-bindings here if you want them to work in normal & visual mode
-      "g p": "editor::Paste"
+      "ctrl-w -": "pane::SplitDown",
+      "ctrl-w |": "pane::SplitRight",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-alt-h": ["workspace::SwapPaneInDirection", "Left"],
+      "ctrl-alt-j": ["workspace::SwapPaneInDirection", "Down"],
+      "ctrl-alt-k": ["workspace::SwapPaneInDirection", "Up"],
+      "ctrl-alt-l": ["workspace::SwapPaneInDirection", "Right"],
+      "ctrl-w shift-h": "zed::NoAction",
+      "ctrl-w shift-l": "zed::NoAction",
+      "ctrl-w shift-k": "zed::NoAction",
+      "ctrl-w shift-j": "zed::NoAction"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-j": "zed::NoAction"
     }
   },
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
-      // put key-bindings here if you want them to work only in normal mode
-      // "down": ["workspace::SendKeystrokes", "4 j"]
-      // "up": ["workspace::SendKeystrokes", "4 k"]
       "\\ w": "editor::ToggleSoftWrap",
       "\\ n": "editor::ToggleLineNumbers",
       "shift-h": "pane::ActivatePrevItem",
@@ -29,34 +41,31 @@
     }
   },
   {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
-    "bindings": {
-      // visual, visual line & visual block modes
-      "g y": "editor::Copy",
-      "g d": "editor::Cut"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == insert && !menu",
-    "bindings": {
-      // put key-bindings here if you want them to work in insert mode
-      // e.g.
-      // "j j": "vim::NormalBefore" // remap jj in insert mode to escape.
-      "j k": ["vim::SwitchMode", "Normal"]
-    }
-  },
-  {
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
       "w": "vim::NextSubwordStart",
       "b": "vim::PreviousSubwordStart",
       "e": "vim::NextSubwordEnd",
       "g e": "vim::PreviousSubwordEnd",
+
       "g shift-r": "editor::FindAllReferences",
       "g a": "editor::ToggleCodeActions",
       "g r": "editor::Rename",
-      "space w": "workspace::Save",
-      "\\ g b": "editor::ToggleGitBlame"
+      "\\ g b": "editor::ToggleGitBlame",
+      "\\ g d": "editor::ToggleHunkDiff",
+
+      "space l l": "diagnostics::Deploy",
+      "space l a": "editor::ToggleCodeActions",
+      "space l r": "editor::Rename",
+      "space l f": "editor::Format",
+      "space w": "workspace::Save"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "bindings": {
+      "g y": "editor::Copy",
+      "g d": "editor::Cut"
     }
   },
   {
@@ -68,10 +77,46 @@
     }
   },
   {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletion"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-\\": "workspace::ToggleLeftDock",
+      "ctrl-alt-\\": "workspace::ToggleRightDock",
+      "ctrl-shift-\\": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "space": null,
+      "space e": "workspace::ToggleLeftDock",
+      "a": "project_panel::NewFile",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Trash",
+      "g y": "project_panel::CopyPath",
+      "g shift-y": "project_panel::CopyRelativePath",
+      "shift-o": "project_panel::RevealInFinder"
+    }
+  },
+  {
     "context": "Terminal",
     "bindings": {
       "ctrl-w": "terminal_panel::ToggleFocus",
       "ctrl-h": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-w": null
     }
   }
 ]
