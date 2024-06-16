@@ -1,9 +1,33 @@
 [
   {
+    "context": "Editor && !VimWaiting && !menu",
+    "bindings": {
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-x": "editor::Cut",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "bindings": {
+      "g y": "editor::Copy",
+      "g d": "editor::Cut"
+    }
+  },
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletion"
+    }
+  },
+
+  {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
       "ctrl-w -": "pane::SplitDown",
       "ctrl-w |": "pane::SplitRight",
+      "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
@@ -19,11 +43,20 @@
     }
   },
   {
-    "context": "Workspace",
+    "context": "Pane",
     "bindings": {
-      "ctrl-j": "zed::NoAction"
+      "ctrl-w": null,
+      "ctrl-w x": "pane::CloseActiveItem"
     }
   },
+  {
+    "context": "Editor || Workspace",
+    "bindings": {
+      "ctrl-j": "zed::NoAction",
+      "ctrl-k": "zed::NoAction"
+    }
+  },
+
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
@@ -34,6 +67,7 @@
       "space e": "workspace::ToggleLeftDock",
       "space f": "file_finder::Toggle",
       "space s g": "pane::DeploySearch",
+      "space d s": "outline::Toggle",
       "space p": "outline::Toggle",
       "space v": "editor::GoToDefinitionSplit",
       "ctrl-w z": "workspace::ToggleZoom",
@@ -58,65 +92,63 @@
       "space l a": "editor::ToggleCodeActions",
       "space l r": "editor::Rename",
       "space l f": "editor::Format",
-      "space w": "workspace::Save"
+
+      "space w": "workspace::Save",
+      "space alt-w": "workspace::SaveWithoutFormat",
+      "space shift-w": "workspace::SaveAs",
+      "space ctrl-w": "workspace::SaveAll"
     }
   },
   {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
-    "bindings": {
-      "g y": "editor::Copy",
-      "g d": "editor::Cut"
-    }
-  },
-  {
-    "context": "Editor && !VimWaiting && !menu",
-    "bindings": {
-      "ctrl-shift-c": "editor::Copy",
-      "ctrl-shift-x": "editor::Cut",
-      "ctrl-shift-v": "editor::Paste"
-    }
-  },
-  {
-    "context": "Editor && showing_completions",
-    "bindings": {
-      "ctrl-y": "editor::ConfirmCompletion"
-    }
-  },
-  {
-    "context": "Editor",
+    "context": "Editor || ProjectPanel || Terminal",
     "bindings": {
       "ctrl-\\": "workspace::ToggleLeftDock",
       "ctrl-alt-\\": "workspace::ToggleRightDock",
-      "ctrl-shift-\\": "workspace::ToggleBottomDock"
+      "alt-\\": "workspace::ToggleBottomDock"
     }
   },
+
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
       "space": null,
       "space e": "workspace::ToggleLeftDock",
+      "q": "workspace::ToggleLeftDock",
       "a": "project_panel::NewFile",
       "x": "project_panel::Cut",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "r": "project_panel::Rename",
       "d": "project_panel::Trash",
+      "shift-d": "project_panel::Delete",
       "g y": "project_panel::CopyPath",
       "g shift-y": "project_panel::CopyRelativePath",
-      "shift-o": "project_panel::RevealInFinder"
+      "shift-o": "project_panel::RevealInFinder",
+      "ctrl-l": "project_panel::ToggleFocus"
     }
   },
+
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-w": "terminal_panel::ToggleFocus",
-      "ctrl-h": "workspace::ToggleBottomDock"
+      "ctrl-w": "zed::NoAction",
+      "alt-a x": "pane::CloseActiveItem",
+      "alt-l": "pane::ActivateNextItem",
+      "alt-h": "pane::ActivatePrevItem"
     }
   },
   {
-    "context": "Pane",
+    "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || Terminal",
     "bindings": {
-      "ctrl-w": null
+      "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "alt-left": "pane::ActivatePrevItem",
+      "alt-right": "pane::ActivateNextItem",
+
+      "alt-a n": "workspace::NewTerminal",
+      "alt-a shift-n": "workspace::NewCenterTerminal",
+      "alt-a h": "terminal_panel::ToggleFocus",
+      "alt-a z": "workspace::ToggleZoom"
     }
   }
 ]
