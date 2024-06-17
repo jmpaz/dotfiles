@@ -24,8 +24,9 @@
   {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
-      "ctrl-w -": "pane::SplitDown",
-      "ctrl-w |": "pane::SplitRight",
+      "alt-a enter": "assistant::InlineAssist",
+      "alt-a >": "assistant::QuoteSelection",
+
       "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
       "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
@@ -36,6 +37,8 @@
       "ctrl-alt-j": ["workspace::SwapPaneInDirection", "Down"],
       "ctrl-alt-k": ["workspace::SwapPaneInDirection", "Up"],
       "ctrl-alt-l": ["workspace::SwapPaneInDirection", "Right"],
+      "ctrl-w -": "pane::SplitDown",
+      "ctrl-w |": "pane::SplitRight",
       "ctrl-w shift-h": "zed::NoAction",
       "ctrl-w shift-l": "zed::NoAction",
       "ctrl-w shift-k": "zed::NoAction",
@@ -104,7 +107,9 @@
     "bindings": {
       "ctrl-\\": "workspace::ToggleLeftDock",
       "ctrl-alt-\\": "workspace::ToggleRightDock",
-      "alt-\\": "workspace::ToggleBottomDock"
+      "alt-\\": "workspace::ToggleBottomDock",
+      "alt-|": "terminal_panel::ToggleFocus",
+      "alt-?": "assistant::ToggleFocus"
     }
   },
 
@@ -144,11 +149,26 @@
       "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
       "alt-left": "pane::ActivatePrevItem",
       "alt-right": "pane::ActivateNextItem",
-
+      "alt-a z": "workspace::ToggleZoom",
       "alt-a n": "workspace::NewTerminal",
-      "alt-a shift-n": "workspace::NewCenterTerminal",
-      "alt-a h": "terminal_panel::ToggleFocus",
-      "alt-a z": "workspace::ToggleZoom"
+      "alt-a alt-n": "workspace::NewCenterTerminal",
+      "alt-a h": "workspace::ToggleBottomDock",
+      "alt-a \\": "workspace::ToggleRightDock",
+      "alt-a alt-\\": "assistant::ToggleFocus",
+      "alt-a alt-h": "terminal_panel::ToggleFocus"
+    }
+  },
+
+  {
+    "context": "ContextEditor > Editor",
+    "bindings": {
+      "ctrl-r": null,
+      "alt-r": "assistant::CycleMessageRole",
+      "enter": "assistant::ConfirmCommand",
+      "ctrl-enter": "assistant::Assist",
+      "shift-enter": "editor::Newline",
+      "alt-enter": "assistant::Split",
+      "ctrl->": "assistant::QuoteSelection"
     }
   }
 ]

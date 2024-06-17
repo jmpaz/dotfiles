@@ -4,7 +4,6 @@
     "diagnostics": false,
     "metrics": false
   },
-
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "never",
@@ -12,7 +11,6 @@
   },
   "relative_line_numbers": true,
   "cursor_blink": false,
-
   "theme": {
     "mode": "system",
     "light": "Rosé Pine Dawn",
@@ -25,11 +23,9 @@
       }
     }
   },
-
   "ui_font_size": 18,
   "buffer_font_size": 18,
   "buffer_font_family": "BerkeleyMono Nerd Font",
-
   "context": "Dock",
   "terminal": {
     // "font_size": 17,
@@ -39,6 +35,18 @@
         "program": "env",
         "args": ["SKIP_ZELLIJ=1", "fish"]
       }
+    }
+  },
+  "assistant": {
+    "version": "1",
+    "provider": {
+      "default_model": {
+        "name": "codestral:latest",
+        "max_tokens": 16384,
+        "keep_alive": -1
+      },
+      "name": "ollama",
+      "low_speed_timeout_in_seconds": null
     }
   }
 }
