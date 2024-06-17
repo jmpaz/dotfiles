@@ -4,6 +4,7 @@
     "diagnostics": false,
     "metrics": false
   },
+
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "never",
@@ -11,11 +12,15 @@
   },
   "relative_line_numbers": true,
   "cursor_blink": false,
+
   "theme": {
     "mode": "system",
     "light": "Rosé Pine Dawn",
     "dark": "Rosé Pine Moon"
   },
+  "buffer_font_family": "BerkeleyMono Nerd Font",
+  "ui_font_size": 18,
+  "buffer_font_size": 18,
   "experimental.theme_overrides": {
     "syntax": {
       "property": {
@@ -23,10 +28,7 @@
       }
     }
   },
-  "ui_font_size": 18,
-  "buffer_font_size": 18,
-  "buffer_font_family": "BerkeleyMono Nerd Font",
-  "context": "Dock",
+
   "terminal": {
     // "font_size": 17,
     "font_weight": 500,
@@ -37,6 +39,7 @@
       }
     }
   },
+
   "assistant": {
     "version": "1",
     "provider": {
@@ -47,6 +50,12 @@
       },
       "name": "ollama",
       "low_speed_timeout_in_seconds": null
+    }
+  },
+
+  "git": {
+    "inline_blame": {
+      "enabled": false
     }
   }
 }

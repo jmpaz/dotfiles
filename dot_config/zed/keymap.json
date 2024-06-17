@@ -49,7 +49,12 @@
     "context": "Pane",
     "bindings": {
       "ctrl-w": null,
-      "ctrl-w x": "pane::CloseActiveItem"
+      "ctrl-w x": "pane::CloseActiveItem",
+      "alt-e e": "editor::ExpandExcerpts",
+      "alt-e k": "editor::ExpandExcerptsUp",
+      "alt-e j": "editor::ExpandExcerptsDown",
+      "alt-e l": "editor::OpenExcerpts",
+      "alt-e shift-l": "editor::OpenExcerptsSplit"
     }
   },
   {
@@ -74,7 +79,13 @@
       "space p": "outline::Toggle",
       "space v": "editor::GoToDefinitionSplit",
       "ctrl-w z": "workspace::ToggleZoom",
-      "ctrl-w t": "terminal_panel::ToggleFocus"
+      "ctrl-w t": "terminal_panel::ToggleFocus",
+
+      "space c k": "zed::OpenKeymap",
+      "space c s": "zed::OpenSettings",
+      "space c l": "zed::OpenLocalSettings",
+      "space c shift-k": "zed::OpenDefaultKeymap",
+      "space c shift-s": "zed::OpenDefaultSettings"
     }
   },
   {
@@ -88,7 +99,8 @@
       "g shift-r": "editor::FindAllReferences",
       "g a": "editor::ToggleCodeActions",
       "g r": "editor::Rename",
-      "\\ g b": "editor::ToggleGitBlame",
+      "\\ g b": "editor::ToggleGitBlameInline",
+      "\\ g shift-b": "editor::ToggleGitBlame",
       "\\ g d": "editor::ToggleHunkDiff",
 
       "space l l": "diagnostics::Deploy",
@@ -105,11 +117,12 @@
   {
     "context": "Editor || ProjectPanel || Terminal",
     "bindings": {
-      "ctrl-\\": "workspace::ToggleLeftDock",
-      "ctrl-alt-\\": "workspace::ToggleRightDock",
-      "alt-\\": "workspace::ToggleBottomDock",
-      "alt-|": "terminal_panel::ToggleFocus",
-      "alt-?": "assistant::ToggleFocus"
+      "alt-a h": "workspace::ToggleBottomDock",
+      "alt-a \\": "workspace::ToggleRightDock",
+      "alt-a alt-\\": "assistant::ToggleFocus",
+      "alt-a alt-h": "terminal_panel::ToggleFocus",
+      "alt--": "project_panel::ToggleFocus",
+      "alt-|": "assistant::ToggleFocus"
     }
   },
 
@@ -151,11 +164,7 @@
       "alt-right": "pane::ActivateNextItem",
       "alt-a z": "workspace::ToggleZoom",
       "alt-a n": "workspace::NewTerminal",
-      "alt-a alt-n": "workspace::NewCenterTerminal",
-      "alt-a h": "workspace::ToggleBottomDock",
-      "alt-a \\": "workspace::ToggleRightDock",
-      "alt-a alt-\\": "assistant::ToggleFocus",
-      "alt-a alt-h": "terminal_panel::ToggleFocus"
+      "alt-a alt-n": "workspace::NewCenterTerminal"
     }
   },
 
@@ -168,7 +177,8 @@
       "ctrl-enter": "assistant::Assist",
       "shift-enter": "editor::Newline",
       "alt-enter": "assistant::Split",
-      "ctrl->": "assistant::QuoteSelection"
+      "ctrl->": "assistant::QuoteSelection",
+      "alt-y": "assistant::ToggleHistory"
     }
   }
 ]
