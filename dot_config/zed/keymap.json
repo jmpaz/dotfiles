@@ -1,5 +1,11 @@
 [
   {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletion"
+    }
+  },
+  {
     "context": "Editor && !VimWaiting && !menu",
     "bindings": {
       "ctrl-shift-c": "editor::Copy",
@@ -10,14 +16,15 @@
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
     "bindings": {
-      "g y": "editor::Copy",
-      "g d": "editor::Cut"
+      "g y": ["workspace::SendKeystrokes", "ctrl-shift-c escape"],
+      "g d": ["workspace::SendKeystrokes", "ctrl-shift-x escape"]
     }
   },
   {
-    "context": "Editor && showing_completions",
+    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
-      "ctrl-y": "editor::ConfirmCompletion"
+      "g y shift-g": ["workspace::SendKeystrokes", "shift-v shift-g g y"],
+      "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"]
     }
   },
 
