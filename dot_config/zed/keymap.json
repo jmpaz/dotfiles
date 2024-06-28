@@ -83,7 +83,9 @@
       "space f": "file_finder::Toggle",
       "space s g": "pane::DeploySearch",
       "space d s": "outline::Toggle",
+      "space w s": "project_symbols::Toggle",
       "space p": "outline::Toggle",
+      "space shift-p": "project_symbols::Toggle",
       "space v": "editor::GoToDefinitionSplit",
       "ctrl-w z": "workspace::ToggleZoom",
       "ctrl-w t": "terminal_panel::ToggleFocus",
@@ -122,14 +124,39 @@
     }
   },
   {
-    "context": "Editor || ProjectPanel || Terminal",
+    "context": "Editor || ProjectPanel || OutlinePanel || CollabPanel || Terminal",
     "bindings": {
       "alt-a h": "workspace::ToggleBottomDock",
       "alt-a \\": "workspace::ToggleRightDock",
       "alt-a alt-\\": "assistant::ToggleFocus",
       "alt-a alt-h": "terminal_panel::ToggleFocus",
       "alt--": "project_panel::ToggleFocus",
+      "alt-=": "outline_panel::ToggleFocus",
+      "alt-backspace": "collab_panel::ToggleFocus",
       "alt-|": "assistant::ToggleFocus"
+    }
+  },
+
+  {
+    "context": "(ProjectPanel || OutlinePanel ) && not_editing",
+    "bindings": {
+      "space": null,
+      "space e": "workspace::ToggleLeftDock",
+      "alt-escape": "workspace::ToggleLeftDock"
+    }
+  },
+
+  {
+    "context": "OutlinePanel",
+    "bindings": {
+      "enter": "outline_panel::Open",
+      "g y": "outline_panel::CopyPath",
+      "h": "outline_panel::CollapseSelectedEntry",
+      "l": "outline_panel::ExpandSelectedEntry",
+      "j": "menu::SelectNext",
+      "k": "menu::SelectPrev",
+      "alt-l": "outline_panel::ToggleFocus",
+      "ctrl-l": "outline_panel::ToggleFocus"
     }
   },
 
@@ -137,7 +164,6 @@
     "context": "ProjectPanel && not_editing",
     "bindings": {
       "space": null,
-      "space e": "workspace::ToggleLeftDock",
       "q": "workspace::ToggleLeftDock",
       "a": "project_panel::NewFile",
       "x": "project_panel::Cut",

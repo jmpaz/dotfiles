@@ -43,13 +43,10 @@
   "assistant": {
     "version": "1",
     "provider": {
-      "default_model": {
-        "name": "codestral:latest",
-        "max_tokens": 16384,
-        "keep_alive": -1
-      },
-      "name": "ollama",
-      "low_speed_timeout_in_seconds": null
+      "name": "openai",
+      "type": "openai",
+      "default_model": "gpt-4o",
+      "api_url": "http://localhost:4020/v1"
     }
   },
 
