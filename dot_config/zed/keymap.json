@@ -182,10 +182,13 @@
   {
     "context": "Terminal",
     "bindings": {
+      "ctrl-o": "zed::NoAction",
       "ctrl-w": "zed::NoAction",
       "alt-a x": "pane::CloseActiveItem",
       "alt-l": "pane::ActivateNextItem",
-      "alt-h": "pane::ActivatePrevItem"
+      "alt-h": "pane::ActivatePrevItem",
+      "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"]
     }
   },
   {
@@ -201,6 +204,15 @@
     }
   },
 
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-.": "copilot::NextSuggestion",
+      "alt-,": "copilot::PreviousSuggestion",
+      "alt-/": "editor::AcceptPartialCopilotSuggestion",
+      "alt-;": "copilot::Suggest"
+    }
+  },
   {
     "context": "ContextEditor > Editor",
     "bindings": {
