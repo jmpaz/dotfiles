@@ -3,7 +3,6 @@
 from libqtile import layout
 from libqtile.config import Match
 
-
 float_titles = [
     "Characters",
     "Bluetooth",

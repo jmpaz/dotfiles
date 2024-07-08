@@ -84,7 +84,7 @@ keys = [
         desc="Move to previous group.",
     ),
     ########
-    ## Layout manipulation
+    ## Layout
     Key(
         [mod, "shift"],
         "Return",
@@ -145,8 +145,12 @@ for i in groups:
 # Scratchpad
 keys.extend(
     [
-        Key([mod, alt], "Return", lazy.group["scratchpad"].dropdown_toggle("term")),
+        Key(
+            [mod, "control"], "grave", lazy.group["scratchpad"].dropdown_toggle("term")
+        ),
         Key([mod, alt], "v", lazy.group["scratchpad"].dropdown_toggle("volume")),
+        Key([mod, alt], "f", lazy.group["scratchpad"].dropdown_toggle("files")),
+        Key([mod, alt], "p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
     ]
 )
 
