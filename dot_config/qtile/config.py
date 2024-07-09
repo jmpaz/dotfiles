@@ -1,22 +1,11 @@
 from modules.groups import groups, scratchpad
-
 from modules.hooks import *
 from modules.keys import keys, mouse
-from modules.layout import floating_layout, layouts
+from modules.layout import floating_layout, layouts, screens
+from modules.widgets import load_widgets
 
-from libqtile import bar, hook, layout, qtile, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
-from libqtile.lazy import lazy
-
-widget_defaults = dict(
-    font="sans",
-    fontsize=12,
-    padding=3,
-)
-extension_defaults = widget_defaults.copy()
 groups.append(scratchpad)
 
-screens = [Screen(), Screen()]
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list

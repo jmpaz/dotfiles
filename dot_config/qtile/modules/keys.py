@@ -1,8 +1,8 @@
 from os.path import expanduser
 from sys import path
 
-from libqtile import qtile
-from libqtile.config import Click, Drag, Key
+from libqtile import config, qtile
+from libqtile.config import Click, Drag, EzKey, Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -16,107 +16,84 @@ launcher = "rofi -modi drun,run -show drun"
 
 keys = [
     # Switch focus between windows
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([alt], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    EzKey("M-h", lazy.layout.left(), desc="Move focus to left"),
+    EzKey("M-l", lazy.layout.right(), desc="Move focus to right"),
+    EzKey("M-j", lazy.layout.down(), desc="Move focus down"),
+    EzKey("M-k", lazy.layout.up(), desc="Move focus up"),
+    EzKey("A-<space>", lazy.layout.next(), desc="Move window focus to other window"),
     ########
     ## Move windows
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Shuffle window up"),
-    Key(
-        [mod, "shift"],
-        "l",
-        lazy.layout.shuffle_right(),
-        desc="Shuffle window to the right",
-    ),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Shuffle window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Shuffle window up"),
+    EzKey("M-S-h", lazy.layout.shuffle_left(), desc="Shuffle window up"),
+    EzKey("M-S-l", lazy.layout.shuffle_right(), desc="Shuffle window to the right"),
+    EzKey("M-S-j", lazy.layout.shuffle_down(), desc="Shuffle window down"),
+    EzKey("M-S-k", lazy.layout.shuffle_up(), desc="Shuffle window up"),
     ########
     ## Grow windows
-    Key(
-        [mod, "control"],
-        "k",
-        lazy.layout.grow_up(),
+    EzKey(
+        "M-C-h",
+        lazy.layout.grow_left(),
+        lazy.layout.shrink(),
+        desc="Decrease active window size.",
+    ),
+    EzKey(
+        "M-C-l",
+        lazy.layout.grow_right(),
         lazy.layout.grow(),
-        lazy.layout.decrease_nmaster(),
         desc="Increase active window size.",
     ),
-    Key(
-        [mod, "control"],
-        "Up",
-        lazy.layout.grow_up(),
-        lazy.layout.grow(),
-        lazy.layout.decrease_nmaster(),
-        desc="Increase active window size.",
-    ),
-    Key(
-        [mod, "control"],
-        "j",
+    EzKey(
+        "M-C-j",
         lazy.layout.grow_down(),
         lazy.layout.shrink(),
         lazy.layout.increase_nmaster(),
         desc="Decrease active window size.",
     ),
-    Key(
-        [mod, "control"],
-        "Down",
-        lazy.layout.grow_down(),
-        lazy.layout.shrink(),
-        lazy.layout.increase_nmaster(),
-        desc="Decrease active window size.",
+    EzKey(
+        "M-C-k",
+        lazy.layout.grow_up(),
+        lazy.layout.grow(),
+        lazy.layout.decrease_nmaster(),
+        desc="Increase active window size.",
     ),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key(
-        [mod], "r", lazy.layout.reset(), desc="Reset the sizes of all window in group."
-    ),
+    EzKey("M-n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    EzKey("M-r", lazy.layout.reset(), desc="Reset the sizes of all window in group."),
     ########
     ## Monitor focus
-    Key([mod], "i", lazy.to_screen(0), desc="Keyboard focus to monitor 1"),
-    Key([mod], "o", lazy.to_screen(1), desc="Keyboard focus to monitor 2"),
-    Key([mod], "period", lazy.next_screen(), desc="Move focus to next monitor"),
-    Key([mod], "comma", lazy.prev_screen(), desc="Move focus to prev monitor"),
-    Key([alt], "Tab", lazy.screen.next_group(), desc="Move to next group."),
-    Key(
-        [alt, "shift"],
-        "Tab",
-        lazy.screen.prev_group(),
-        desc="Move to previous group.",
-    ),
+    EzKey("M-A-1", lazy.to_screen(0), desc="Keyboard focus to monitor 1"),
+    EzKey("M-A-<grave>", lazy.to_screen(1), desc="Keyboard focus to monitor 2"),
+    EzKey("M-A-<period>", lazy.next_screen(), desc="Move focus to next monitor"),
+    EzKey("M-A-<comma>", lazy.prev_screen(), desc="Move focus to prev monitor"),
+    EzKey("M-<tab>", lazy.screen.next_group(), desc="Move to next group."),
+    EzKey("M-S-<tab>", lazy.screen.prev_group(), desc="Move to previous group."),
     ########
     ## Layout
-    Key(
-        [mod, "shift"],
-        "Return",
+    EzKey(
+        "M-S-<Return>",
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod, "shift"], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [mod],
-        "f",
+    EzKey("A-<tab>", lazy.next_layout(), desc="Toggle between layouts"),
+    EzKey("M-S-q", lazy.window.kill(), desc="Kill focused window"),
+    EzKey(
+        "M-f",
         lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen on the focused window",
     ),
-    Key(
-        [alt],
-        "f",
+    EzKey(
+        "A-f",
         lazy.window.toggle_floating(),
         desc="Toggle floating on the focused window",
     ),
     ########
     ## Qtile
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control", "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    EzKey("M-C-r", lazy.reload_config(), desc="Reload the config"),
+    EzKey("M-C-S-q", lazy.shutdown(), desc="Shutdown Qtile"),
     ########
     ## Applications
-    Key(
-        [mod, "shift"], "Return", lazy.spawn(guess_terminal()), desc="Fallback terminal"
-    ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "Space", lazy.spawn(launcher), desc="Launch rofi"),
-    Key([mod, "shift"], "f", lazy.spawn("firefox"), desc="Launch web browser"),
+    EzKey("M-<Return>", lazy.spawn(terminal), desc="Launch terminal"),
+    EzKey("M-S-<Return>", lazy.spawn(guess_terminal()), desc="Fallback terminal"),
+    EzKey("M-<space>", lazy.spawn(launcher), desc="Launch rofi"),
+    EzKey("M-S-f", lazy.spawn("firefox"), desc="Launch web browser"),
 ]
 
 
@@ -124,17 +101,13 @@ keys = [
 for i in groups:
     keys.extend(
         [
-            # mod1 + group number = switch to group
-            Key(
-                [mod],
-                i.name,
+            EzKey(
+                f"M-{i.name}",
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + group number = move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
+            EzKey(
+                f"M-S-{i.name}",
                 lazy.window.togroup(i.name),
                 desc="move focused window to group {}".format(i.name),
             ),
@@ -145,12 +118,10 @@ for i in groups:
 # Scratchpad
 keys.extend(
     [
-        Key(
-            [mod, "control"], "grave", lazy.group["scratchpad"].dropdown_toggle("term")
-        ),
-        Key([mod, alt], "v", lazy.group["scratchpad"].dropdown_toggle("volume")),
-        Key([mod, alt], "f", lazy.group["scratchpad"].dropdown_toggle("files")),
-        Key([mod, alt], "p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
+        EzKey("M-C-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
+        EzKey("M-A-v", lazy.group["scratchpad"].dropdown_toggle("volume")),
+        EzKey("M-A-f", lazy.group["scratchpad"].dropdown_toggle("files")),
+        EzKey("M-A-p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
     ]
 )
 
@@ -158,42 +129,37 @@ keys.extend(
 # Media keys
 keys.extend(
     [
-        Key(
-            [],
-            "XF86AudioRaiseVolume",
-            lazy.spawn("pactl -- set-sink-volume 0 +5%"),
+        EzKey(
+            "<XF86AudioRaiseVolume>",
+            lazy.spawn("pactl -- set-sink-volume @DEFAULT_SINK@ +5%"),
             desc="Volume Up",
         ),
-        Key(
-            [],
-            "XF86AudioLowerVolume",
-            lazy.spawn("pactl -- set-sink-volume 0 -5%"),
+        EzKey(
+            "S-<XF86AudioRaiseVolume>",
+            lazy.spawn("pactl -- set-sink-volume @DEFAULT_SINK@ +10%"),
+            desc="Volume Up (2x)",
+        ),
+        EzKey(
+            "<XF86AudioLowerVolume>",
+            lazy.spawn("pactl -- set-sink-volume @DEFAULT_SINK@ -5%"),
             desc="Volume Down",
         ),
-        Key(
-            [],
-            "XF86AudioMute",
-            lazy.spawn("pactl set-sink-mute 0 toggle"),
+        EzKey(
+            "S-<XF86AudioLowerVolume>",
+            lazy.spawn("pactl -- set-sink-volume @DEFAULT_SINK@ -10%"),
+            desc="Volume Down",
+        ),
+        EzKey(
+            "<XF86AudioMute>",
+            lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
             desc="Toggle Mute",
         ),
-        Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
-        Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="Next Song"),
-        Key(
-            [], "XF86AudioPrev", lazy.spawn("playerctl previous"), desc="Previous Song"
+        EzKey("<XF86AudioPlay>", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
+        EzKey("<XF86AudioNext>", lazy.spawn("playerctl next"), desc="Next Song"),
+        EzKey(
+            "<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"
         ),
-        Key([], "XF86AudioStop", lazy.spawn("playerctl stop"), desc="Stop music"),
-        Key(
-            [],
-            "XF86MonBrightnessUp",
-            lazy.spawn("brightnessctl set 5%+"),
-            desc="Increase brightness",
-        ),
-        Key(
-            [],
-            "XF86MonBrightnessDown",
-            lazy.spawn("brightnessctl set 5%-"),
-            desc="Decrease brightness",
-        ),
+        EzKey("<XF86AudioStop>", lazy.spawn("playerctl stop"), desc="Stop music"),
     ]
 )
 

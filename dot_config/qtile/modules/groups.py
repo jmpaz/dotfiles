@@ -37,7 +37,7 @@ scratchpad = ScratchPad(
             height=0.6,
             x=0,
             y=0,
-            opacity=1,
+            opacity=0.95,
         ),
         DropDown(
             "volume", "pavucontrol", width=0.8, height=0.8, x=0.1, y=0.1, opacity=0.95
