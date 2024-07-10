@@ -1,5 +1,7 @@
 import logging
 
+from qtile_bonsai import Bonsai
+
 from libqtile import bar, layout
 from libqtile.config import Match, Screen
 
@@ -13,10 +15,17 @@ layout_theme = {
     "border_normal": colors["color0"],
 }
 layouts = [
+    Bonsai(
+        **{
+            "window.border_size": 1,
+            "tab_bar.height": 20,
+            "L1.tab_bar.hide_when": "always",
+        }
+    ),
+    layout.Max(**layout_theme),
     layout.MonadTall(**layout_theme),
     layout.MonadWide(**layout_theme),
-    layout.Columns(**layout_theme),
-    layout.Max(**layout_theme),
+    # layout.Columns(**layout_theme),
     # layout.Floating(**layout_theme),
     # layout.RatioTile(**layout_theme),
     # layout.Spiral(

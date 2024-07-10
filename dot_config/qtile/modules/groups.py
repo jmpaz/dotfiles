@@ -15,7 +15,7 @@ group_names = [
     "9",
     "0",
 ]
-group_layouts = ["monadtall"] * 10
+group_layouts = ["bonsai"] * 10
 
 # Create label for groups and assign them layout
 for i in range(len(group_names)):
