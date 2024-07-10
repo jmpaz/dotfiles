@@ -36,10 +36,10 @@ def get_colors():
     # i3 color names
     colors.update(
         {
-            "focused_border": colors["color0"],
+            "focused_border": colors["color6"],
             "focused_background": colors["color0"],
             "focused_text": colors["color7"],
-            "focused_indicator": colors["color5"],
+            "focused_indicator": colors["color4"],
             "focused_child_border": colors["color1"],
             "focused_inactive_border": colors["color0"],
             "focused_inactive_bg": colors["color0"],
@@ -47,7 +47,7 @@ def get_colors():
             "unfocused_border": colors["color0"],
             "unfocused_bg": colors["color0"],
             "unfocused_text": colors["color8"],
-            "urgent_border": colors["color1"],
+            "urgent_border": colors["color3"],
             "urgent_bg": colors["color1"],
             "urgent_text": colors["color7"],
             "placeholder_border": colors["color0"],

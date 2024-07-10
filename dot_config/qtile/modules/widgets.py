@@ -50,12 +50,22 @@ def load_widgets(display):
     widgets_list = [
         ########
         ### Left Side
-        widget.Sep(linewidth=0, padding=7),
-        widget.Sep(linewidth=0, **mid_widgets),
-        widget.CurrentLayout(**widget_defaults, **mid_widgets),
+        # widget.Sep(linewidth=0, padding=7),
+        # widget.Sep(linewidth=0, **mid_widgets),
+        # widget.CurrentLayout(**widget_defaults, **mid_widgets),
         # widget.CurrentLayoutIcon(**widget_defaults, **mid_widgets),
-        widget.Sep(linewidth=0, **mid_widgets),
-        BonsaiBar(**{"length": 500}),
+        # widget.Sep(linewidth=0, **mid_widgets),
+        BonsaiBar(
+            **{
+                "length": 500,
+                "tab.width": 30,
+                "tab.bg_color": colors["background"],
+                "tab.fg_color": colors["unfocused_text"],
+                "tab.active.bg_color": colors["focused_indicator"],
+                "tab.active.fg_color": colors["color15"],
+                "font_family": "Sauce Code Pro Nerd Font",
+            }
+        ),
         widget.Sep(linewidth=0, **mid_widgets),
         # ## Performance
         # # Memory
@@ -164,6 +174,7 @@ def load_widgets(display):
             **mid_widgets,
             **widget_defaults,
         ),
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
         widget.TextBox(
             text="",
             mouse_callbacks={
@@ -172,6 +183,7 @@ def load_widgets(display):
             **widget_defaults,
             **mid_widgets,
         ),
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
         widget.TextBox(
             text="",
             mouse_callbacks={

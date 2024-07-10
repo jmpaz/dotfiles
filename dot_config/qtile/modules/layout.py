@@ -8,36 +8,25 @@ from libqtile.config import Match, Screen
 from .colors import colors
 from .widgets import load_widgets
 
-layout_theme = {
-    "border_width": 2,
-    "margin": 7,
-    "border_focus": colors["color11"],
-    "border_normal": colors["color0"],
-}
 layouts = [
     Bonsai(
         **{
-            "window.border_size": 1,
-            "tab_bar.height": 20,
             "L1.tab_bar.hide_when": "always",
-        }
+            "window.margin": [4, 2, 4, 2],
+            "window.border_size": 3,
+            "window.border_color": colors["unfocused_border"],
+            "window.active.border_color": colors["focused_border"],
+            "window.default.add_mode": "match_previous",
+            "auto_cwd_for_terminals": True,
+            "tab_bar.height": 20,
+            "tab_bar.tab.bg_color": colors["background"],
+            "tab_bar.tab.fg_color": colors["unfocused_text"],
+            "tab_bar.tab.active.bg_color": colors["focused_indicator"],
+            "tab_bar.tab.active.fg_color": colors["color15"],
+            "container_select_mode.border_color": colors["urgent_border"],
+        },
     ),
-    layout.Max(**layout_theme),
-    layout.MonadTall(**layout_theme),
-    layout.MonadWide(**layout_theme),
-    # layout.Columns(**layout_theme),
-    # layout.Floating(**layout_theme),
-    # layout.RatioTile(**layout_theme),
-    # layout.Spiral(
-    #     min_pane_ratio=0.70, ratio=0.52, new_client_position="bottom", **layout_theme
-    # ),
-    # layout.Bsp(**layout_theme),
-    # layout.Stack(num_stacks=2),
-    # layout.Matrix(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Max(**{"border_width": 0}),
 ]
 
 
@@ -62,9 +51,9 @@ floating_layout = layout.Floating(
         *[Match(wm_class=wm_class) for wm_class in float_classes],
     ],
     fullscreen_border_width=0,
-    border_width=4,
-    border_focus=colors["color11"],
-    border_normal=colors["color1"],
+    border_width=3,
+    border_focus=colors["focused_border"],
+    border_normal=colors["unfocused_border"],
 )
 
 
