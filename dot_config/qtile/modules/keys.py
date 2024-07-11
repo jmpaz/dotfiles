@@ -9,8 +9,39 @@ from libqtile.utils import guess_terminal
 
 from .groups import groups
 
+
+# Helper functions
+def window_to_adjacent_screen(
+    qtile, direction, switch_group=False, focus_window=True, wrap=True
+):
+    num_screens = len(qtile.screens)
+    current_index = qtile.screens.index(qtile.current_screen)
+
+    if direction == "next":
+        target_index = (
+            (current_index + 1) % num_screens
+            if wrap
+            else min(current_index + 1, num_screens - 1)
+        )
+    elif direction == "prev":
+        target_index = (
+            (current_index - 1) % num_screens if wrap else max(current_index - 1, 0)
+        )
+    else:
+        return  # Invalid direction
+
+    if target_index != current_index:
+        group = qtile.screens[target_index].group.name
+        qtile.current_window.togroup(group, switch_group=switch_group)
+        if focus_window:
+            qtile.cmd_to_screen(target_index)
+
+
 mod = "mod4"
 alt = "mod1"
+hyper = [mod, "shift", "control", alt]
+hyper_str = "M-S-C-A-"
+
 terminal = "kitty"
 launcher = "rofi -modi drun,run -show drun"
 
@@ -36,15 +67,15 @@ keys = [
     EzKey("M-S-<tab>", lazy.screen.prev_group(), desc="Switch to previous group"),
     EzKey("M-<period>", lazy.next_screen(), desc="Move focus to next monitor"),
     EzKey("M-<comma>", lazy.prev_screen(), desc="Move focus to prev monitor"),
+    EzKey("M-S-<comma>", lazy.function(window_to_adjacent_screen, "next")),
+    EzKey("M-S-<period>", lazy.function(window_to_adjacent_screen, "prev")),
     EzKey(
-        "M-S-<period>",
-        lazy.move_window_to_next_screen(),
-        desc="Move window to next monitor",
+        "M-C-S-<comma>",
+        lazy.function(window_to_adjacent_screen, "next", switch_group=True),
     ),
     EzKey(
-        "M-S-<comma>",
-        lazy.move_window_to_prev_screen(),
-        desc="Move window to prev monitor",
+        "M-C-S-<period>",
+        lazy.function(window_to_adjacent_screen, "prev", switch_group=True),
     ),
     ########
     ## Bonsai
@@ -124,9 +155,8 @@ keys = [
     EzKey("M-S-j", lazy.layout.swap("down")),
     #
     # Manipulate containers
-    EzKey("M-v", lazy.layout.toggle_container_select_mode()),
-    # EzKey("M-v", lazy.layout.enter_container_select_mode()),
-    # EzKey("<escape>", lazy.layout.exit_container_select_mode()),
+    EzKey("M-v", lazy.layout.enter_container_select_mode()),
+    EzKey("M-<escape>", lazy.layout.exit_container_select_mode()),
     EzKey("M-o", lazy.layout.select_container_outer()),
     EzKey("M-i", lazy.layout.select_container_inner()),
     #
