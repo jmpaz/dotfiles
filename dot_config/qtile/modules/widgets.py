@@ -50,11 +50,8 @@ def load_widgets(display):
     widgets_list = [
         ########
         ### Left Side
-        # widget.Sep(linewidth=0, padding=7),
-        # widget.Sep(linewidth=0, **mid_widgets),
-        # widget.CurrentLayout(**widget_defaults, **mid_widgets),
-        # widget.CurrentLayoutIcon(**widget_defaults, **mid_widgets),
-        # widget.Sep(linewidth=0, **mid_widgets),
+        # widget.Prompt(**widget_defaults, **mid_widgets),
+        # tabs
         BonsaiBar(
             **{
                 "length": 500,
@@ -66,82 +63,9 @@ def load_widgets(display):
                 "font_family": "Sauce Code Pro Nerd Font",
             }
         ),
-        widget.Sep(linewidth=0, **mid_widgets),
-        # ## Performance
-        # # Memory
-        # widget.TextBox(
-        #     text="",
-        #     font="FontAwesome6Free",
-        #     fontsize=12,
-        #     foreground=colors["focused_text"],
-        #     margin=0,
-        #     padding=5,
-        #     **light_widgets,
-        # ),
-        # widget.Memory(
-        #     foreground=colors["focused_text"],
-        #     format="{MemPercent}%",
-        #     measure_mem="M",
-        #     margin=0,
-        #     padding=0,
-        #     **widget_defaults,
-        #     **light_widgets,
-        # ),
-        # widget.Sep(
-        #     foreground=colors["focused_text"],
-        #     padding=10,
-        #     size_percent=60,
-        #     **light_widgets,
-        # ),
-        # # CPU usage
-        # widget.TextBox(
-        #     text="",
-        #     font="FontAwesome6Free",
-        #     fontsize=12,
-        #     foreground=colors["focused_text"],
-        #     margin=0,
-        #     padding=5,
-        #     **light_widgets,
-        # ),
-        # widget.CPU(
-        #     foreground=colors["focused_text"],
-        #     format="{load_percent}%",
-        #     margin=0,
-        #     padding=0,
-        #     **widget_defaults,
-        #     **light_widgets,
-        # ),
-        # widget.Sep(
-        #     foreground=colors["focused_text"],
-        #     padding=10,
-        #     size_percent=60,
-        #     **light_widgets,
-        # ),
-        # # CPU temperature
-        # widget.TextBox(
-        #     text="",
-        #     font="FontAwesome6Free",
-        #     fontsize=12,
-        #     foreground=colors["focused_text"],
-        #     padding=5,
-        #     **light_widgets,
-        # ),
-        # widget.ThermalSensor(
-        #     foreground=colors["focused_text"], **widget_defaults, **light_widgets
-        # ),
-        # widget.Sep(linewidth=0, padding=10, **light_widgets),
-        # widget.Sep(linewidth=0, padding=10),
-        # widget.Sep(linewidth=0, padding=10, **light_widgets),
-        # widget.TextBox(
-        #     text="",
-        #     font="FontAwesome6Free",
-        #     fontsize=12,
-        #     foreground=colors["focused_text"],
-        #     **light_widgets,
-        # ),
-        widget.Spacer(),
         ########
         ## Middle
+        widget.Spacer(),
         widget.GroupBox(
             active=colors["focused_text"],
             borderwidth=2,
@@ -161,39 +85,29 @@ def load_widgets(display):
             **dark_widgets,
             **widget_defaults,
         ),
-        widget.Spacer(),
         ########
         ### Right Side
-        ##  Tray
+        widget.Spacer(),
+        ## Performance
+        *performance_widgets(),
+        widget.Sep(
+            linewidth=0,
+            padding=10,
+        ),
+        ## Volume
         widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        widget.TextBox(
-            text="󰻞",
-            mouse_callbacks={
-                "Button1": lazy.spawn("google-chrome-stable --app=https://claude.ai/"),
-            },
-            **mid_widgets,
+        widget.PulseVolume(
+            fmt="󰕾 {}",  # Nerd Fonts icon for volume
+            bar_width=50,  # Width of the volume bar
+            bar_filled_color="2f343f",  # Color of the filled part of the bar
+            bar_unfilled_color="4b5162",  # Color of the unfilled part of the bar
+            get_volume_command="pamixer --get-volume",
             **widget_defaults,
+            **mid_widgets,
         ),
         widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        widget.TextBox(
-            text="",
-            mouse_callbacks={
-                "Button1": lazy.spawn("nemo"),
-            },
-            **widget_defaults,
-            **mid_widgets,
-        ),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        widget.TextBox(
-            text="",
-            mouse_callbacks={
-                "Button1": lazy.spawn("blueman-manager"),
-            },
-            **mid_widgets,
-            **widget_defaults,
-        ),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        ##  Time
+        #
+        ## Date/Time
         widget.Sep(
             linewidth=0,
             padding=10,
@@ -210,3 +124,104 @@ def load_widgets(display):
     ]
 
     return widgets_list
+
+
+def performance_widgets():
+    def create_separator(padding=15, size_percent=60):
+        return widget.Sep(
+            foreground=colors["unfocused_text"],
+            padding=padding,
+            size_percent=size_percent,
+            **mid_widgets,
+        )
+
+    return [
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        # Memory
+        widget.TextBox(
+            text="",
+            font="FontAwesome6Free",
+            fontsize=12,
+            foreground=colors["focused_text"],
+            padding=5,
+            **mid_widgets,
+        ),
+        widget.Memory(
+            foreground=colors["focused_text"],
+            format="{MemPercent}%",
+            measure_mem="M",
+            padding=5,
+            **widget_defaults,
+            **mid_widgets,
+        ),
+        create_separator(),
+        # CPU Usage
+        widget.TextBox(
+            text="",
+            font="FontAwesome6Free",
+            fontsize=12,
+            foreground=colors["focused_text"],
+            padding=5,
+            **mid_widgets,
+        ),
+        widget.CPU(
+            foreground=colors["focused_text"],
+            format="{load_percent}%",
+            padding=5,
+            **widget_defaults,
+            **mid_widgets,
+        ),
+        create_separator(),
+        # CPU Temperature
+        widget.TextBox(
+            text="󰔏",
+            fontsize=15,
+            foreground=colors["focused_text"],
+            padding=5,
+            **mid_widgets,
+        ),
+        widget.ThermalSensor(
+            foreground=colors["focused_text"], **widget_defaults, **mid_widgets
+        ),
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+    ]
+
+
+def apps_tray_widgets():
+    return [
+        widget.Sep(
+            linewidth=0,
+            padding=10,
+        ),
+        # chat
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.TextBox(
+            text="󰻞",
+            mouse_callbacks={
+                "Button1": lazy.spawn("google-chrome-stable --app=https://claude.ai/"),
+            },
+            **mid_widgets,
+            **widget_defaults,
+        ),
+        # files
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.TextBox(
+            text="",
+            mouse_callbacks={
+                "Button1": lazy.spawn("nemo"),
+            },
+            **widget_defaults,
+            **mid_widgets,
+        ),
+        # bluetooth
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.TextBox(
+            text="",
+            mouse_callbacks={
+                "Button1": lazy.spawn("blueman-manager"),
+            },
+            **mid_widgets,
+            **widget_defaults,
+        ),
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+    ]
