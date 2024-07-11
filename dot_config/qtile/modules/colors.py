@@ -57,7 +57,7 @@ def get_colors():
         }
     )
     colors["transparent_bg"] = compute_transparent_bg(colors["background"])
-    log_colors(colors)
+    # log_colors(colors)
     return colors
 
 

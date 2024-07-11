@@ -9,12 +9,8 @@ group_names = [
     "3",
     "4",
     "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
 ]
+group_labels = ["I", "II", "III", "IV", "V"]
 group_layouts = ["bonsai"] * 10
 
 # Create label for groups and assign them layout
@@ -22,6 +18,7 @@ for i in range(len(group_names)):
     groups.append(
         Group(
             name=group_names[i],
+            label=group_labels[i],
             layout=group_layouts[i].lower(),
         )
     )
@@ -40,13 +37,20 @@ scratchpad = ScratchPad(
             opacity=0.95,
         ),
         DropDown(
-            "volume", "pavucontrol", width=0.8, height=0.8, x=0.1, y=0.1, opacity=0.95
+            "volume",
+            "pavucontrol",
+            width=0.8,
+            height=0.8,
+            x=0.1,
+            y=0.1,
+            opacity=0.95,
         ),
         DropDown(
             "files",
             "nemo",
             width=0.8,
             height=0.8,
+            on_focus_lost_hide=False,
             x=0.1,
             y=0.1,
             opacity=0.95,

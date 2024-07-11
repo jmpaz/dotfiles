@@ -12,8 +12,8 @@ layouts = [
     Bonsai(
         **{
             "L1.tab_bar.hide_when": "always",
-            "window.margin": [4, 2, 4, 2],
-            "window.border_size": 3,
+            "L2.window.margin": [4, 2, 4, 2],
+            "window.border_size": 4,
             "window.border_color": colors["unfocused_border"],
             "window.active.border_color": colors["focused_border"],
             "window.default.add_mode": "match_previous",
@@ -51,7 +51,7 @@ floating_layout = layout.Floating(
         *[Match(wm_class=wm_class) for wm_class in float_classes],
     ],
     fullscreen_border_width=0,
-    border_width=3,
+    border_width=5,
     border_focus=colors["focused_border"],
     border_normal=colors["unfocused_border"],
 )
