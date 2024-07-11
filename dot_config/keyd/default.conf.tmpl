@@ -8,10 +8,12 @@ leftalt = leftmeta
 leftmeta = leftalt
 rightmeta = rightalt
 rightalt = rightcontrol
-{{- end }}
+{{- end -}}
+{{ if eq .chezmoi.hostname "cd-tower" }}esc = grave{{ end }}
 
 [capslock_layer:C-S-A-M]
 h = left
 j = down
 k = up
 l = right
+\ = backspace
