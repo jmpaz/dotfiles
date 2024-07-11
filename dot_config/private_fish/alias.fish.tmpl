@@ -13,7 +13,7 @@ alias cz='chezmoi'
 alias cz-e='chezmoi edit'
 alias cz-w='chezmoi edit --watch'
 alias cza='chezmoi apply'
-alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && i3-msg reload{{ end }}'
+alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && qtile cmd-obj -o cmd -f reload_config{{ end }}'
 
 {{ if eq .chezmoi.os "darwin" }}
 alias copy='pbcopy'
