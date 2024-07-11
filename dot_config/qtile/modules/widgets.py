@@ -56,10 +56,12 @@ def load_widgets(display):
             **{
                 "length": 500,
                 "tab.width": 30,
-                "tab.bg_color": colors["background"],
                 "tab.fg_color": colors["unfocused_text"],
-                "tab.active.bg_color": colors["focused_indicator"],
-                "tab.active.fg_color": colors["color15"],
+                "tab.bg_color": colors["background"],
+                # "tab.active.fg_color": colors["active_tab_fg_light"],
+                "tab.active.fg_color": colors["active_tab_fg"],
+                "tab.active.bg_color": colors["active_tab_bg"],
+                "container_select_mode.indicator.bg_color": colors["color6"],
                 "font_family": "Sauce Code Pro Nerd Font",
             }
         ),
@@ -102,6 +104,7 @@ def load_widgets(display):
             bar_filled_color="2f343f",  # Color of the filled part of the bar
             bar_unfilled_color="4b5162",  # Color of the unfilled part of the bar
             get_volume_command="pamixer --get-volume",
+            foreground=colors["focused_text"],
             **widget_defaults,
             **mid_widgets,
         ),
@@ -117,6 +120,7 @@ def load_widgets(display):
             mouse_callbacks={
                 "Button1": lazy.spawn("wlogout"),
             },
+            foreground=colors["focused_text"],
             **widget_defaults,
             **mid_widgets,
         ),

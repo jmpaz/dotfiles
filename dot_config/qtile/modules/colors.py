@@ -50,10 +50,10 @@ def get_colors():
             "urgent_border": colors["color3"],
             "urgent_bg": colors["color1"],
             "urgent_text": colors["color7"],
-            "placeholder_border": colors["color0"],
-            "placeholder_bg": colors["color0"],
-            "placeholder_text": colors["color7"],
             "background": colors["color0"],
+            "active_tab_bg": colors["color5"],
+            "active_tab_fg": colors["color15"],
+            "active_tab_fg_light": colors["color0"],
         }
     )
     colors["transparent_bg"] = compute_transparent_bg(colors["background"])

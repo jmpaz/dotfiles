@@ -39,8 +39,8 @@ def window_to_adjacent_screen(
 
 mod = "mod4"
 alt = "mod1"
-hyper = [mod, "shift", "control", alt]
-hyper_str = "M-S-C-A-"
+# hyper = [mod, "shift", "control", alt]
+# hyper_str = "M-S-C-A-"
 
 terminal = "kitty"
 launcher = "rofi -modi drun,run -show drun"
@@ -129,7 +129,7 @@ keys = [
     EzKey("M-8", lazy.layout.focus_nth_tab(8, level=-1)),
     EzKey("M-9", lazy.layout.focus_nth_tab(9, level=-1)),
     EzKey("M-0", lazy.layout.focus_nth_tab(10, level=-1)),
-    # Focus nth top-level tab
+    # Focus nth root-level tab
     EzKey("C-M-1", lazy.layout.focus_nth_tab(1, level=1)),
     EzKey("C-M-2", lazy.layout.focus_nth_tab(2, level=1)),
     EzKey("C-M-3", lazy.layout.focus_nth_tab(3, level=1)),
@@ -164,21 +164,23 @@ keys = [
         [mod],
         "t",
         [
-            # Spawn new windows in new top-level tabs
-            EzKey("M-<Return>", lazy.spawn(terminal)),
-            EzKey("M-<space>", lazy.spawn(launcher)),
-            # in same-/lower-level tabs
-            EzKey("<return>", lazy.layout.spawn_tab(terminal)),
+            # Spawn new windows in a new root-level tabs,
+            EzKey("M-A-<Return>", lazy.spawn(terminal)),
+            EzKey("M-A-<space>", lazy.spawn(launcher)),
+            # as a sibling of the current tab,
+            EzKey("M-<return>", lazy.layout.spawn_tab(terminal)),
+            EzKey("M-<space>", lazy.layout.spawn_tab(launcher)),
+            # or as a nested child in the current tab.
             EzKey("S-<return>", lazy.layout.spawn_tab(terminal, new_level=True)),
-            EzKey("<space>", lazy.layout.spawn_tab(launcher)),
             EzKey("S-<space>", lazy.layout.spawn_tab(launcher, new_level=True)),
             #
-            EzKey("b", lazy.layout.pull_out_to_tab()),
             EzKey("r", lazy.layout.rename_tab()),
+            EzKey("b", lazy.layout.pull_out_to_tab()),
             #
             EzKey("h", lazy.layout.prev_tab()),
             EzKey("l", lazy.layout.next_tab()),
             #
+            # Normalize window sizes
             EzKey("n", lazy.layout.normalize_tab()),
             EzKey("S-n", lazy.layout.normalize_tab(recurse=True)),
             EzKey("M-S-n", lazy.layout.normalize_all()),
@@ -220,6 +222,7 @@ keys = [
         ],
     ),
     # KeyChord([mod], "g", []),
+    # KeyChord(hyper, "a", []),
 ]
 
 # Workspace
@@ -246,6 +249,7 @@ keys.extend(
         # KeyChord([mod], "s", []),
         EzKey("M-C-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
         EzKey("M-S-v", lazy.group["scratchpad"].dropdown_toggle("volume")),
+        EzKey("M-S-o", lazy.group["scratchpad"].dropdown_toggle("obs")),
         EzKey("M-S-f", lazy.group["scratchpad"].dropdown_toggle("files")),
         EzKey("M-S-p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
     ]
