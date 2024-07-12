@@ -5,6 +5,29 @@
     "metrics": false
   },
 
+  "calls": {
+    "mute_on_join": true,
+    "share_on_join": false
+  },
+
+  "outline_panel": {
+    "dock": "right",
+    "default_width": 350
+  },
+
+  "gutter": {
+    // "folds": false,
+    "code_actions": false
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+
+  "active_pane_magnification": 1.2,
+  "current_line_highlight": "gutter",
+  "use_autoclose": false,
+  "always_treat_brackets_as_autoclosed": true,
+
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "never",
@@ -14,11 +37,12 @@
   "cursor_blink": false,
 
   "theme": {
-    "mode": "system",
+    "mode": "light",
     "light": "Rosé Pine Dawn",
     "dark": "Rosé Pine Moon"
   },
-  "buffer_font_family": "BerkeleyMono Nerd Font",
+  "buffer_font_family": "Miracode Nerd Font",
+  "ui_font_family": "Hack Nerd Font",
   "ui_font_size": 18,
   "buffer_font_size": 18,
   "experimental.theme_overrides": {
@@ -28,6 +52,16 @@
       }
     }
   },
+
+  "private_files": [
+    "**/.env*",
+    "**/*.pem",
+    "**/*.key",
+    "**/*.cert",
+    "**/*.crt",
+    "**/secrets.yml",
+    "**/secrets.txt"
+  ],
 
   "terminal": {
     // "font_size": 17,
@@ -40,6 +74,9 @@
     }
   },
 
+  "features": {
+    "inline_completion_provider": "supermaven"
+  },
   "assistant": {
     "version": "1",
     "provider": {

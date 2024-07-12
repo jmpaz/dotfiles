@@ -120,7 +120,9 @@
       "space w": "workspace::Save",
       "space alt-w": "workspace::SaveWithoutFormat",
       "space shift-w": "workspace::SaveAs",
-      "space ctrl-w": "workspace::SaveAll"
+      "space ctrl-w": "workspace::SaveAll",
+
+      "z s": "editor::UnfoldLines"
     }
   },
   {
@@ -133,7 +135,7 @@
       "alt--": "project_panel::ToggleFocus",
       "alt-=": "outline_panel::ToggleFocus",
       "alt-backspace": "collab_panel::ToggleFocus",
-      "alt-|": "assistant::ToggleFocus"
+      "alt-\\": "assistant::ToggleFocus"
     }
   },
 
@@ -155,8 +157,8 @@
       "l": "outline_panel::ExpandSelectedEntry",
       "j": "menu::SelectNext",
       "k": "menu::SelectPrev",
-      "alt-l": "outline_panel::ToggleFocus",
-      "ctrl-l": "outline_panel::ToggleFocus"
+      "alt-h": "outline_panel::ToggleFocus",
+      "ctrl-h": "outline_panel::ToggleFocus"
     }
   },
 
@@ -174,7 +176,7 @@
       "shift-d": "project_panel::Delete",
       "g y": "project_panel::CopyPath",
       "g shift-y": "project_panel::CopyRelativePath",
-      "shift-o": "project_panel::RevealInFinder",
+      "shift-o": "project_panel::RevealInFileManager",
       "ctrl-l": "project_panel::ToggleFocus"
     }
   },
@@ -224,6 +226,58 @@
       "alt-enter": "assistant::Split",
       "ctrl->": "assistant::QuoteSelection",
       "alt-y": "assistant::ToggleHistory"
+    }
+  },
+
+  // manually disable all ctrl-k bindings so that they don't interfere with the terminal
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-k s": null,
+      "ctrl-k ctrl-s": null,
+      "ctrl-k ctrl-t": null,
+      "ctrl-k m": null,
+      "ctrl-k ctrl-left": null,
+      "ctrl-k ctrl-right": null,
+      "ctrl-k ctrl-up": null,
+      "ctrl-k ctrl-down": null,
+      "ctrl-k shift-left": null,
+      "ctrl-k shift-right": null,
+      "ctrl-k shift-up": null,
+      "ctrl-k shift-down": null
+    }
+  },
+  {
+    "context": "Terminal || Editor",
+    "bindings": { "ctrl-k": "zed::NoAction" }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-k u": null,
+      "ctrl-k w": null,
+      "ctrl-k ctrl-w": null,
+      "ctrl-k up": null,
+      "ctrl-k down": null,
+      "ctrl-k left": null,
+      "ctrl-k right": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-k ctrl-r": null,
+      "ctrl-k ctrl-d": null,
+      "ctrl-k ctrl-shift-d": null,
+      "ctrl-k ctrl-i": null,
+      "ctrl-k ctrl-p": null,
+      "ctrl-k ctrl-v": null
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      "ctrl-k enter": null
     }
   }
 ]
