@@ -11,22 +11,16 @@ from .groups import groups
 
 
 # Helper functions
-def window_to_adjacent_screen(
-    qtile, direction, switch_group=False, focus_window=True, wrap=True
-):
+def window_to_adjacent_screen(qtile, direction, switch_group=False, focus_window=True, wrap=True):
     num_screens = len(qtile.screens)
     current_index = qtile.screens.index(qtile.current_screen)
 
     if direction == "next":
         target_index = (
-            (current_index + 1) % num_screens
-            if wrap
-            else min(current_index + 1, num_screens - 1)
+            (current_index + 1) % num_screens if wrap else min(current_index + 1, num_screens - 1)
         )
     elif direction == "prev":
-        target_index = (
-            (current_index - 1) % num_screens if wrap else max(current_index - 1, 0)
-        )
+        target_index = (current_index - 1) % num_screens if wrap else max(current_index - 1, 0)
     else:
         return  # Invalid direction
 
@@ -48,21 +42,62 @@ launcher = "rofi -modi drun,run -show drun"
 
 keys = [
     ########
-    ## Qtile
-    EzKey("M-C-r", lazy.reload_config(), desc="Reload the config"),
-    EzKey("M-C-S-q", lazy.shutdown(), desc="Shutdown Qtile"),
+    ## Windows
+    EzKey("M-<return>", lazy.spawn(terminal), desc="Launch terminal"),
+    EzKey("M-S-<return>", lazy.spawn(guess_terminal()), desc="Fallback terminal"),
+    EzKey("M-<space>", lazy.spawn(launcher), desc="Launch rofi"),
+    #
     EzKey("M-S-q", lazy.window.kill(), desc="Kill focused window"),
-    EzKey(
-        "M-f", lazy.next_layout(), desc="Toggle fullscreen for the current group"
-    ),  # necessary for bonsai
-    # EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
+    EzKey("M-<grave>", lazy.next_layout()),
+    EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     EzKey(
         "A-f",
         lazy.window.toggle_floating(),
         desc="Toggle floating on the focused window",
     ),
+    ## Motions
+    # Focus
+    EzKey("M-h", lazy.layout.left()),
+    EzKey("M-l", lazy.layout.right()),
+    EzKey("M-k", lazy.layout.up()),
+    EzKey("M-j", lazy.layout.down()),
+    # Move
+    EzKey("M-S-h", lazy.layout.shuffle_left()),
+    EzKey("M-S-l", lazy.layout.shuffle_right()),
+    EzKey("M-S-k", lazy.layout.shuffle_up()),
+    EzKey("M-S-j", lazy.layout.shuffle_down()),
     #
-    # Groups/monitors
+    # Resize
+    EzKey(
+        "M-C-h",
+        lazy.layout.grow_left(),
+        lazy.layout.shrink(),
+        desc="Decrease active window size.",
+    ),
+    EzKey(
+        "M-C-l",
+        lazy.layout.grow_right(),
+        lazy.layout.grow(),
+        desc="Increase active window size.",
+    ),
+    EzKey(
+        "M-C-j",
+        lazy.layout.grow_down(),
+        lazy.layout.shrink(),
+        lazy.layout.increase_nmaster(),
+        desc="Decrease active window size.",
+    ),
+    EzKey(
+        "M-C-k",
+        lazy.layout.grow_up(),
+        lazy.layout.grow(),
+        lazy.layout.decrease_nmaster(),
+        desc="Increase active window size.",
+    ),
+    EzKey("M-C-n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    EzKey("M-C-r", lazy.layout.reset(), desc="Reset the sizes of all window in group."),
+    #
+    # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
     EzKey("M-S-<tab>", lazy.screen.prev_group(), desc="Switch to previous group"),
     EzKey("M-<period>", lazy.next_screen(), desc="Move focus to next monitor"),
@@ -77,152 +112,36 @@ keys = [
         "M-C-S-<period>",
         lazy.function(window_to_adjacent_screen, "prev", switch_group=True),
     ),
-    ########
-    ## Bonsai
-    # Splits
-    EzKey("M-S-<Return>", lazy.spawn(guess_terminal()), desc="Fallback terminal"),
-    EzKey("M-<minus>", lazy.layout.spawn_split(launcher, "y")),
-    EzKey("M-<backslash>", lazy.layout.spawn_split(launcher, "x")),
-    EzKey("M-S-<minus>", lazy.layout.spawn_split(launcher, "y", position="previous")),
-    EzKey(
-        "M-S-<backslash>",
-        lazy.layout.spawn_split(launcher, "x", position="previous"),
-    ),
-    # terminal
-    EzKey("M-A-<minus>", lazy.layout.spawn_split(terminal, "y")),
-    EzKey("M-A-<backslash>", lazy.layout.spawn_split(terminal, "x")),
-    EzKey("M-A-S-<minus>", lazy.layout.spawn_split(terminal, "y", position="previous")),
-    EzKey(
-        "M-A-S-<backslash>", lazy.layout.spawn_split(terminal, "x", position="previous")
-    ),
-    # aliases for standard bindings
-    EzKey("M-<Return>", lazy.layout.spawn_split(terminal, "x")),
-    EzKey("M-<Space>", lazy.layout.spawn_split(launcher, "x")),
-    EzKey(
-        "M-S-<Return>",
-        lazy.layout.spawn_split(guess_terminal(), "x"),
-        desc="Fallback terminal",
-    ),
     #
-    # Move focus
-    EzKey("M-h", lazy.layout.left()),
-    EzKey("M-l", lazy.layout.right()),
-    EzKey("M-k", lazy.layout.up()),
-    EzKey("M-j", lazy.layout.down()),
-    # Focus tabs
-    EzKey("M-p", lazy.layout.prev_tab()),
-    EzKey("M-n", lazy.layout.next_tab()),
-    EzKey("M-S-p", lazy.layout.swap_tabs("previous")),
-    EzKey("M-S-n", lazy.layout.swap_tabs("next")),
-    EzKey("M-<left>", lazy.layout.prev_tab()),
-    EzKey("M-<right>", lazy.layout.next_tab()),
-    EzKey("M-S-<left>", lazy.layout.swap_tabs("previous")),
-    EzKey("M-S-<right>", lazy.layout.swap_tabs("next")),
-    # Focus nth tab at nearest level
-    EzKey("M-1", lazy.layout.focus_nth_tab(1, level=-1)),
-    EzKey("M-2", lazy.layout.focus_nth_tab(2, level=-1)),
-    EzKey("M-3", lazy.layout.focus_nth_tab(3, level=-1)),
-    EzKey("M-4", lazy.layout.focus_nth_tab(4, level=-1)),
-    EzKey("M-5", lazy.layout.focus_nth_tab(5, level=-1)),
-    EzKey("M-6", lazy.layout.focus_nth_tab(6, level=-1)),
-    EzKey("M-7", lazy.layout.focus_nth_tab(7, level=-1)),
-    EzKey("M-8", lazy.layout.focus_nth_tab(8, level=-1)),
-    EzKey("M-9", lazy.layout.focus_nth_tab(9, level=-1)),
-    EzKey("M-0", lazy.layout.focus_nth_tab(10, level=-1)),
-    # Focus nth root-level tab
-    EzKey("C-M-1", lazy.layout.focus_nth_tab(1, level=1)),
-    EzKey("C-M-2", lazy.layout.focus_nth_tab(2, level=1)),
-    EzKey("C-M-3", lazy.layout.focus_nth_tab(3, level=1)),
-    EzKey("C-M-4", lazy.layout.focus_nth_tab(4, level=1)),
-    EzKey("C-M-5", lazy.layout.focus_nth_tab(5, level=1)),
-    EzKey("C-M-6", lazy.layout.focus_nth_tab(6, level=1)),
-    EzKey("C-M-7", lazy.layout.focus_nth_tab(7, level=1)),
-    EzKey("C-M-8", lazy.layout.focus_nth_tab(8, level=1)),
-    EzKey("C-M-9", lazy.layout.focus_nth_tab(9, level=1)),
-    EzKey("C-M-0", lazy.layout.focus_nth_tab(10, level=1)),
-    #
-    #
-    # Resize
-    EzKey("M-C-h", lazy.layout.resize("left", 100)),
-    EzKey("M-C-l", lazy.layout.resize("right", 100)),
-    EzKey("M-C-k", lazy.layout.resize("up", 100)),
-    EzKey("M-C-j", lazy.layout.resize("down", 100)),
-    #
-    # Swap windows with neighbors
-    EzKey("M-S-h", lazy.layout.swap("left")),
-    EzKey("M-S-l", lazy.layout.swap("right")),
-    EzKey("M-S-k", lazy.layout.swap("up")),
-    EzKey("M-S-j", lazy.layout.swap("down")),
-    #
-    # Manipulate containers
-    EzKey("M-v", lazy.layout.enter_container_select_mode()),
-    EzKey("M-<escape>", lazy.layout.exit_container_select_mode()),
-    EzKey("M-o", lazy.layout.select_container_outer()),
-    EzKey("M-i", lazy.layout.select_container_inner()),
-    #
-    KeyChord(
-        [mod],
-        "t",
-        [
-            # Spawn new windows in a new root-level tabs,
-            EzKey("M-A-<Return>", lazy.spawn(terminal)),
-            EzKey("M-A-<space>", lazy.spawn(launcher)),
-            # as a sibling of the current tab,
-            EzKey("M-<return>", lazy.layout.spawn_tab(terminal)),
-            EzKey("M-<space>", lazy.layout.spawn_tab(launcher)),
-            # or as a nested child in the current tab.
-            EzKey("S-<return>", lazy.layout.spawn_tab(terminal, new_level=True)),
-            EzKey("S-<space>", lazy.layout.spawn_tab(launcher, new_level=True)),
-            #
-            EzKey("r", lazy.layout.rename_tab()),
-            EzKey("b", lazy.layout.pull_out_to_tab()),
-            #
-            EzKey("h", lazy.layout.prev_tab()),
-            EzKey("l", lazy.layout.next_tab()),
-            #
-            # Normalize window sizes
-            EzKey("n", lazy.layout.normalize_tab()),
-            EzKey("S-n", lazy.layout.normalize_tab(recurse=True)),
-            EzKey("M-S-n", lazy.layout.normalize_all()),
-        ],
-    ),
-    KeyChord(
-        [mod],
-        "a",
-        [
-            # Pull windows out of tabs
-            EzKey("e", lazy.layout.pull_out(position="next")),
-            EzKey("C-e", lazy.layout.pull_out()),
-            #
-            # Directional commands to move window inside neighbor space.
-            EzKey("h", lazy.layout.push_in("left")),
-            EzKey("l", lazy.layout.push_in("right")),
-            EzKey("j", lazy.layout.push_in("down")),
-            EzKey("k", lazy.layout.push_in("up")),
-            EzKey("S-h", lazy.layout.push_in("left", dest_selection="mru_deepest")),
-            EzKey("S-l", lazy.layout.push_in("right", dest_selection="mru_deepest")),
-            EzKey("S-j", lazy.layout.push_in("down", dest_selection="mru_deepest")),
-            EzKey("S-k", lazy.layout.push_in("up", dest_selection="mru_deepest")),
-            #
-            # Directional commands to merge windows with their neighbor into subtabs.
-            EzKey("M-h", lazy.layout.merge_to_subtab("left")),
-            EzKey("M-l", lazy.layout.merge_to_subtab("right")),
-            EzKey("M-j", lazy.layout.merge_to_subtab("down")),
-            EzKey("M-k", lazy.layout.merge_to_subtab("up")),
-            #
-            # Merge entire tabs with each other as splits
-            EzKey("M-S-h", lazy.layout.merge_tabs("previous", "x")),
-            EzKey("M-S-l", lazy.layout.merge_tabs("next", "x")),
-            EzKey("M-<left>", lazy.layout.merge_tabs("previous", "y")),
-            EzKey("M-<right>", lazy.layout.merge_tabs("next", "y")),
-            #
-            # Normalize windows
-            EzKey("n", lazy.layout.normalize()),
-            EzKey("S-n", lazy.layout.normalize(recurse=True)),
-        ],
-    ),
-    # KeyChord([mod], "g", []),
+    ## Chords
     # KeyChord(hyper, "a", []),
+    # KeyChord([mod], "a", []),
+    # KeyChord([mod], "g", []),
+    # KeyChord([mod], "t", []),
+    #
+    # Screenshots
+    EzKey("M-S-s", lazy.spawn("flameshot gui")),
+    KeyChord(
+        [mod],
+        "s",
+        [
+            # EzKey("M-s", lazy.spawn("flameshot gui")),
+            EzKey(
+                "f",
+                lazy.spawn("flameshot screen -cp ~/Pictures/Screenshots"),
+                desc="Capture the current display",
+            ),
+            EzKey(
+                "f",
+                lazy.spawn("flameshot full -cp ~/Pictures/Screenshots"),
+                desc="Capture the entire desktop",
+            ),
+        ],
+    ),
+    ######
+    ## System
+    EzKey("M-C-r", lazy.reload_config(), desc="Reload the config"),
+    EzKey("M-C-S-q", lazy.shutdown(), desc="Shutdown Qtile"),
 ]
 
 # Workspace
@@ -286,9 +205,7 @@ keys.extend(
         ),
         EzKey("<XF86AudioPlay>", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
         EzKey("<XF86AudioNext>", lazy.spawn("playerctl next"), desc="Next Song"),
-        EzKey(
-            "<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"
-        ),
+        EzKey("<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"),
         EzKey("<XF86AudioStop>", lazy.spawn("playerctl stop"), desc="Stop music"),
     ]
 )
@@ -302,8 +219,6 @@ mouse = [
         lazy.window.set_position_floating(),
         start=lazy.window.get_position(),
     ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]

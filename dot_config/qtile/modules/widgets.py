@@ -1,6 +1,5 @@
 import subprocess
 
-from qtile_bonsai import BonsaiBar
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
@@ -52,19 +51,10 @@ def load_widgets(display):
         ### Left Side
         # widget.Prompt(**widget_defaults, **mid_widgets),
         # tabs
-        BonsaiBar(
-            **{
-                "length": 500,
-                "tab.width": 30,
-                "tab.fg_color": colors["unfocused_text"],
-                "tab.bg_color": colors["background"],
-                # "tab.active.fg_color": colors["active_tab_fg_light"],
-                "tab.active.fg_color": colors["active_tab_fg"],
-                "tab.active.bg_color": colors["active_tab_bg"],
-                "container_select_mode.indicator.bg_color": colors["color6"],
-                "font_family": "Sauce Code Pro Nerd Font",
-            }
-        ),
+        widget.Sep(linewidth=0, padding=7),
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.CurrentLayout(foreground=colors["focused_text"], **widget_defaults, **mid_widgets),
+        widget.Sep(linewidth=0, padding=10, **mid_widgets),
         ########
         ## Middle
         widget.Spacer(),
@@ -83,6 +73,10 @@ def load_widgets(display):
             urgent_method="block",
             urgent_border=colors["urgent_border"],
             urgent_text=colors["urgent_text"],
+            margin_x=2,
+            margin_y=4,
+            padding_x=7,
+            padding_y=3,
             use_mouse_wheel=True,
             **dark_widgets,
             **widget_defaults,
@@ -184,9 +178,7 @@ def performance_widgets():
             padding=5,
             **mid_widgets,
         ),
-        widget.ThermalSensor(
-            foreground=colors["focused_text"], **widget_defaults, **mid_widgets
-        ),
+        widget.ThermalSensor(foreground=colors["focused_text"], **widget_defaults, **mid_widgets),
         widget.Sep(linewidth=0, padding=10, **mid_widgets),
     ]
 
