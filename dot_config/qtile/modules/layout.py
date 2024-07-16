@@ -15,7 +15,13 @@ layout_theme = {
 
 layouts = [
     layout.MonadTall(num_columns=2, **layout_theme),
-    layout.Columns(num_columns=2, insert_position=1, **layout_theme),
+    layout.Columns(
+        num_columns=2,
+        insert_position=1,
+        margin_on_single=10,
+        single_border_width=layout_theme["border_width"],
+        **layout_theme,
+    ),
     layout.Plasma(**layout_theme),
     layout.Max(**{"border_width": 0}),
     # layout.Tile(**layout_theme),

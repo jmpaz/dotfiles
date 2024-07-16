@@ -8,30 +8,8 @@ from libqtile.lazy import lazy
 
 from .colors import colors
 
-widget_defaults = dict(font="Sauce Code Pro Nerd Font", fontsize=14)
-dark_widgets = {
-    "decorations": [
-        RectDecoration(
-            colour=colors["focused_background"],
-            filled=True,
-            radius=10,
-            padding_y=4,
-            group=True,
-        )
-    ]
-}
-light_widgets = {
-    "decorations": [
-        RectDecoration(
-            colour=colors["unfocused_bg"],
-            filled=True,
-            radius=10,
-            padding_y=4,
-            group=True,
-        )
-    ]
-}
-mid_widgets = {
+defaults = dict(font="Sauce Code Pro Nerd Font", fontsize=14)
+decorations = {
     "decorations": [
         RectDecoration(
             foreground=colors["focused_text"],
@@ -41,100 +19,124 @@ mid_widgets = {
             padding_y=4,
             group=True,
         )
-    ]
+    ],
 }
+
+
+def create_separator(padding=15, size_percent=60):
+    return widget.Sep(
+        foreground=colors["unfocused_text"],
+        padding=padding,
+        size_percent=size_percent,
+        **decorations,
+    )
 
 
 def load_widgets(display):
-    widgets_list = [
-        ########
-        ### Left Side
-        # widget.Prompt(**widget_defaults, **mid_widgets),
-        # tabs
-        widget.Sep(linewidth=0, padding=7),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        widget.CurrentLayout(foreground=colors["focused_text"], **widget_defaults, **mid_widgets),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        ########
-        ## Middle
-        widget.Spacer(),
-        widget.GroupBox(
-            active=colors["focused_text"],
-            borderwidth=2,
-            disable_drag=True,
-            hide_unused=False,
-            highlight_color=[colors["background"], colors["background"]],
-            highlight_method="line",
-            inactive=colors["unfocused_text"],
-            this_current_screen_border=colors["focused_indicator"],
-            this_screen_border=colors["focused_border"],
-            other_current_screen_border=colors["focused_inactive_border"],
-            other_screen_border=colors["unfocused_border"],
-            urgent_method="block",
-            urgent_border=colors["urgent_border"],
-            urgent_text=colors["urgent_text"],
-            margin_x=2,
-            margin_y=4,
-            padding_x=7,
-            padding_y=3,
-            use_mouse_wheel=True,
-            **dark_widgets,
-            **widget_defaults,
-        ),
-        ########
-        ### Right Side
-        widget.Spacer(),
-        ## Performance
-        *performance_widgets(),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
-        ),
-        ## Volume
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        widget.PulseVolume(
-            fmt="󰕾 {}",  # Nerd Fonts icon for volume
-            bar_width=50,  # Width of the volume bar
-            bar_filled_color="2f343f",  # Color of the filled part of the bar
-            bar_unfilled_color="4b5162",  # Color of the unfilled part of the bar
-            get_volume_command="pamixer --get-volume",
-            foreground=colors["focused_text"],
-            **widget_defaults,
-            **mid_widgets,
-        ),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
-        #
-        ## Date/Time
-        widget.Sep(
-            linewidth=0,
-            padding=10,
-        ),
-        widget.Clock(
-            format=" %d %b | %I:%M%P ",
-            mouse_callbacks={
-                "Button1": lazy.spawn("wlogout"),
-            },
-            foreground=colors["focused_text"],
-            **widget_defaults,
-            **mid_widgets,
-        ),
-        widget.Sep(linewidth=0, padding=7),
-    ]
+    def left():
+        return [
+            # widget.Prompt(**widget_defaults, **mid_widgets),
+            # layout
+            widget.Sep(linewidth=0, padding=7),
+            widget.Sep(linewidth=0, padding=10, **decorations),
+            # widget.CurrentLayoutIcon(
+            #     scale=0.3,
+            #     **defaults,
+            #     **decorations,
+            # ),
+            widget.CurrentLayout(
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+                fmt="<b>{}</b>",
+            ),
+            create_separator(),
+            widget.Sep(linewidth=0, padding=2, **decorations),
+            # window name
+            widget.WindowName(
+                max_chars=0,
+                empty_group_string="desktop",
+                width=275,
+                scroll=True,
+                format="{name}",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+            widget.Sep(linewidth=0, padding=10, **decorations),
+        ]
 
-    return widgets_list
+    def center():
+        return [
+            widget.Spacer(),
+            widget.GroupBox(
+                active=colors["focused_text"],
+                borderwidth=2,
+                disable_drag=True,
+                hide_unused=False,
+                highlight_color=[colors["background"], colors["background"]],
+                highlight_method="line",
+                inactive=colors["unfocused_text"],
+                this_current_screen_border=colors["focused_indicator"],
+                this_screen_border=colors["focused_border"],
+                other_current_screen_border=colors["focused_inactive_border"],
+                other_screen_border=colors["unfocused_border"],
+                urgent_method="block",
+                urgent_border=colors["urgent_border"],
+                urgent_text=colors["urgent_text"],
+                margin_x=2,
+                margin_y=4,
+                padding_x=7,
+                padding_y=3,
+                use_mouse_wheel=True,
+                **defaults,
+                **decorations,
+            ),
+        ]
+
+    def right():
+        return [
+            widget.Spacer(),
+            ## Performance
+            *performance_widgets(),
+            widget.Sep(linewidth=0, padding=10),
+            ## Volume
+            widget.Sep(linewidth=0, padding=10, **decorations),
+            widget.PulseVolume(
+                fmt="󰕾 {}",  # Nerd Fonts icon for volume
+                bar_width=50,  # Width of the volume bar
+                bar_filled_color="2f343f",  # Color of the filled part of the bar
+                bar_unfilled_color="4b5162",  # Color of the unfilled part of the bar
+                get_volume_command="pamixer --get-volume",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+            widget.Sep(linewidth=0, padding=10, **decorations),
+            #
+            ## Date/Time
+            widget.Sep(
+                linewidth=0,
+                padding=10,
+            ),
+            widget.Clock(
+                format=" %d %b | <b>%-I:%M%P</b> ",
+                mouse_callbacks={
+                    "Button1": lazy.spawn("wlogout"),
+                },
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+            widget.Sep(linewidth=0, padding=7),
+        ]
+
+    return left() + center() + right()
 
 
 def performance_widgets():
-    def create_separator(padding=15, size_percent=60):
-        return widget.Sep(
-            foreground=colors["unfocused_text"],
-            padding=padding,
-            size_percent=size_percent,
-            **mid_widgets,
-        )
-
     return [
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.Sep(linewidth=0, padding=10, **decorations),
         # Memory
         widget.TextBox(
             text="",
@@ -142,15 +144,15 @@ def performance_widgets():
             fontsize=12,
             foreground=colors["focused_text"],
             padding=5,
-            **mid_widgets,
+            **decorations,
         ),
         widget.Memory(
             foreground=colors["focused_text"],
             format="{MemPercent}%",
             measure_mem="M",
             padding=5,
-            **widget_defaults,
-            **mid_widgets,
+            **defaults,
+            **decorations,
         ),
         create_separator(),
         # CPU Usage
@@ -160,14 +162,14 @@ def performance_widgets():
             fontsize=12,
             foreground=colors["focused_text"],
             padding=5,
-            **mid_widgets,
+            **decorations,
         ),
         widget.CPU(
             foreground=colors["focused_text"],
             format="{load_percent}%",
             padding=5,
-            **widget_defaults,
-            **mid_widgets,
+            **defaults,
+            **decorations,
         ),
         create_separator(),
         # CPU Temperature
@@ -176,10 +178,10 @@ def performance_widgets():
             fontsize=15,
             foreground=colors["focused_text"],
             padding=5,
-            **mid_widgets,
+            **decorations,
         ),
-        widget.ThermalSensor(foreground=colors["focused_text"], **widget_defaults, **mid_widgets),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.ThermalSensor(foreground=colors["focused_text"], **defaults, **decorations),
+        widget.Sep(linewidth=0, padding=10, **decorations),
     ]
 
 
@@ -190,34 +192,30 @@ def apps_tray_widgets():
             padding=10,
         ),
         # chat
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.Sep(linewidth=0, padding=10, **decorations),
         widget.TextBox(
             text="󰻞",
             mouse_callbacks={
                 "Button1": lazy.spawn("google-chrome-stable --app=https://claude.ai/"),
             },
-            **mid_widgets,
-            **widget_defaults,
+            **decorations,
+            **defaults,
         ),
         # files
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.Sep(linewidth=0, padding=10, **decorations),
         widget.TextBox(
             text="",
-            mouse_callbacks={
-                "Button1": lazy.spawn("nemo"),
-            },
-            **widget_defaults,
-            **mid_widgets,
+            mouse_callbacks={"Button1": lazy.spawn("nemo")},
+            **defaults,
+            **decorations,
         ),
         # bluetooth
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.Sep(linewidth=0, padding=10, **decorations),
         widget.TextBox(
             text="",
-            mouse_callbacks={
-                "Button1": lazy.spawn("blueman-manager"),
-            },
-            **mid_widgets,
-            **widget_defaults,
+            mouse_callbacks={"Button1": lazy.spawn("blueman-manager")},
+            **decorations,
+            **defaults,
         ),
-        widget.Sep(linewidth=0, padding=10, **mid_widgets),
+        widget.Sep(linewidth=0, padding=10, **decorations),
     ]

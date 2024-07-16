@@ -31,6 +31,20 @@ def window_to_adjacent_screen(qtile, direction, switch_group=False, focus_window
             qtile.cmd_to_screen(target_index)
 
 
+def smart_move(direction):
+    """Returns a layout-dependent function for moving a window in the given direction."""
+
+    @lazy.function
+    def _inner(qtile):
+        layout = qtile.current_layout.name
+        if layout == "plasma":
+            getattr(qtile.current_layout, f"move_{direction}")()
+        else:
+            getattr(qtile.current_layout, f"shuffle_{direction}")()
+
+    return _inner
+
+
 @lazy.group.function
 def toggle_max_monadtall(group):
     layout = group.layout.name
@@ -73,10 +87,10 @@ keys = [
     EzKey("M-k", lazy.layout.up()),
     EzKey("M-j", lazy.layout.down()),
     # Move
-    EzKey("M-S-h", lazy.layout.shuffle_left(), lazy.layout.move_left()),
-    EzKey("M-S-l", lazy.layout.shuffle_right(), lazy.layout.move_right()),
-    EzKey("M-S-k", lazy.layout.shuffle_up(), lazy.layout.move_up()),
-    EzKey("M-S-j", lazy.layout.shuffle_down(), lazy.layout.move_down()),
+    EzKey("M-S-h", smart_move("left")),
+    EzKey("M-S-l", smart_move("right")),
+    EzKey("M-S-k", smart_move("up")),
+    EzKey("M-S-j", smart_move("down")),
     # Resize
     EzKey(
         "M-C-h",
@@ -110,11 +124,13 @@ keys = [
         lazy.layout.normalize(),
         desc="Reset all window sizes",
     ),
-    EzKey("M-C-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."),
+    EzKey("M-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."),
     #
     # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
     EzKey("M-S-<tab>", lazy.screen.prev_group(), desc="Switch to previous group"),
+    EzKey("M-n", lazy.screen.next_group(), desc="Switch to next group"),
+    EzKey("M-p", lazy.screen.prev_group(), desc="Switch to next group"),
     EzKey("M-<period>", lazy.next_screen(), desc="Move focus to next monitor"),
     EzKey("M-<comma>", lazy.prev_screen(), desc="Move focus to prev monitor"),
     EzKey("M-S-<comma>", lazy.function(window_to_adjacent_screen, "next")),
@@ -179,18 +195,14 @@ plasma_keys = [
     EzKey("M-S-d", lazy.layout.mode_horizontal_split()),
     EzKey("M-S-v", lazy.layout.mode_vertical_split()),
 ]
-keys.extend(plasma_keys)
-
 monad_keys = [
-    # Flip
     EzKey("M-A-f", lazy.layout.flip()),
 ]
-keys.extend(monad_keys)
-
 columns_keys = [
-    # Flip
     EzKey("M-A-<space>", lazy.layout.toggle_split()),
 ]
+keys.extend(plasma_keys)
+keys.extend(monad_keys)
 keys.extend(columns_keys)
 
 # Workspace
@@ -215,11 +227,11 @@ for i in groups:
 keys.extend(
     [
         # KeyChord([mod], "s", []),
-        EzKey("M-C-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
-        EzKey("M-S-v", lazy.group["scratchpad"].dropdown_toggle("volume")),
-        EzKey("M-S-o", lazy.group["scratchpad"].dropdown_toggle("obs")),
-        EzKey("M-S-f", lazy.group["scratchpad"].dropdown_toggle("files")),
-        EzKey("M-S-p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
+        EzKey("C-M-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
+        EzKey("C-M-v", lazy.group["scratchpad"].dropdown_toggle("volume")),
+        EzKey("C-M-o", lazy.group["scratchpad"].dropdown_toggle("obs")),
+        EzKey("C-M-f", lazy.group["scratchpad"].dropdown_toggle("files")),
+        EzKey("C-M-p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
     ]
 )
 
