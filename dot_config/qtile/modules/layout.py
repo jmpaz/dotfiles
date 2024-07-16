@@ -15,10 +15,10 @@ layout_theme = {
 
 layouts = [
     layout.MonadTall(num_columns=2, **layout_theme),
-    layout.Columns(num_columns=2, **layout_theme),
-    layout.Tile(**layout_theme),
-    # layout.Plasma(**layout_theme),
-    # layout.Max(**{"border_width": 0}),
+    layout.Columns(num_columns=2, insert_position=1, **layout_theme),
+    layout.Plasma(**layout_theme),
+    layout.Max(**{"border_width": 0}),
+    # layout.Tile(**layout_theme),
     # Bonsai(
     #     **{
     #         "L1.tab_bar.hide_when": "always",
@@ -77,13 +77,13 @@ screens = [
             opacity=0.9,
         ),
     ),
-    # Screen(
-    #     bottom=bar.Bar(
-    #         widgets=load_widgets(1),
-    #         background=colors["transparent_bg"],
-    #         margin=0,
-    #         size=30,
-    #         opacity=0.9,
-    #     ),
-    # ),
+    Screen(
+        bottom=bar.Bar(
+            widgets=load_widgets(1),
+            background=colors["transparent_bg"],
+            margin=0,
+            size=30,
+            opacity=0.9,
+        ),
+    ),
 ]

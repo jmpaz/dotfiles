@@ -31,6 +31,15 @@ def window_to_adjacent_screen(qtile, direction, switch_group=False, focus_window
             qtile.cmd_to_screen(target_index)
 
 
+@lazy.group.function
+def toggle_max_monadtall(group):
+    layout = group.layout.name
+    if layout == "max":
+        group.setlayout("monadtall")
+    elif layout == "monadtall":
+        group.setlayout("max")
+
+
 mod = "mod4"
 alt = "mod1"
 # hyper = [mod, "shift", "control", alt]
@@ -49,7 +58,9 @@ keys = [
     #
     EzKey("M-S-q", lazy.window.kill(), desc="Kill focused window"),
     EzKey("M-<grave>", lazy.next_layout()),
+    EzKey("M-S-<grave>", lazy.prev_layout()),
     EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
+    EzKey("M-m", toggle_max_monadtall, desc="Toggle max/monadtall layout"),
     EzKey(
         "A-f",
         lazy.window.toggle_floating(),
@@ -62,11 +73,10 @@ keys = [
     EzKey("M-k", lazy.layout.up()),
     EzKey("M-j", lazy.layout.down()),
     # Move
-    EzKey("M-S-h", lazy.layout.shuffle_left()),
-    EzKey("M-S-l", lazy.layout.shuffle_right()),
-    EzKey("M-S-k", lazy.layout.shuffle_up()),
-    EzKey("M-S-j", lazy.layout.shuffle_down()),
-    #
+    EzKey("M-S-h", lazy.layout.shuffle_left(), lazy.layout.move_left()),
+    EzKey("M-S-l", lazy.layout.shuffle_right(), lazy.layout.move_right()),
+    EzKey("M-S-k", lazy.layout.shuffle_up(), lazy.layout.move_up()),
+    EzKey("M-S-j", lazy.layout.shuffle_down(), lazy.layout.move_down()),
     # Resize
     EzKey(
         "M-C-h",
@@ -94,8 +104,13 @@ keys = [
         lazy.layout.decrease_nmaster(),
         desc="Increase active window size.",
     ),
-    EzKey("M-C-n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    EzKey("M-C-r", lazy.layout.reset(), desc="Reset the sizes of all window in group."),
+    EzKey(
+        "M-n",
+        lazy.layout.reset_size(),
+        lazy.layout.normalize(),
+        desc="Reset all window sizes",
+    ),
+    EzKey("M-C-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."),
     #
     # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
@@ -144,12 +159,46 @@ keys = [
     EzKey("M-C-S-q", lazy.shutdown(), desc="Shutdown Qtile"),
 ]
 
+# Layout-specific
+plasma_keys = [
+    # Resize
+    EzKey("M-z", lazy.layout.grow_width(50)),
+    EzKey("M-x", lazy.layout.grow_width(-50)),
+    EzKey("M-C-z", lazy.layout.grow_height(50)),
+    EzKey("M-C-x", lazy.layout.grow_height(-50)),
+    # Integrate
+    EzKey(
+        "M-A-h", lazy.layout.swap_column_left(), lazy.layout.integrate_left()
+    ),  # (columns + plasma)
+    EzKey("M-A-l", lazy.layout.swap_column_right(), lazy.layout.integrate_right()),
+    EzKey("M-A-k", lazy.layout.integrate_up()),
+    EzKey("M-A-j", lazy.layout.integrate_down()),
+    # Splits
+    EzKey("M-d", lazy.layout.mode_horizontal()),
+    EzKey("M-v", lazy.layout.mode_vertical()),
+    EzKey("M-S-d", lazy.layout.mode_horizontal_split()),
+    EzKey("M-S-v", lazy.layout.mode_vertical_split()),
+]
+keys.extend(plasma_keys)
+
+monad_keys = [
+    # Flip
+    EzKey("M-A-f", lazy.layout.flip()),
+]
+keys.extend(monad_keys)
+
+columns_keys = [
+    # Flip
+    EzKey("M-A-<space>", lazy.layout.toggle_split()),
+]
+keys.extend(columns_keys)
+
 # Workspace
 for i in groups:
     keys.extend(
         [
             EzKey(
-                f"M-A-{i.name}",
+                f"M-{i.name}",
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),

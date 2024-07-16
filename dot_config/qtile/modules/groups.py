@@ -3,7 +3,7 @@ from libqtile.config import DropDown, Group, ScratchPad
 groups = []
 
 # Define group names and layouts
-group_names = ["1","2","3","4", "5", "6", "7", "8", "9"]
+group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_layouts = ["monadtall"] * 10
 
 # Create label for groups and assign them layout
