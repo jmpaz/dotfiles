@@ -54,6 +54,38 @@ def toggle_max_monadtall(group):
         group.setlayout("max")
 
 
+def go_to_group(name: str):
+    def _inner(qtile):
+        if len(qtile.screens) == 1:
+            qtile.groups_map[name].toscreen()
+            return
+
+        if name in "123456789":
+            qtile.focus_screen(0)
+            qtile.groups_map[name].toscreen()
+        else:
+            qtile.focus_screen(1)
+            qtile.groups_map[name].toscreen()
+
+    return _inner
+
+
+def go_to_group_and_move_window(name: str):
+    def _inner(qtile):
+        if len(qtile.screens) == 1:
+            qtile.current_window.togroup(name, switch_group=False)
+            return
+
+        if name in "123456789":
+            qtile.current_window.togroup(name, switch_group=False)
+            qtile.focus_screen(0)
+        else:
+            qtile.current_window.togroup(name, switch_group=False)
+            qtile.focus_screen(1)
+
+    return _inner
+
+
 mod = "mod4"
 alt = "mod1"
 # hyper = [mod, "shift", "control", alt]
@@ -207,20 +239,36 @@ keys.extend(columns_keys)
 
 # Workspace
 for i in groups:
-    keys.extend(
-        [
-            EzKey(
-                f"M-{i.name}",
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            EzKey(
-                f"M-S-{i.name}",
-                lazy.window.togroup(i.name),
-                desc="move focused window to group {}".format(i.name),
-            ),
-        ]
-    )
+    if i.name in "123456789":
+        keys.extend(
+            [
+                EzKey(
+                    f"M-{i.name}",
+                    lazy.function(go_to_group(i.name)),
+                    desc=f"Switch to group {i.name}",
+                ),
+                EzKey(
+                    f"M-S-{i.name}",
+                    lazy.function(go_to_group_and_move_window(i.name)),
+                    desc=f"Move focused window to group {i.name}",
+                ),
+            ]
+        )
+    elif i.name in ["I", "II", "III", "IV", "V"]:
+        keys.extend(
+            [
+                EzKey(
+                    f"M-A-{['1', '2', '3', '4', '5'][['I', 'II', 'III', 'IV', 'V'].index(i.name)]}",
+                    lazy.function(go_to_group(i.name)),
+                    desc=f"Switch to group {i.name}",
+                ),
+                EzKey(
+                    f"M-A-S-{['1', '2', '3', '4', '5'][['I', 'II', 'III', 'IV', 'V'].index(i.name)]}",
+                    lazy.function(go_to_group_and_move_window(i.name)),
+                    desc=f"Move focused window to group {i.name}",
+                ),
+            ]
+        )
 
 
 # Scratchpad

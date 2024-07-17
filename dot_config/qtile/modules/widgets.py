@@ -66,31 +66,47 @@ def load_widgets(display):
             widget.Sep(linewidth=0, padding=10, **decorations),
         ]
 
-    def center():
+    def center(display):
+        primary_groups = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        secondary_groups = ["I", "II", "III", "IV", "V"]
+
         return [
             widget.Spacer(),
             widget.GroupBox(
-                active=colors["focused_text"],
+                **defaults,
+                **{
+                    "decorations": [
+                        RectDecoration(
+                            # foreground=colors["focused_text"],
+                            colour=colors["focused_background"],
+                            radius=7,
+                            filled=True,
+                            padding_y=3,
+                            padding_x=3,
+                        )
+                    ],
+                    "padding": 12,
+                },
                 borderwidth=2,
+                margin_x=6,
                 disable_drag=True,
+                rounded=False,
                 hide_unused=False,
-                highlight_color=[colors["background"], colors["background"]],
+                visible_groups=primary_groups if display == 0 else secondary_groups,
+                # highlight
                 highlight_method="line",
+                highlight_color="#00000000",  # transparent
+                active=colors["focused_text"],
                 inactive=colors["unfocused_text"],
+                # indicator
                 this_current_screen_border=colors["focused_indicator"],
                 this_screen_border=colors["focused_border"],
                 other_current_screen_border=colors["focused_inactive_border"],
                 other_screen_border=colors["unfocused_border"],
+                # urgent
                 urgent_method="block",
                 urgent_border=colors["urgent_border"],
                 urgent_text=colors["urgent_text"],
-                margin_x=2,
-                margin_y=4,
-                padding_x=7,
-                padding_y=3,
-                use_mouse_wheel=True,
-                **defaults,
-                **decorations,
             ),
         ]
 
@@ -131,7 +147,7 @@ def load_widgets(display):
             widget.Sep(linewidth=0, padding=7),
         ]
 
-    return left() + center() + right()
+    return left() + center(display) + right()
 
 
 def performance_widgets():
@@ -180,7 +196,21 @@ def performance_widgets():
             padding=5,
             **decorations,
         ),
-        widget.ThermalSensor(foreground=colors["focused_text"], **defaults, **decorations),
+        widget.ThermalSensor(
+            foreground=colors["focused_text"], **defaults, **decorations, format="{temp:.1f}°"
+        ),
+        widget.TextBox(text="• ", foreground=colors["focused_text"], padding=5, **decorations),
+        widget.NvidiaSensors(
+            foreground=colors["focused_text"],
+            **defaults,
+            **decorations,
+            gpu_bus_id="01:00.0",
+            format="{temp}°",
+        ),
+        widget.TextBox(text="/", foreground=colors["focused_text"], padding=5, **decorations),
+        widget.NvidiaSensors(
+            foreground=colors["focused_text"], **defaults, **decorations, gpu_bus_id="02:00.0"
+        ),
         widget.Sep(linewidth=0, padding=10, **decorations),
     ]
 

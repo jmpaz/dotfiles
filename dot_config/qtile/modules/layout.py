@@ -76,7 +76,7 @@ floating_layout = layout.Floating(
 screens = [
     Screen(
         top=bar.Bar(
-            widgets=load_widgets(1),
+            widgets=load_widgets(0),
             background=colors["transparent_bg"],
             margin=0,
             size=30,

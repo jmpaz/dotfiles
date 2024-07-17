@@ -3,16 +3,31 @@ from libqtile.config import DropDown, Group, ScratchPad
 groups = []
 
 # Define group names and layouts
-group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-group_layouts = ["columns"] * 10
+primary_group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+primary_group_layouts = ["columns"] * 9
 
-# Create label for groups and assign them layout
-for i in range(len(group_names)):
+secondary_group_names = ["I", "II", "III", "IV", "V"]
+secondary_group_layouts = ["columns"] * 5
+
+# Primary monitor
+for i in range(len(primary_group_names)):
     groups.append(
         Group(
-            name=group_names[i],
-            label=group_names[i],
-            layout=group_layouts[i].lower(),
+            name=primary_group_names[i],
+            label=primary_group_names[i],
+            layout=primary_group_layouts[i].lower(),
+            screen_affinity=0,
+        )
+    )
+
+# Secondary monitor
+for i in range(len(secondary_group_names)):
+    groups.append(
+        Group(
+            name=secondary_group_names[i],
+            label=secondary_group_names[i],
+            layout=secondary_group_layouts[i].lower(),
+            screen_affinity=1,
         )
     )
 
