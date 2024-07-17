@@ -13,6 +13,7 @@ layout_theme = {
     "margin": 2,
 }
 
+
 primary_layouts = [
     layout.Columns(
         num_columns=2,
@@ -23,13 +24,14 @@ primary_layouts = [
     ),
     layout.MonadTall(**layout_theme),
     layout.Plasma(**layout_theme),
-    layout.Max(**{"border_width": 0}),
 ]
+
 secondary_layouts = [
     layout.MonadWide(**layout_theme),
     layout.Plasma(**layout_theme),
-    layout.Max(**{"border_width": 0}),
 ]
+
+max_layout = layout.Max(**{"border_width": 0})
 layouts = primary_layouts + secondary_layouts
 
 

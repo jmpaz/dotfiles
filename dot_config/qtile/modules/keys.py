@@ -9,6 +9,8 @@ from libqtile.utils import guess_terminal
 
 from .groups import groups
 
+previous_layouts = {0: None, 1: None}
+
 
 # Helper functions
 def window_to_adjacent_screen(qtile, direction, switch_group=False, focus_window=True, wrap=True):
@@ -46,16 +48,18 @@ def smart_move(direction):
 
 
 @lazy.function
-def toggle_max_monad(qtile):
-    layout = qtile.current_layout.name
-    screen = qtile.current_screen.index
-    if layout == "max":
-        if screen == 0:
-            qtile.current_group.setlayout("monadtall")
-        else:
-            qtile.current_group.setlayout("monadwide")
-    elif layout in ["monadtall", "monadwide"]:
-        qtile.current_group.setlayout("max")
+def toggle_max_layout(qtile):
+    current_screen = qtile.current_screen.index
+    current_group = qtile.current_group
+    current_layout = current_group.layout.name
+
+    if current_layout == "max":
+        if previous_layouts[current_screen]:
+            current_group.setlayout(previous_layouts[current_screen])
+            previous_layouts[current_screen] = None
+    else:
+        previous_layouts[current_screen] = current_layout
+        current_group.setlayout("max")
 
 
 def go_to_group(name: str):
@@ -110,7 +114,7 @@ keys = [
     EzKey("M-<grave>", lazy.next_layout()),
     EzKey("M-S-<grave>", lazy.prev_layout()),
     EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
-    EzKey("M-m", toggle_max_monad, desc="Toggle max/monad layout"),
+    EzKey("M-m", toggle_max_layout, desc="Maximize/restore"),
     EzKey(
         "A-f",
         lazy.window.toggle_floating(),

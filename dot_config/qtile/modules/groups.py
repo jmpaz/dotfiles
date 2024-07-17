@@ -1,14 +1,12 @@
 from libqtile.config import DropDown, Group, ScratchPad
-from .layout import primary_layouts, secondary_layouts
+from .layout import primary_layouts, secondary_layouts, max_layout
+
 
 groups = []
 
-# Define group names and layouts
+# Define group names
 primary_group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-primary_group_layouts = ["columns"] * 9
-
 secondary_group_names = ["I", "II", "III", "IV", "V"]
-secondary_group_layouts = ["columns"] * 5
 
 # Primary monitor
 for i in range(len(primary_group_names)):
@@ -16,7 +14,7 @@ for i in range(len(primary_group_names)):
         Group(
             name=primary_group_names[i],
             label=primary_group_names[i],
-            layouts=primary_layouts,
+            layouts=primary_layouts + [max_layout],
             screen_affinity=0,
         )
     )
@@ -27,7 +25,7 @@ for i in range(len(secondary_group_names)):
         Group(
             name=secondary_group_names[i],
             label=secondary_group_names[i],
-            layouts=secondary_layouts,
+            layouts=secondary_layouts + [max_layout],
             screen_affinity=1,
         )
     )
