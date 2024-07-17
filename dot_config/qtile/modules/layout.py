@@ -23,16 +23,16 @@ primary_layouts = [
         **layout_theme,
     ),
     layout.MonadTall(**layout_theme),
-    layout.Plasma(**layout_theme),
 ]
 
 secondary_layouts = [
-    layout.MonadWide(**layout_theme),
-    layout.Plasma(**layout_theme),
+    layout.MonadWide(align=1, ratio=0.65, **layout_theme),
+    layout.VerticalTile(**layout_theme),
 ]
 
-max_layout = layout.Max(**{"border_width": 0})
-layouts = primary_layouts + secondary_layouts
+shared_layouts = [layout.Plasma(**layout_theme), layout.Max(**{"border_width": 0})]
+
+layouts = primary_layouts + secondary_layouts + shared_layouts
 
 
 float_titles = [

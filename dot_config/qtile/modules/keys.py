@@ -169,8 +169,8 @@ keys = [
     # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
     EzKey("M-S-<tab>", lazy.screen.prev_group(), desc="Switch to previous group"),
-    EzKey("M-n", lazy.screen.next_group(), desc="Switch to next group"),
-    EzKey("M-p", lazy.screen.prev_group(), desc="Switch to next group"),
+    EzKey("M-<bracketright>", lazy.screen.next_group(), desc="Switch to next group"),
+    EzKey("M-<bracketleft>", lazy.screen.prev_group(), desc="Switch to next group"),
     EzKey("M-<period>", lazy.next_screen(), desc="Move focus to next monitor"),
     EzKey("M-<comma>", lazy.prev_screen(), desc="Move focus to prev monitor"),
     EzKey("M-S-<comma>", lazy.function(window_to_adjacent_screen, "next")),
