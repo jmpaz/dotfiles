@@ -13,8 +13,7 @@ layout_theme = {
     "margin": 2,
 }
 
-layouts = [
-    layout.MonadTall(num_columns=2, **layout_theme),
+primary_layouts = [
     layout.Columns(
         num_columns=2,
         insert_position=1,
@@ -22,28 +21,16 @@ layouts = [
         single_border_width=layout_theme["border_width"],
         **layout_theme,
     ),
+    layout.MonadTall(**layout_theme),
     layout.Plasma(**layout_theme),
     layout.Max(**{"border_width": 0}),
-    # layout.Tile(**layout_theme),
-    # Bonsai(
-    #     **{
-    #         "L1.tab_bar.hide_when": "always",
-    #         "L2.window.margin": [4, 2, 4, 2],
-    #         "window.border_size": 4,
-    #         "window.border_color": colors["unfocused_border"],
-    #         "window.active.border_color": colors["focused_border"],
-    #         "window.default.add_mode": "match_previous",
-    #         "auto_cwd_for_terminals": True,
-    #         "tab_bar.height": 20,
-    #         "tab_bar.tab.fg_color": colors["unfocused_text"],
-    #         "tab_bar.tab.bg_color": colors["background"],
-    #         "tab_bar.tab.active.fg_color": colors["active_tab_fg_light"],
-    #         # "tab_bar.tab.active.fg_color": colors["active_tab_fg"],
-    #         "tab_bar.tab.active.bg_color": colors["active_tab_bg"],
-    #         "container_select_mode.border_color": colors["urgent_border"],
-    #     },
-    # ),
 ]
+secondary_layouts = [
+    layout.MonadWide(**layout_theme),
+    layout.Plasma(**layout_theme),
+    layout.Max(**{"border_width": 0}),
+]
+layouts = primary_layouts + secondary_layouts
 
 
 float_titles = [

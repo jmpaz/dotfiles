@@ -45,13 +45,17 @@ def smart_move(direction):
     return _inner
 
 
-@lazy.group.function
-def toggle_max_monadtall(group):
-    layout = group.layout.name
+@lazy.function
+def toggle_max_monad(qtile):
+    layout = qtile.current_layout.name
+    screen = qtile.current_screen.index
     if layout == "max":
-        group.setlayout("monadtall")
-    elif layout == "monadtall":
-        group.setlayout("max")
+        if screen == 0:
+            qtile.current_group.setlayout("monadtall")
+        else:
+            qtile.current_group.setlayout("monadwide")
+    elif layout in ["monadtall", "monadwide"]:
+        qtile.current_group.setlayout("max")
 
 
 def go_to_group(name: str):
@@ -106,7 +110,7 @@ keys = [
     EzKey("M-<grave>", lazy.next_layout()),
     EzKey("M-S-<grave>", lazy.prev_layout()),
     EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
-    EzKey("M-m", toggle_max_monadtall, desc="Toggle max/monadtall layout"),
+    EzKey("M-m", toggle_max_monad, desc="Toggle max/monad layout"),
     EzKey(
         "A-f",
         lazy.window.toggle_floating(),
