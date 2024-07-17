@@ -7,6 +7,7 @@ from libqtile import bar, qtile
 from libqtile.lazy import lazy
 
 from .colors import colors
+from .platform import is_wayland
 
 defaults = dict(font="Sauce Code Pro Nerd Font", fontsize=14)
 decorations = {
@@ -118,16 +119,7 @@ def load_widgets(display):
             widget.Sep(linewidth=0, padding=10),
             ## Volume
             widget.Sep(linewidth=0, padding=10, **decorations),
-            widget.PulseVolume(
-                fmt="󰕾 {}",  # Nerd Fonts icon for volume
-                bar_width=50,  # Width of the volume bar
-                bar_filled_color="2f343f",  # Color of the filled part of the bar
-                bar_unfilled_color="4b5162",  # Color of the unfilled part of the bar
-                get_volume_command="pamixer --get-volume",
-                foreground=colors["focused_text"],
-                **defaults,
-                **decorations,
-            ),
+            volume_widget()[0],
             widget.Sep(linewidth=0, padding=10, **decorations),
             #
             ## Date/Time
@@ -150,70 +142,105 @@ def load_widgets(display):
     return left() + center(display) + right()
 
 
-def performance_widgets():
-    return [
-        widget.Sep(linewidth=0, padding=10, **decorations),
-        # Memory
-        widget.TextBox(
-            text="",
-            font="FontAwesome6Free",
-            fontsize=12,
-            foreground=colors["focused_text"],
-            padding=5,
-            **decorations,
-        ),
-        widget.Memory(
-            foreground=colors["focused_text"],
-            format="{MemPercent}%",
-            measure_mem="M",
-            padding=5,
-            **defaults,
-            **decorations,
-        ),
-        create_separator(),
-        # CPU Usage
-        widget.TextBox(
-            text="",
-            font="FontAwesome6Free",
-            fontsize=12,
-            foreground=colors["focused_text"],
-            padding=5,
-            **decorations,
-        ),
-        widget.CPU(
-            foreground=colors["focused_text"],
-            format="{load_percent}%",
-            padding=5,
-            **defaults,
-            **decorations,
-        ),
-        create_separator(),
-        # CPU Temperature
-        widget.TextBox(
-            text="󰔏",
-            fontsize=15,
-            foreground=colors["focused_text"],
-            padding=5,
-            **decorations,
-        ),
-        widget.ThermalSensor(
-            foreground=colors["focused_text"], **defaults, **decorations, format="{temp:.1f}°"
-        ),
-        widget.TextBox(text="• ", foreground=colors["focused_text"], padding=5, **decorations),
-        widget.NvidiaSensors(
-            foreground=colors["focused_text"],
-            **defaults,
-            **decorations,
-            gpu_bus_id="01:00.0",
-            format="{temp}°",
-        ),
-        widget.TextBox(text="/", foreground=colors["focused_text"], padding=5, **decorations),
-        widget.NvidiaSensors(
-            foreground=colors["focused_text"], **defaults, **decorations, gpu_bus_id="02:00.0"
-        ),
-        widget.Sep(linewidth=0, padding=10, **decorations),
-    ]
+def volume_widget():
+    if not is_wayland():
+        return [
+            widget.PulseVolume(
+                fmt="󰕾 {}",  # Nerd Fonts icon for volume
+                bar_width=50,  # Width of the volume bar
+                bar_filled_color="2f343f",  # Color of the filled part of the bar
+                bar_unfilled_color="4b5162",  # Color of the unfilled part of the bar
+                get_volume_command="pamixer --get-volume",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+        ]
+    else:
+        return [
+            widget.GenPollText(
+                func=lambda: subprocess.check_output("pamixer --get-volume", shell=True)
+                .decode()
+                .strip(),
+                update_interval=0.2,
+                format="󰕾 {}%",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+        ]
 
+
+def performance_widgets():
+    widgets = []
+
+    if is_wayland():
+        widgets.extend([
+            widget.Sep(linewidth=0, padding=10, **decorations),
+            # Memory
+            widget.TextBox(
+                text="",
+                font="FontAwesome6Free",
+                fontsize=12,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
+            widget.GenPollText(
+                func=lambda: subprocess.check_output(
+                    "free -m | awk '/^Mem/ {printf \"%.1f\", $3/$2 * 100}'", shell=True
+                ).decode().strip(),
+                update_interval=2,
+                format="{:>4}%",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+            create_separator(),
+            # CPU Usage
+            widget.TextBox(
+                text="",
+                font="FontAwesome6Free",
+                fontsize=12,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
+            widget.GenPollText(
+                func=lambda: subprocess.check_output(
+                    "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{printf \"%.1f\", 100 - $1}'",
+                    shell=True,
+                ).decode().strip(),
+                update_interval=2,
+                format="{:>4}%",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+            create_separator(),
+            # CPU Temperature
+            widget.TextBox(
+                text="󰔏",
+                fontsize=15,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
+            widget.GenPollText(
+                func=lambda: subprocess.check_output(
+                    "sensors | grep 'Package id 0:' | awk '{print $4}' | sed 's/+//' | sed 's/°C//'",
+                    shell=True,
+                ).decode().strip(),
+                update_interval=2,
+                format="{:>4}°",
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+            ),
+        ])
+
+    widgets.append(widget.Sep(linewidth=0, padding=10, **decorations))
+    return widgets
 
 def apps_tray_widgets():
     return [

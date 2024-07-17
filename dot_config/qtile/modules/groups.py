@@ -1,7 +1,9 @@
 from libqtile.config import DropDown, Group, ScratchPad
 from .layout import primary_layouts, secondary_layouts, shared_layouts
+from .platform import get_number_of_screens
 
 
+num_screens = get_number_of_screens()
 groups = []
 
 # Define group names
@@ -20,15 +22,16 @@ for i in range(len(primary_group_names)):
     )
 
 # Secondary monitor
-for i in range(len(secondary_group_names)):
-    groups.append(
-        Group(
-            name=secondary_group_names[i],
-            label=secondary_group_names[i],
-            layouts=secondary_layouts + shared_layouts,
-            screen_affinity=1,
+if num_screens > 1:
+    for i in range(len(secondary_group_names)):
+        groups.append(
+            Group(
+                name=secondary_group_names[i],
+                label=secondary_group_names[i],
+                layouts=secondary_layouts + shared_layouts,
+                screen_affinity=1,
+            )
         )
-    )
 
 
 scratchpad = ScratchPad(

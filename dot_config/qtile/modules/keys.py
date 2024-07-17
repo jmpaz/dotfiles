@@ -8,7 +8,9 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 from .groups import groups
+from .platform import get_number_of_screens, is_wayland
 
+num_screens = get_number_of_screens()
 previous_layouts = {0: None, 1: None}
 
 
@@ -114,7 +116,7 @@ alt = "mod1"
 # hyper_str = "M-S-C-A-"
 
 terminal = "kitty"
-launcher = "rofi -modi drun,run -show drun"
+launcher = "rofi -modi drun,run -show drun" if not is_wayland() else "fuzzel"
 
 
 keys = [
@@ -261,34 +263,22 @@ for i in groups:
     if i.name in "123456789":
         keys.extend(
             [
-                EzKey(
-                    f"M-{i.name}",
-                    lazy.function(go_to_group(i.name)),
-                    desc=f"Switch to group {i.name}",
-                ),
-                EzKey(
-                    f"M-S-{i.name}",
-                    lazy.function(go_to_group_and_move_window(i.name)),
-                    desc=f"Move focused window to group {i.name}",
-                ),
+                Key([mod], i.name, lazy.function(go_to_group(i.name))),
+                Key([mod, "shift"], i.name, lazy.function(go_to_group_and_move_window(i.name))),
             ]
         )
-    elif i.name in ["I", "II", "III", "IV", "V"]:
+    elif i.name in ["I", "II", "III", "IV", "V"] and num_screens > 1:
+        index = ["I", "II", "III", "IV", "V"].index(i.name)
         keys.extend(
             [
-                EzKey(
-                    f"M-A-{['1', '2', '3', '4', '5'][['I', 'II', 'III', 'IV', 'V'].index(i.name)]}",
-                    lazy.function(go_to_group(i.name)),
-                    desc=f"Switch to group {i.name}",
-                ),
-                EzKey(
-                    f"M-A-S-{['1', '2', '3', '4', '5'][['I', 'II', 'III', 'IV', 'V'].index(i.name)]}",
+                Key([mod, "mod1"], str(index + 1), lazy.function(go_to_group(i.name))),
+                Key(
+                    [mod, "mod1", "shift"],
+                    str(index + 1),
                     lazy.function(go_to_group_and_move_window(i.name)),
-                    desc=f"Move focused window to group {i.name}",
                 ),
             ]
         )
-
 
 # Scratchpad
 keys.extend(

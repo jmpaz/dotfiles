@@ -5,6 +5,7 @@ from libqtile.config import Match, Screen
 
 from .colors import colors
 from .widgets import load_widgets
+from .platform import get_number_of_screens
 
 layout_theme = {
     "border_focus": colors["focused_border"],
@@ -32,8 +33,11 @@ secondary_layouts = [
 
 shared_layouts = [layout.Plasma(**layout_theme), layout.Max(**{"border_width": 0})]
 
-layouts = primary_layouts + secondary_layouts + shared_layouts
-
+num_screens = get_number_of_screens()
+if num_screens == 1:
+    layouts = primary_layouts + shared_layouts
+else:
+    layouts = primary_layouts + secondary_layouts + shared_layouts
 
 float_titles = [
     "Characters",
@@ -71,14 +75,18 @@ screens = [
             size=30,
             opacity=0.9,
         ),
-    ),
-    Screen(
-        bottom=bar.Bar(
-            widgets=load_widgets(1),
-            background=colors["transparent_bg"],
-            margin=0,
-            size=30,
-            opacity=0.9,
-        ),
-    ),
+    )
 ]
+
+if num_screens > 1:
+    screens.append(
+        Screen(
+            bottom=bar.Bar(
+                widgets=load_widgets(1),
+                background=colors["transparent_bg"],
+                margin=0,
+                size=30,
+                opacity=0.9,
+            ),
+        )
+    )
