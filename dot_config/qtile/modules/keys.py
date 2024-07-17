@@ -48,6 +48,20 @@ def smart_move(direction):
 
 
 @lazy.function
+def smart_toggle(qtile):
+    layout = qtile.current_layout
+    layout_name = layout.name
+
+    if layout_name == "columns":
+        layout.toggle_split()
+    elif layout_name == "verticaltile":
+        if layout.maximized:
+            layout.normalize()
+        else:
+            layout.maximize()
+
+
+@lazy.function
 def toggle_max_layout(qtile):
     current_screen = qtile.current_screen.index
     current_group = qtile.current_group
@@ -120,6 +134,7 @@ keys = [
         lazy.window.toggle_floating(),
         desc="Toggle floating on the focused window",
     ),
+    EzKey("M-A-<space>", smart_toggle, desc="Expand focused window"),
     ## Motions
     # Focus
     EzKey("M-h", lazy.layout.left()),
@@ -238,12 +253,8 @@ plasma_keys = [
 monad_keys = [
     EzKey("M-A-f", lazy.layout.flip()),
 ]
-columns_keys = [
-    EzKey("M-A-<space>", lazy.layout.toggle_split()),
-]
 keys.extend(plasma_keys)
 keys.extend(monad_keys)
-keys.extend(columns_keys)
 
 # Workspace
 for i in groups:
