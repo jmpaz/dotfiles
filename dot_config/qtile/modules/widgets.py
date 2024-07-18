@@ -172,75 +172,79 @@ def volume_widget():
 
 
 def performance_widgets():
-    widgets = []
+    return [
+        widget.Sep(linewidth=0, padding=10, **decorations),
+        # Memory
+        widget.TextBox(
+            text="",
+            font="FontAwesome6Free",
+            fontsize=12,
+            foreground=colors["focused_text"],
+            padding=5,
+            **decorations,
+        ),
+        widget.Memory(
+            foreground=colors["focused_text"],
+            format="{MemPercent}%",
+            measure_mem="M",
+            padding=5,
+            **defaults,
+            **decorations,
+        ),
+        create_separator(),
+        # CPU Usage
+        widget.TextBox(
+            text="",
+            font="FontAwesome6Free",
+            fontsize=12,
+            foreground=colors["focused_text"],
+            padding=5,
+            **decorations,
+        ),
+        widget.CPU(
+            foreground=colors["focused_text"],
+            format="{load_percent}%",
+            padding=5,
+            **defaults,
+            **decorations,
+        ),
+        create_separator(),
+        # CPU Temperature
+        widget.TextBox(
+            text="󰔏",
+            fontsize=15,
+            foreground=colors["focused_text"],
+            padding=5,
+            **decorations,
+        ),
+        widget.ThermalSensor(
+            foreground=colors["focused_text"],
+            **defaults,
+            **decorations,
+            format="{temp:.1f}°",
+        ),
+        widget.TextBox(
+            text="• ", foreground=colors["focused_text"], padding=5, **decorations
+        ),
+        widget.NvidiaSensors(
+            foreground=colors["focused_text"],
+            **defaults,
+            **decorations,
+            gpu_bus_id="01:00.0",
+            format="{temp}°",
+        ),
+        widget.TextBox(
+            text="/", foreground=colors["focused_text"], padding=5, **decorations
+        ),
+        widget.NvidiaSensors(
+            foreground=colors["focused_text"],
+            **defaults,
+            **decorations,
+            gpu_bus_id="02:00.0",
+        ),
+        widget.Sep(linewidth=0, padding=10, **decorations),
+    ]
 
-    if is_wayland():
-        widgets.extend([
-            widget.Sep(linewidth=0, padding=10, **decorations),
-            # Memory
-            widget.TextBox(
-                text="",
-                font="FontAwesome6Free",
-                fontsize=12,
-                foreground=colors["focused_text"],
-                padding=5,
-                **decorations,
-            ),
-            widget.GenPollText(
-                func=lambda: subprocess.check_output(
-                    "free -m | awk '/^Mem/ {printf \"%.1f\", $3/$2 * 100}'", shell=True
-                ).decode().strip(),
-                update_interval=2,
-                format="{:>4}%",
-                foreground=colors["focused_text"],
-                **defaults,
-                **decorations,
-            ),
-            create_separator(),
-            # CPU Usage
-            widget.TextBox(
-                text="",
-                font="FontAwesome6Free",
-                fontsize=12,
-                foreground=colors["focused_text"],
-                padding=5,
-                **decorations,
-            ),
-            widget.GenPollText(
-                func=lambda: subprocess.check_output(
-                    "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{printf \"%.1f\", 100 - $1}'",
-                    shell=True,
-                ).decode().strip(),
-                update_interval=2,
-                format="{:>4}%",
-                foreground=colors["focused_text"],
-                **defaults,
-                **decorations,
-            ),
-            create_separator(),
-            # CPU Temperature
-            widget.TextBox(
-                text="󰔏",
-                fontsize=15,
-                foreground=colors["focused_text"],
-                padding=5,
-                **decorations,
-            ),
-            widget.GenPollText(
-                func=lambda: subprocess.check_output(
-                    "sensors | grep 'Package id 0:' | awk '{print $4}' | sed 's/+//' | sed 's/°C//'",
-                    shell=True,
-                ).decode().strip(),
-                update_interval=2,
-                format="{:>4}°",
-                foreground=colors["focused_text"],
-                **defaults,
-                **decorations,
-            ),
-        ])
-
-    widgets.append(widget.Sep(linewidth=0, padding=10, **decorations))
-    return widgets
 
 def apps_tray_widgets():
     return [
