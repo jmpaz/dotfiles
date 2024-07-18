@@ -19,5 +19,9 @@ def autostart():
         for command in commands:
             subprocess.Popen(command, shell=True)
     else:
-        # TODO
+        commands = [
+            "kanshi",
+        ]
+        for command in commands:
+            subprocess.Popen(command, shell=True)
         pass
