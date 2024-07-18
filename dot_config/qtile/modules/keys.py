@@ -78,6 +78,29 @@ def toggle_max_layout(qtile):
         current_group.setlayout("max")
 
 
+@lazy.function
+def system_control(qtile, action, device, step=5):
+    if device == "volume":
+        if is_wayland():
+            if action == "mute":
+                return qtile.cmd_spawn("pulsemixer --toggle-mute")
+            elif action == "+":
+                return qtile.cmd_spawn(f"pulsemixer --change-volume +{step}")
+            else:  # action == "-"
+                return qtile.cmd_spawn(f"pulsemixer --change-volume -{step}")
+        else:
+            if action == "mute":
+                return qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+            else:
+                return qtile.cmd_spawn(f"pactl -- set-sink-volume @DEFAULT_SINK@ {action}{step}%")
+    elif device == "brightness":
+        if is_wayland():
+            return qtile.cmd_spawn(f"light -{action} {step}")
+        else:
+            return qtile.cmd_spawn(f"xbacklight -{action} {step}")
+
+
+
 def go_to_group(name: str):
     def _inner(qtile):
         if len(qtile.screens) == 1:
@@ -108,6 +131,7 @@ def go_to_group_and_move_window(name: str):
             qtile.focus_screen(1)
 
     return _inner
+
 
 
 mod = "mod4"
@@ -292,41 +316,17 @@ keys.extend(
     ]
 )
 
-@lazy.function
-def system_control(qtile, action, device, step=5):
-    if device == "volume":
-        if is_wayland():
-            if action == "mute":
-                return qtile.cmd_spawn("pulsemixer --toggle-mute")
-            elif action == "+":
-                return qtile.cmd_spawn(f"pulsemixer --change-volume +{step}")
-            else:  # action == "-"
-                return qtile.cmd_spawn(f"pulsemixer --change-volume -{step}")
-        else:
-            if action == "mute":
-                return qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
-            else:
-                return qtile.cmd_spawn(f"pactl -- set-sink-volume @DEFAULT_SINK@ {action}{step}%")
-    elif device == "brightness":
-        if is_wayland():
-            return qtile.cmd_spawn(f"light -{action} {step}")
-        else:
-            return qtile.cmd_spawn(f"xbacklight -{action} {step}")
-
-# Update your keys list
+# System control
 keys.extend([
-    # Volume controls
     EzKey("<XF86AudioRaiseVolume>", system_control(action="+", device="volume"), desc="Volume Up"),
     EzKey("S-<XF86AudioRaiseVolume>", system_control(action="+", device="volume", step=10), desc="Volume Up (2x)"),
     EzKey("<XF86AudioLowerVolume>", system_control(action="-", device="volume"), desc="Volume Down"),
     EzKey("S-<XF86AudioLowerVolume>", system_control(action="-", device="volume", step=10), desc="Volume Down (2x)"),
     EzKey("<XF86AudioMute>", system_control(action="mute", device="volume"), desc="Toggle Mute"),
 
-    # Brightness controls
     EzKey("<XF86MonBrightnessUp>", system_control(action="A", device="brightness", step=1), desc="Brightness Up"),
     EzKey("<XF86MonBrightnessDown>", system_control(action="U", device="brightness", step=1), desc="Brightness Down"),
 
-    # Media controls (these remain unchanged)
     EzKey("<XF86AudioPlay>", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
     EzKey("<XF86AudioNext>", lazy.spawn("playerctl next"), desc="Next Song"),
     EzKey("<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"),
