@@ -119,7 +119,7 @@ def load_widgets(display):
             widget.Sep(linewidth=0, padding=10),
             ## Volume
             widget.Sep(linewidth=0, padding=10, **decorations),
-            volume_widget()[0],
+            *volume_widget(),
             widget.Sep(linewidth=0, padding=10, **decorations),
             #
             ## Date/Time
@@ -158,92 +158,189 @@ def volume_widget():
         ]
     else:
         return [
+            widget.TextBox(
+                text="󰕾",
+                fontsize=15,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
             widget.GenPollText(
-                func=lambda: subprocess.check_output("pamixer --get-volume", shell=True)
-                .decode()
-                .strip(),
+                func=lambda: "{}%".format(subprocess.check_output('pulsemixer --get-volume | awk \'{print $1}\'', shell=True).decode().strip()),
                 update_interval=0.2,
-                format="󰕾 {}%",
                 foreground=colors["focused_text"],
                 **defaults,
                 **decorations,
             ),
         ]
 
+def get_battery_info():
+    try:
+        acpi_output = subprocess.check_output(["acpi", "-b"], universal_newlines=True).strip()
+        battery_info = acpi_output.split(": ", 1)[1].split(", ")
+        status = battery_info[0].lower()
+        percentage = int(battery_info[1].rstrip("%"))
+
+        icon = "󰁹"
+        if status == "charging":
+            icon = "󰂄"
+        elif percentage <= 10:
+            icon = "󰁺"
+        elif percentage <= 30:
+            icon = "󰁻"
+        elif percentage <= 60:
+            icon = "󰁽"
+        elif percentage <= 90:
+            icon = "󰂀"
+        elif percentage <= 100:
+            icon = "󰁹"
+
+        return f"{icon} {percentage}%"
+    except Exception:
+        return "󰂃 N/A"
+
 
 def performance_widgets():
-    return [
-        widget.Sep(linewidth=0, padding=10, **decorations),
-        # Memory
-        widget.TextBox(
-            text="",
-            font="FontAwesome6Free",
-            fontsize=12,
-            foreground=colors["focused_text"],
-            padding=5,
-            **decorations,
-        ),
-        widget.Memory(
-            foreground=colors["focused_text"],
-            format="{MemPercent}%",
-            measure_mem="M",
-            padding=5,
-            **defaults,
-            **decorations,
-        ),
-        create_separator(),
-        # CPU Usage
-        widget.TextBox(
-            text="",
-            font="FontAwesome6Free",
-            fontsize=12,
-            foreground=colors["focused_text"],
-            padding=5,
-            **decorations,
-        ),
-        widget.CPU(
-            foreground=colors["focused_text"],
-            format="{load_percent}%",
-            padding=5,
-            **defaults,
-            **decorations,
-        ),
-        create_separator(),
-        # CPU Temperature
-        widget.TextBox(
-            text="󰔏",
-            fontsize=15,
-            foreground=colors["focused_text"],
-            padding=5,
-            **decorations,
-        ),
-        widget.ThermalSensor(
-            foreground=colors["focused_text"],
-            **defaults,
-            **decorations,
-            format="{temp:.1f}°",
-        ),
-        widget.TextBox(
-            text="• ", foreground=colors["focused_text"], padding=5, **decorations
-        ),
-        widget.NvidiaSensors(
-            foreground=colors["focused_text"],
-            **defaults,
-            **decorations,
-            gpu_bus_id="01:00.0",
-            format="{temp}°",
-        ),
-        widget.TextBox(
-            text="/", foreground=colors["focused_text"], padding=5, **decorations
-        ),
-        widget.NvidiaSensors(
-            foreground=colors["focused_text"],
-            **defaults,
-            **decorations,
-            gpu_bus_id="02:00.0",
-        ),
-        widget.Sep(linewidth=0, padding=10, **decorations),
-    ]
+    """
+    Returns a list of system performance widgets.
+    rather thrown-together (especially wayland)
+    """
+    widgets = []
+
+    def add_widget(icon, get_value_func, icon_font="FontAwesome6Free", icon_size=12):
+        widgets.extend([
+            widget.Sep(linewidth=0, padding=5, **decorations),
+            widget.TextBox(
+                text=icon,
+                font=icon_font,
+                fontsize=icon_size,
+                foreground=colors["focused_text"],
+                padding=2,
+                **decorations,
+            ),
+            widget.GenPollText(
+                func=get_value_func,
+                update_interval=2,
+                format="{:>4}",
+                foreground=colors["focused_text"],
+                padding=2,
+                **defaults,
+                **decorations,
+            ),
+        ])
+
+    # Memory
+    if is_wayland():
+        widgets.extend([widget.Sep(linewidth=0, padding=5, **decorations)])
+        def get_memory_usage():
+            value = subprocess.check_output(
+                "free -m | awk '/^Mem/ {printf \"%.1f%%\", $3/$2 * 100}'",
+                shell=True,
+            ).decode().strip()
+            return f"  {value} "
+        add_widget("", get_memory_usage)
+    else:
+        widgets.extend([
+            widget.TextBox(
+                text="",
+                font="FontAwesome6Free",
+                fontsize=12,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
+            widget.Memory(
+                foreground=colors["focused_text"],
+                format="{MemPercent}%",
+                measure_mem="M",
+                padding=5,
+                **defaults,
+                **decorations,
+            ),
+        ])
+
+    widgets.append(create_separator(padding=5))
+
+    # CPU Usage
+    if is_wayland():
+        def get_cpu_usage():
+            value = subprocess.check_output(
+                "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{printf \"%.1f%%\", 100 - $1}'",
+                shell=True,
+            ).decode().strip()
+            return f"  {value} "
+        add_widget("", get_cpu_usage)
+    else:
+        widgets.extend([
+            widget.TextBox(
+                text="",
+                font="FontAwesome6Free",
+                fontsize=12,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
+            widget.CPU(
+                foreground=colors["focused_text"],
+                format="{load_percent}%",
+                padding=5,
+                **defaults,
+                **decorations,
+            ),
+        ])
+
+    widgets.append(create_separator(padding=5))
+
+    # CPU Temperature/Battery
+    if is_wayland():
+        add_widget("", get_battery_info, icon_font="Sauce Code Pro Nerd Font", icon_size=15)
+        widgets.extend([widget.Sep(linewidth=0, padding=5, **decorations)])
+    else:
+        widgets.extend([
+            widget.TextBox(
+                text="󰔏",
+                font="Sauce Code Pro Nerd Font",
+                fontsize=15,
+                foreground=colors["focused_text"],
+                padding=5,
+                **decorations,
+            ),
+            widget.ThermalSensor(
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+                format="{temp:.1f}°",
+            ),
+            widget.TextBox(
+                text="• ",
+                foreground=colors["focused_text"],
+                padding=2,
+                **decorations
+            ),
+            widget.NvidiaSensors(
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+                gpu_bus_id="01:00.0",
+                format="{temp}°",
+            ),
+            widget.TextBox(
+                text="/",
+                foreground=colors["focused_text"],
+                padding=2,
+                **decorations
+            ),
+            widget.NvidiaSensors(
+                foreground=colors["focused_text"],
+                **defaults,
+                **decorations,
+                gpu_bus_id="02:00.0"
+            ),
+        ])
+
+    widgets.append(widget.Sep(linewidth=0, padding=5, **decorations))
+    return widgets
+
 
 
 def apps_tray_widgets():
