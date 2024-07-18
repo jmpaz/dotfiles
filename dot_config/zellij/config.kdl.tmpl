@@ -14,7 +14,7 @@ serialize_pane_viewport true
 copy_command "xclip -selection clipboard"
 {{ else if eq .displayServer "wayland" }}
 copy_command "wl-copy"
-else if eq .chezmoi.os "darwin" }}
+{{ else if eq .chezmoi.os "darwin" }}
 copy_command "pbcopy"
 {{ end }}
 theme "custom"
