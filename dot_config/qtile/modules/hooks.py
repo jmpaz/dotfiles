@@ -1,7 +1,8 @@
 import subprocess
 import os
-from libqtile import hook
+from libqtile import hook, qtile
 from .platform import is_wayland
+from .theme import initialize_wallpapers
 
 
 @hook.subscribe.startup_once
@@ -11,7 +12,6 @@ def autostart():
         scripts = ["screens.sh", "rclone_mount.sh"]
         commands = [
             "/home/josh/.nix-profile/bin/redshift",
-            "nitrogen --restore",
             "darkman run",
             "picom",
         ]
@@ -25,3 +25,5 @@ def autostart():
         for command in commands:
             subprocess.Popen(command, shell=True)
         pass
+
+    initialize_wallpapers(qtile)

@@ -3,7 +3,7 @@ import logging
 from libqtile import bar, layout
 from libqtile.config import Match, Screen
 
-from .colors import colors
+from .theme import colors
 from .widgets import load_widgets
 from .platform import get_number_of_screens
 

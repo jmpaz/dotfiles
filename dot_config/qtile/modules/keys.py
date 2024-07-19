@@ -9,6 +9,7 @@ from libqtile.utils import guess_terminal
 
 from .groups import groups
 from .platform import get_number_of_screens, is_wayland
+from .theme import set_wallpaper, initialize_wallpapers
 
 num_screens = get_number_of_screens()
 previous_layouts = {0: None, 1: None}
@@ -100,7 +101,6 @@ def system_control(qtile, action, device, step=5):
             return qtile.cmd_spawn(f"xbacklight -{action} {step}")
 
 
-
 def go_to_group(name: str):
     def _inner(qtile):
         if len(qtile.screens) == 1:
@@ -133,11 +133,10 @@ def go_to_group_and_move_window(name: str):
     return _inner
 
 
-
 mod = "mod4"
 alt = "mod1"
-# hyper = [mod, "shift", "control", alt]
-# hyper_str = "M-S-C-A-"
+hyper = [mod, "shift", "control", alt]
+hyper_str = "M-S-C-A"
 
 terminal = "kitty"
 launcher = "rofi -modi drun,run -show drun" if not is_wayland() else "fuzzel"
@@ -200,7 +199,7 @@ keys = [
         desc="Increase active window size.",
     ),
     EzKey(
-        "M-n",
+        "M-C-n",
         lazy.layout.reset_size(),
         lazy.layout.normalize(),
         desc="Reset all window sizes",
@@ -210,8 +209,8 @@ keys = [
     # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
     EzKey("M-S-<tab>", lazy.screen.prev_group(), desc="Switch to previous group"),
-    EzKey("M-<bracketright>", lazy.screen.next_group(), desc="Switch to next group"),
-    EzKey("M-<bracketleft>", lazy.screen.prev_group(), desc="Switch to next group"),
+    EzKey("M-n", lazy.screen.next_group(), desc="Switch to next group"),
+    EzKey("M-p", lazy.screen.prev_group(), desc="Switch to next group"),
     EzKey("M-<period>", lazy.next_screen(), desc="Move focus to next monitor"),
     EzKey("M-<comma>", lazy.prev_screen(), desc="Move focus to prev monitor"),
     EzKey("M-S-<comma>", lazy.function(window_to_adjacent_screen, "next")),
@@ -227,6 +226,16 @@ keys = [
     #
     ## Chords
     # KeyChord(hyper, "a", []),
+    KeyChord(
+        hyper,
+        "w",
+        [
+            EzKey("n", lazy.function(set_wallpaper, cycle_direction="next")),
+            EzKey("p", lazy.function(set_wallpaper, cycle_direction="prev")),
+            EzKey("r", lazy.function(set_wallpaper, cycle_direction="random")),
+            EzKey("i", lazy.function(initialize_wallpapers)),
+        ],
+    ),
     # KeyChord([mod], "a", []),
     # KeyChord([mod], "g", []),
     # KeyChord([mod], "t", []),
@@ -317,21 +326,47 @@ keys.extend(
 )
 
 # System control
-keys.extend([
-    EzKey("<XF86AudioRaiseVolume>", system_control(action="+", device="volume"), desc="Volume Up"),
-    EzKey("S-<XF86AudioRaiseVolume>", system_control(action="+", device="volume", step=10), desc="Volume Up (2x)"),
-    EzKey("<XF86AudioLowerVolume>", system_control(action="-", device="volume"), desc="Volume Down"),
-    EzKey("S-<XF86AudioLowerVolume>", system_control(action="-", device="volume", step=10), desc="Volume Down (2x)"),
-    EzKey("<XF86AudioMute>", system_control(action="mute", device="volume"), desc="Toggle Mute"),
-
-    EzKey("<XF86MonBrightnessUp>", system_control(action="A", device="brightness", step=1), desc="Brightness Up"),
-    EzKey("<XF86MonBrightnessDown>", system_control(action="U", device="brightness", step=1), desc="Brightness Down"),
-
-    EzKey("<XF86AudioPlay>", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
-    EzKey("<XF86AudioNext>", lazy.spawn("playerctl next"), desc="Next Song"),
-    EzKey("<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"),
-    EzKey("<XF86AudioStop>", lazy.spawn("playerctl stop"), desc="Stop music"),
-])
+keys.extend(
+    [
+        EzKey(
+            "<XF86AudioRaiseVolume>",
+            system_control(action="+", device="volume"),
+            desc="Volume Up",
+        ),
+        EzKey(
+            "S-<XF86AudioRaiseVolume>",
+            system_control(action="+", device="volume", step=10),
+            desc="Volume Up (2x)",
+        ),
+        EzKey(
+            "<XF86AudioLowerVolume>",
+            system_control(action="-", device="volume"),
+            desc="Volume Down",
+        ),
+        EzKey(
+            "S-<XF86AudioLowerVolume>",
+            system_control(action="-", device="volume", step=10),
+            desc="Volume Down (2x)",
+        ),
+        EzKey(
+            "<XF86AudioMute>", system_control(action="mute", device="volume"), desc="Toggle Mute"
+        ),
+        EzKey(
+            "<XF86MonBrightnessUp>",
+            system_control(action="A", device="brightness", step=1),
+            desc="Brightness Up",
+        ),
+        EzKey(
+            "<XF86MonBrightnessDown>",
+            system_control(action="U", device="brightness", step=1),
+            desc="Brightness Down",
+        ),
+        EzKey("<XF86AudioPlay>", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
+        EzKey("<XF86AudioNext>", lazy.spawn("playerctl next"), desc="Next Song"),
+        EzKey("<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"),
+        EzKey("<XF86AudioStop>", lazy.spawn("playerctl stop"), desc="Stop music"),
+    ]
+)
 
 # Mouse bindings
 mouse = [
