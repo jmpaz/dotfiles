@@ -6,7 +6,6 @@
 .config/picom/
 .config/rofi/
 .config/keyd/
-.config/xremap/
 .config/fuzzel
 .config/wezterm/
 {{- end }}
@@ -15,5 +14,17 @@
 .config/aerospace/
 .config/skhd/
 .config/spacebar/
+{{- end }}
+
+{{- if eq .displayServer "X11" }}
+.config/waybar/
+.config/kanshi/
+.config/fuzzel/
+{{- end }}
+
+{{- if eq .displayServer "wayland" }}
+.config/polybar/
+.config/picom/
+.config/rofi/
 {{- end }}
 
