@@ -1,6 +1,7 @@
 from libqtile.config import DropDown, Group, ScratchPad
 from .layout import primary_layouts, secondary_layouts, shared_layouts
 from .platform import get_number_of_screens
+from libqtile.config import Match
 
 
 num_screens = get_number_of_screens()
@@ -44,10 +45,10 @@ scratchpad = ScratchPad(
             height=0.6,
             x=0,
             y=0,
-            opacity=0.95,
+            opacity=1,
         ),
         DropDown(
-            "volume",
+            "audio",
             "pavucontrol",
             width=0.8,
             height=0.8,
@@ -75,6 +76,5 @@ scratchpad = ScratchPad(
             opacity=0.95,
             on_focus_lost_hide=False,
         ),
-        DropDown("bitwarden", "bitwarden", width=0.4, height=0.6, x=0.3, y=0.1),
     ],
 )

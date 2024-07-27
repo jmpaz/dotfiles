@@ -199,12 +199,12 @@ keys = [
         desc="Increase active window size.",
     ),
     EzKey(
-        "M-C-n",
+        "M-A-n",
         lazy.layout.reset_size(),
         lazy.layout.normalize(),
         desc="Reset all window sizes",
     ),
-    EzKey("M-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."),
+    EzKey("M-A-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."),
     #
     # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
@@ -318,10 +318,9 @@ keys.extend(
     [
         # KeyChord([mod], "s", []),
         EzKey("C-M-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
-        EzKey("C-M-v", lazy.group["scratchpad"].dropdown_toggle("volume")),
+        EzKey("C-M-a", lazy.group["scratchpad"].dropdown_toggle("audio")),
         EzKey("C-M-o", lazy.group["scratchpad"].dropdown_toggle("obs")),
         EzKey("C-M-f", lazy.group["scratchpad"].dropdown_toggle("files")),
-        EzKey("C-M-p", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
     ]
 )
 
@@ -373,7 +372,7 @@ mouse = [
     Drag(
         [mod],
         "Button1",
-        lazy.window.set_position_floating(),
+        lazy.window.set_position(),
         start=lazy.window.get_position(),
     ),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),

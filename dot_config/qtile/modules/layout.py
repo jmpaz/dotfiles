@@ -54,7 +54,6 @@ float_classes = [
 ]
 floating_layout = layout.Floating(
     float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
         *[Match(title=title) for title in float_titles],
         *[Match(wm_class=wm_class) for wm_class in float_classes],
