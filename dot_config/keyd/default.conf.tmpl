@@ -17,4 +17,17 @@ h = left
 j = down
 k = up
 l = right
+
 \ = backspace
+backspace = delete
+space = space
+
+left = home
+right = end
+up = pgup
+down = pgdown
+
+{{ if eq .chezmoi.hostname "cd-tower" }}
+[capslock_layer+shift]
+\ = delete
+{{ end }}
