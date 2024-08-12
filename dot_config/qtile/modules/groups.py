@@ -48,6 +48,17 @@ scratchpad = ScratchPad(
             opacity=1,
         ),
         DropDown(
+            "obsidian",
+            "/home/josh/bin/appimage-launch obsidian",
+            match=Match(wm_class="obsidian"),
+            width=0.7,
+            height=0.8,
+            x=0.15,
+            y=0.1,
+            opacity=1,
+            # on_focus_lost_hide=False,
+        ),
+        DropDown(
             "audio",
             "pavucontrol",
             width=0.8,

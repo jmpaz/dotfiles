@@ -41,7 +41,7 @@ else:
 
 float_titles = [
     "Characters",
-    "Bluetooth",
+    "Bluetooth Devices",
     "pinentry",
 ]
 float_classes = [

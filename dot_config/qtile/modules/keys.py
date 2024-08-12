@@ -319,6 +319,7 @@ keys.extend(
         # KeyChord([mod], "s", []),
         EzKey("C-M-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
         EzKey("C-M-a", lazy.group["scratchpad"].dropdown_toggle("audio")),
+        EzKey("C-M-n", lazy.group["scratchpad"].dropdown_toggle("obsidian")),
         EzKey("C-M-o", lazy.group["scratchpad"].dropdown_toggle("obs")),
         EzKey("C-M-f", lazy.group["scratchpad"].dropdown_toggle("files")),
     ]

@@ -91,6 +91,7 @@ def load_widgets(display):
                 borderwidth=2,
                 margin_x=6,
                 disable_drag=True,
+                toggle=False,
                 rounded=False,
                 hide_unused=False,
                 visible_groups=primary_groups if display == 0 else secondary_groups,
