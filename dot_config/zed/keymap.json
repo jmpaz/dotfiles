@@ -13,6 +13,14 @@
       "ctrl-shift-v": "editor::Paste"
     }
   },
+
+  {
+    "context": "Editor && jupyter && !ContextEditor",
+    "bindings": {
+      "ctrl-alt-r": "repl::Run"
+    }
+  },
+
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
     "bindings": {
@@ -25,6 +33,16 @@
     "bindings": {
       "g y shift-g": ["workspace::SendKeystrokes", "shift-v shift-g g y"],
       "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "g shift-d": "editor::GoToDeclaration",
+      "g shift-t": "editor::GoToTypeDefinition",
+      "ctrl-g ctrl-d": "editor::GoToDefinitionSplit",
+      "ctrl-g ctrl-shift-d": "editor::GoToDeclarationSplit",
+      "ctrl-g ctrl-t": "editor::GoToTypeDefinitionSplit"
     }
   },
 
@@ -86,7 +104,6 @@
       "space w s": "project_symbols::Toggle",
       "space p": "outline::Toggle",
       "space shift-p": "project_symbols::Toggle",
-      "space v": "editor::GoToDefinitionSplit",
       "ctrl-w z": "workspace::ToggleZoom",
       "ctrl-w t": "terminal_panel::ToggleFocus",
 
@@ -173,6 +190,7 @@
       "p": "project_panel::Paste",
       "r": "project_panel::Rename",
       "d": "project_panel::Trash",
+      "space e": "workspace::ToggleLeftDock",
       "shift-d": "project_panel::Delete",
       "g y": "project_panel::CopyPath",
       "g shift-y": "project_panel::CopyRelativePath",
@@ -197,8 +215,8 @@
     "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || Terminal",
     "bindings": {
       "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
       "alt-left": "pane::ActivatePrevItem",
+      "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
       "alt-right": "pane::ActivateNextItem",
       "alt-a z": "workspace::ToggleZoom",
       "alt-a n": "workspace::NewTerminal",
@@ -218,14 +236,10 @@
   {
     "context": "ContextEditor > Editor",
     "bindings": {
-      "ctrl-r": null,
+      "ctrl-r": "vim::Redo",
       "alt-r": "assistant::CycleMessageRole",
-      "enter": "assistant::ConfirmCommand",
-      "ctrl-enter": "assistant::Assist",
-      "shift-enter": "editor::Newline",
       "alt-enter": "assistant::Split",
-      "ctrl->": "assistant::QuoteSelection",
-      "alt-y": "assistant::ToggleHistory"
+      "ctrl->": "assistant::QuoteSelection"
     }
   },
 

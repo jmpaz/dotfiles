@@ -78,13 +78,12 @@
     "inline_completion_provider": "supermaven"
   },
   "assistant": {
-    "version": "1",
-    "provider": {
-      "name": "openai",
-      "type": "openai",
-      "default_model": "gpt-4o",
-      "api_url": "http://localhost:4020/v1"
-    }
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4"
+    },
+    "version": "2",
+    "provider": null
   },
 
   "git": {
@@ -93,18 +92,12 @@
     }
   },
 
-  "language_overrides": {
+  "languages": {
     "Python": {
-      "format_on_save": "on",
-      "formatter": {
-        "external": {
-          "command": "bash",
-          "arguments": [
-            "-c",
-            "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
-          ]
-        }
-      }
+      "format_on_save": [
+        { "code_actions": { "source.organizeImports.ruff": true } },
+        { "language_server": { "name": "ruff" } }
+      ]
     }
   }
 }
