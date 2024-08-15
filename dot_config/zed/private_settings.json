@@ -68,8 +68,8 @@
     "font_weight": 500,
     "shell": {
       "with_arguments": {
-        "program": "env",
-        "args": ["SKIP_ZELLIJ=1", "fish"]
+        "program": "/usr/bin/fish",
+        "args": ["-c", "set -x SKIP_ZELLIJ 1; direnv reload; exec fish"]
       }
     }
   },
