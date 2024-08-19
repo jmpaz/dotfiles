@@ -56,7 +56,7 @@ scratchpad = ScratchPad(
             x=0.15,
             y=0.1,
             opacity=1,
-            # on_focus_lost_hide=False,
+            on_focus_lost_hide=False,
         ),
         DropDown(
             "audio",
