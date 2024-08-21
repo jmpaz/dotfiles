@@ -41,15 +41,13 @@
     "light": "Rosé Pine Dawn",
     "dark": "Rosé Pine Moon"
   },
-  "buffer_font_family": "Miracode Nerd Font",
+  "buffer_font_family": "Maple Mono NF",
   "ui_font_family": "Hack Nerd Font",
   "ui_font_size": 18,
-  "buffer_font_size": 18,
+  "buffer_font_size": 19,
   "experimental.theme_overrides": {
     "syntax": {
-      "property": {
-        "font_weight": 700
-      }
+      "property": {}
     }
   },
 
@@ -98,6 +96,14 @@
         { "code_actions": { "source.organizeImports.ruff": true } },
         { "language_server": { "name": "ruff" } }
       ]
+    }
+  },
+
+  "lsp": {
+    "ruff": {
+      "initialization_options": {
+        "settings": {}
+      }
     }
   }
 }

@@ -54,6 +54,8 @@
 
       "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
       "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "alt-a -": "pane::SplitDown",
+      "alt-a |": "pane::SplitRight",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
@@ -82,13 +84,13 @@
       "alt-e shift-l": "editor::OpenExcerptsSplit"
     }
   },
-  {
-    "context": "Editor || Workspace",
-    "bindings": {
-      "ctrl-j": "zed::NoAction",
-      "ctrl-k": "zed::NoAction"
-    }
-  },
+  // {
+  //   "context": "Editor || Workspace",
+  //   "bindings": {
+  //     "ctrl-j": "zed::NoAction",
+  //     "ctrl-k": "zed::NoAction"
+  //   }
+  // },
 
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
@@ -143,8 +145,11 @@
     }
   },
   {
-    "context": "Editor || ProjectPanel || OutlinePanel || CollabPanel || Terminal",
+    "context": "Editor || ProjectPanel || CollabPanel || Terminal",
     "bindings": {
+      "alt-a e": "workspace::ToggleLeftDock",
+      "alt-a alt-e": "project_panel::ToggleFocus",
+      "alt-shift-a alt-shift-e": "outline_panel::ToggleFocus",
       "alt-a h": "workspace::ToggleBottomDock",
       "alt-a \\": "workspace::ToggleRightDock",
       "alt-a alt-\\": "assistant::ToggleFocus",
@@ -174,8 +179,12 @@
       "l": "outline_panel::ExpandSelectedEntry",
       "j": "menu::SelectNext",
       "k": "menu::SelectPrev",
-      "alt-h": "outline_panel::ToggleFocus",
-      "ctrl-h": "outline_panel::ToggleFocus"
+      "alt-h": "outline_panel::CollapseSelectedEntry",
+      "alt-j": "outline_panel::CollapseSelectedEntry",
+      "alt-k": "outline_panel::CollapseSelectedEntry",
+      "alt-l": "outline_panel::ToggleFocus",
+      "ctrl-l": "outline_panel::ToggleFocus",
+      "alt-a alt-e": "outline_panel::ToggleFocus"
     }
   },
 
@@ -191,10 +200,12 @@
       "r": "project_panel::Rename",
       "d": "project_panel::Trash",
       "space e": "workspace::ToggleLeftDock",
+      "alt-a alt-e": "project_panel::ToggleFocus",
       "shift-d": "project_panel::Delete",
       "g y": "project_panel::CopyPath",
       "g shift-y": "project_panel::CopyRelativePath",
       "shift-o": "project_panel::RevealInFileManager",
+      "alt-l": "project_panel::ToggleFocus",
       "ctrl-l": "project_panel::ToggleFocus"
     }
   },
