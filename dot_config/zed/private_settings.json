@@ -63,6 +63,7 @@
 
   "terminal": {
     // "font_size": 17,
+    "button": false,
     "font_weight": 500,
     "shell": {
       "with_arguments": {
@@ -72,10 +73,19 @@
     }
   },
 
+  "collaboration_panel": {
+    "button": false
+  },
+
+  "chat_panel": {
+    "button": false
+  },
+
   "features": {
     "inline_completion_provider": "supermaven"
   },
   "assistant": {
+    "button": false,
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4"

@@ -80,8 +80,8 @@
       "alt-e e": "editor::ExpandExcerpts",
       "alt-e k": "editor::ExpandExcerptsUp",
       "alt-e j": "editor::ExpandExcerptsDown",
-      "alt-e l": "editor::OpenExcerpts",
-      "alt-e shift-l": "editor::OpenExcerptsSplit"
+      "g f": "editor::OpenExcerpts",
+      "g shift-f": "editor::OpenExcerptsSplit"
     }
   },
   // {
@@ -95,11 +95,14 @@
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
+      "\\ z": "workspace::ToggleCenteredLayout",
       "\\ w": "editor::ToggleSoftWrap",
       "\\ n": "editor::ToggleLineNumbers",
       "shift-h": "pane::ActivatePrevItem",
       "shift-l": "pane::ActivateNextItem",
       "space e": "workspace::ToggleLeftDock",
+      "space shift-e": "pane::RevealInProjectPanel",
+      "space shift-f": "editor::RevealInFileManager",
       "space f": "file_finder::Toggle",
       "space s g": "pane::DeploySearch",
       "space d s": "outline::Toggle",
@@ -125,16 +128,20 @@
       "g e": "vim::PreviousSubwordEnd",
 
       "g shift-r": "editor::FindAllReferences",
-      "g a": "editor::ToggleCodeActions",
-      "g r": "editor::Rename",
-      "\\ g b": "editor::ToggleGitBlameInline",
-      "\\ g shift-b": "editor::ToggleGitBlame",
-      "\\ g d": "editor::ToggleHunkDiff",
+      "space x x": "diagnostics::Deploy",
+      "space space": "file_finder::Toggle",
+      "\\ shift-g": "go_to_line::Toggle",
+      "\\ a": "editor::ToggleCodeActions",
+      "\\ r": "editor::Rename",
 
-      "space l l": "diagnostics::Deploy",
-      "space l a": "editor::ToggleCodeActions",
-      "space l r": "editor::Rename",
-      "space l f": "editor::Format",
+      "\\ g b": "editor::ToggleGitBlameInline",
+      "space g b": "editor::ToggleGitBlame",
+      "space g d": "editor::ToggleHunkDiff",
+      "space g r": "editor::RevertSelectedHunks",
+      "space g shift-r": "editor::RevertFile",
+
+      "space c a": "editor::ToggleCodeActions",
+      "space c f": "editor::Format",
 
       "space w": "workspace::Save",
       "space alt-w": "workspace::SaveWithoutFormat",
@@ -251,6 +258,14 @@
       "alt-r": "assistant::CycleMessageRole",
       "alt-enter": "assistant::Split",
       "ctrl->": "assistant::QuoteSelection"
+    }
+  },
+
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      "space space": "file_finder::Toggle",
+      "space f p": "projects::OpenRecent"
     }
   },
 
