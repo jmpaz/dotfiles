@@ -112,11 +112,13 @@
       "ctrl-w z": "workspace::ToggleZoom",
       "ctrl-w t": "terminal_panel::ToggleFocus",
 
-      "space c k": "zed::OpenKeymap",
-      "space c s": "zed::OpenSettings",
-      "space c l": "zed::OpenLocalSettings",
-      "space c shift-k": "zed::OpenDefaultKeymap",
-      "space c shift-s": "zed::OpenDefaultSettings"
+      ", ,": ["editor::HandleInput", ","],
+      ", o s": "zed::OpenSettings",
+      ", o alt-s": "zed::OpenLocalSettings",
+      ", o shift-s": "zed::OpenDefaultSettings",
+      ", o k": "zed::OpenKeymap",
+      ", o shift-k": "zed::OpenDefaultKeymap",
+      ", o alt-shift-k": "vim::OpenDefaultKeymap"
     }
   },
   {
