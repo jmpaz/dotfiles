@@ -2,8 +2,8 @@
 
 ctrl + fn - r : skhd --restart-service
 
-alt - return : open -na "/Applications/kitty.app" ~
-alt - w : open -na "Firefox"
+# alt - return : open -na "/Applications/kitty.app" ~
+# alt - w : open -na "Firefox"
 
 fn - h : aerospace focus left
 fn - j : aerospace focus down
