@@ -17,7 +17,13 @@
   {
     "context": "Editor && jupyter && !ContextEditor",
     "bindings": {
-      "ctrl-alt-r": "repl::Run"
+      "ctrl-alt-r": "repl::Run",
+      ", r r": "repl::Run",
+      ", r space": "repl::Run",
+      ", r enter": "repl::RunInPlace",
+      ", r i": "repl::Interrupt",
+      ", r backspace": "repl::ClearOutputs",
+      ", r c": "repl::ClearOutputs"
     }
   },
 
@@ -47,7 +53,7 @@
   },
 
   {
-    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || Workspace",
     "bindings": {
       "alt-a enter": "assistant::InlineAssist",
       "alt-a >": "assistant::QuoteSelection",
@@ -80,17 +86,11 @@
       "alt-e e": "editor::ExpandExcerpts",
       "alt-e k": "editor::ExpandExcerptsUp",
       "alt-e j": "editor::ExpandExcerptsDown",
+      "alt-e l": "editor::OpenExcerpts",
       "g f": "editor::OpenExcerpts",
       "g shift-f": "editor::OpenExcerptsSplit"
     }
   },
-  // {
-  //   "context": "Editor || Workspace",
-  //   "bindings": {
-  //     "ctrl-j": "zed::NoAction",
-  //     "ctrl-k": "zed::NoAction"
-  //   }
-  // },
 
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
@@ -107,18 +107,29 @@
       "space s g": "pane::DeploySearch",
       "space d s": "outline::Toggle",
       "space w s": "project_symbols::Toggle",
-      "space p": "outline::Toggle",
-      "space shift-p": "project_symbols::Toggle",
+      "space o": "outline::Toggle",
+      "space p": "project_symbols::Toggle",
+      "space t": "task::Spawn",
+      "space alt-b": "branches::OpenRecent",
+      "space alt-p": "projects::OpenRecent",
       "ctrl-w z": "workspace::ToggleZoom",
-      "ctrl-w t": "terminal_panel::ToggleFocus",
 
       ", ,": ["editor::HandleInput", ","],
+      ", o f": "workspace::Open",
       ", o s": "zed::OpenSettings",
-      ", o alt-s": "zed::OpenLocalSettings",
       ", o shift-s": "zed::OpenDefaultSettings",
+      ", o t": "zed::OpenTasks",
+      ", o alt-t": "zed::OpenLocalTasks",
+      ", o alt-s": "zed::OpenLocalSettings",
+      ", o `": "workspace::OpenInTerminal",
       ", o k": "zed::OpenKeymap",
       ", o shift-k": "zed::OpenDefaultKeymap",
-      ", o alt-shift-k": "vim::OpenDefaultKeymap"
+      ", o alt-shift-k": "vim::OpenDefaultKeymap",
+      ", o p": "markdown::OpenPreview",
+      ", o shift-p": "markdown::OpenPreviewToTheSide",
+      ", o l": "assistant::DeployPromptLibrary",
+      ", o x": "zed::Extensions",
+      ", o z": "zed::OpenZedRepo"
     }
   },
   {
@@ -134,7 +145,7 @@
       "space space": "file_finder::Toggle",
       "\\ shift-g": "go_to_line::Toggle",
       "\\ a": "editor::ToggleCodeActions",
-      "\\ r": "editor::Rename",
+      ", shift-r": "editor::Rename",
 
       "\\ g b": "editor::ToggleGitBlameInline",
       "space g b": "editor::ToggleGitBlame",
@@ -154,7 +165,7 @@
     }
   },
   {
-    "context": "Editor || ProjectPanel || CollabPanel || Terminal",
+    "context": "Editor || ProjectPanel || CollabPanel || Terminal || Workspace",
     "bindings": {
       "alt-a e": "workspace::ToggleLeftDock",
       "alt-a alt-e": "project_panel::ToggleFocus",
@@ -220,11 +231,16 @@
   },
 
   {
+    "context": "Pane",
+    "bindings": {
+      "alt-a x": "pane::CloseActiveItem"
+    }
+  },
+  {
     "context": "Terminal",
     "bindings": {
       "ctrl-o": "zed::NoAction",
       "ctrl-w": "zed::NoAction",
-      "alt-a x": "pane::CloseActiveItem",
       "alt-l": "pane::ActivateNextItem",
       "alt-h": "pane::ActivatePrevItem",
       "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
@@ -232,7 +248,7 @@
     }
   },
   {
-    "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || Terminal",
+    "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || (Terminal || Workspace)",
     "bindings": {
       "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
       "alt-left": "pane::ActivatePrevItem",
