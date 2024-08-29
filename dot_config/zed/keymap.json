@@ -15,7 +15,7 @@
   },
 
   {
-    "context": "Editor && jupyter && !ContextEditor",
+    "context": "Editor && jupyter && !ContextEditor && VimControl && !VimWaiting && !menu",
     "bindings": {
       "ctrl-alt-r": "repl::Run",
       ", r r": "repl::Run",
@@ -79,7 +79,7 @@
     }
   },
   {
-    "context": "Pane",
+    "context": "Pane && VimControl && !VimWaiting && !menu",
     "bindings": {
       "ctrl-w": null,
       "ctrl-w x": "pane::CloseActiveItem",
