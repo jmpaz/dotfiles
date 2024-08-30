@@ -38,7 +38,9 @@
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
       "g y shift-g": ["workspace::SendKeystrokes", "shift-v shift-g g y"],
-      "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"]
+      "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"],
+      "alt-v": "editor::SelectEnclosingSymbol",
+      "ctrl-alt-v": ["workspace::SendKeystrokes", "alt-v ctrl-enter"]
     }
   },
   {
@@ -93,8 +95,36 @@
   },
 
   {
-    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+    "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      "g e": "vim::PreviousSubwordEnd",
+
+      "g shift-r": "editor::FindAllReferences",
+      "space x x": "diagnostics::Deploy",
+      "space space": "file_finder::Toggle",
+      "\\ shift-g": "go_to_line::Toggle",
+      "\\ a": "editor::ToggleCodeActions",
+      ", shift-r": "editor::Rename",
+
+      "\\ g b": "editor::ToggleGitBlameInline",
+      "space g b": "editor::ToggleGitBlame",
+      "space g d": "editor::ToggleHunkDiff",
+      "space g r": "editor::RevertSelectedHunks",
+      "space g shift-r": "editor::RevertFile",
+
+      "space c a": "editor::ToggleCodeActions",
+      "space c f": "editor::Format",
+
+      "space w": "workspace::Save",
+      "space alt-w": "workspace::SaveWithoutFormat",
+      "space shift-w": "workspace::SaveAs",
+      "space ctrl-w": "workspace::SaveAll",
+
+      "z s": "editor::UnfoldLines",
+
       "\\ z": "workspace::ToggleCenteredLayout",
       "\\ w": "editor::ToggleSoftWrap",
       "\\ n": "editor::ToggleLineNumbers",
@@ -130,38 +160,6 @@
       ", o l": "assistant::DeployPromptLibrary",
       ", o x": "zed::Extensions",
       ", o z": "zed::OpenZedRepo"
-    }
-  },
-  {
-    "context": "Editor && VimControl && !VimWaiting && !menu",
-    "bindings": {
-      "w": "vim::NextSubwordStart",
-      "b": "vim::PreviousSubwordStart",
-      "e": "vim::NextSubwordEnd",
-      "g e": "vim::PreviousSubwordEnd",
-
-      "g shift-r": "editor::FindAllReferences",
-      "space x x": "diagnostics::Deploy",
-      "space space": "file_finder::Toggle",
-      "\\ shift-g": "go_to_line::Toggle",
-      "\\ a": "editor::ToggleCodeActions",
-      ", shift-r": "editor::Rename",
-
-      "\\ g b": "editor::ToggleGitBlameInline",
-      "space g b": "editor::ToggleGitBlame",
-      "space g d": "editor::ToggleHunkDiff",
-      "space g r": "editor::RevertSelectedHunks",
-      "space g shift-r": "editor::RevertFile",
-
-      "space c a": "editor::ToggleCodeActions",
-      "space c f": "editor::Format",
-
-      "space w": "workspace::Save",
-      "space alt-w": "workspace::SaveWithoutFormat",
-      "space shift-w": "workspace::SaveAs",
-      "space ctrl-w": "workspace::SaveAll",
-
-      "z s": "editor::UnfoldLines"
     }
   },
   {
