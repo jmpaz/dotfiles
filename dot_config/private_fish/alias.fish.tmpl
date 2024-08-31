@@ -7,12 +7,12 @@ alias yz='yazi'
 alias lg='lazygit'
 
 alias zj='zellij'
-alias zjr='zellij_refresh'
+abbr -a zjr 'zellij_refresh'
 
 alias cz='chezmoi'
-alias cz-e='chezmoi edit'
-alias cz-w='chezmoi edit --watch'
-alias cza='chezmoi apply'
+abbr -a cze 'chezmoi edit'
+abbr -a czw 'chezmoi edit --watch'
+abbr -a cza 'chezmoi apply'
 alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && qtile cmd-obj -o cmd -f reload_config{{ end }}'
 
 {{ if eq .chezmoi.os "darwin" }}
@@ -31,18 +31,17 @@ alias pip='pip_wrapper'
 alias print-staged='git ls-files --stage | awk "{print \$4}" | grep -v -e "__init__.py" -e "requirements.txt" -e ".gitignore"'
 
 # contextualize
-alias cx='contextualize'
-alias cxxc='collect_context'
+abbr -a cx 'contextualize'
+abbr -a cxxc 'collect_context'
 # contextualize cat
-alias cxc='contextualize cat'
-alias cxcc='contextualize cat --output clipboard'
-# alias cxce='contextualize cat | nvim -c "set ft=markdown" -'  # these need to be functions
-# alias cxce='contextualize-edit cat'
+abbr -a cxc 'contextualize cat'
+abbr -a cxcc 'contextualize cat --output clipboard'
+# abbr -a cxce 'contextualize cat | nvim -c "set ft=markdown" -'  # these need to be functions
+# abbr -a cxce 'contextualize-edit cat'
 # contextualize fetch
-alias cxf='contextualize fetch'
-alias cxfc='contextualize fetch --output clipboard'
-# alias cxfe='contextualize fetch | nvim -c "set ft=markdown" -'
-# alias cxfe='contextualize-edit fetch'
+abbr -a cxf 'contextualize fetch'
+abbr -a cxfc 'contextualize fetch --output clipboard'
+# abbr -a cxfe 'contextualize fetch | nvim -c "set ft=markdown" -'
+# abbr -a cxfe 'contextualize-edit fetch'
 
 alias nvim-scratch="nvim --cmd 'let g:no_startscreen = 1' --cmd 'set wrap'"
-
