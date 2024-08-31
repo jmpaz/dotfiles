@@ -4,13 +4,13 @@ local act = wezterm.action
 local config = {
 	enable_wayland = false,
 
-	default_cursor_style = "BlinkingBlock",
+	-- force_reverse_video_cursor = true,
+	default_cursor_style = "BlinkingUnderline",
 	animation_fps = 60,
 	font = wezterm.font_with_fallback({
-		{ family = "Geist Mono" },
-		{ family = "Monaspace Argon" },
+		{ family = "Maple Mono NF", weight = "Regular" },
 	}),
-	font_size = 15,
+	font_size = 14,
 
 	inactive_pane_hsb = {
 		saturation = 0.55,
@@ -24,9 +24,9 @@ local config = {
 	window_background_opacity = 0.9,
 
 	window_padding = {
-		top = "0cell",
-		left = 20,
-		right = 15,
+		top = "0.85cell",
+		left = 23,
+		right = 20,
 		bottom = 0,
 	},
 
