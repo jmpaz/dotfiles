@@ -1,8 +1,7 @@
-from libqtile.config import DropDown, Group, ScratchPad
+from libqtile.config import DropDown, Group, Match, ScratchPad
+
 from .layout import primary_layouts, secondary_layouts, shared_layouts
 from .platform import get_number_of_screens
-from libqtile.config import Match
-
 
 num_screens = get_number_of_screens()
 groups = []
@@ -40,7 +39,8 @@ scratchpad = ScratchPad(
     [
         DropDown(
             "term",
-            "wezterm",
+            "wezterm-gui start --class 'scratchpad'",
+            match=Match(wm_class="scratchpad"),
             width=0.997,
             height=0.6,
             x=0,
