@@ -40,7 +40,7 @@ scratchpad = ScratchPad(
     [
         DropDown(
             "term",
-            "kitty",
+            "wezterm",
             width=0.997,
             height=0.6,
             x=0,
