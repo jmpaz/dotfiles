@@ -145,6 +145,7 @@
       "ctrl-w z": "workspace::ToggleZoom",
 
       ", ,": ["editor::HandleInput", ","],
+      ", c t": "theme_selector::Toggle",
       ", o f": "workspace::Open",
       ", o s": "zed::OpenSettings",
       ", o shift-s": "zed::OpenDefaultSettings",
