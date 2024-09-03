@@ -39,8 +39,7 @@ scratchpad = ScratchPad(
     [
         DropDown(
             "term",
-            "wezterm-gui start --class 'scratchpad'",
-            match=Match(wm_class="scratchpad"),
+            "alacritty",
             width=0.997,
             height=0.6,
             x=0,

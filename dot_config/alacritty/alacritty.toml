@@ -1,0 +1,25 @@
+import = ["colors.toml"]
+
+[window]
+padding = { x = 23, y = 14 }
+opacity = 0.9
+decorations = "None"
+
+[font]
+normal = { family = "Maple Mono NF", style = "Regular" }
+bold = { family = "Maple Mono NF", style = "Bold" }
+italic = { family = "Maple Mono NF", style = "Italic" }
+bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
+size = 11
+
+[cursor]
+style = { shape = "Underline", blinking = "Off" }
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+bindings = [
+    { key = "C", mods = "Control|Shift", action = "Copy" },
+    { key = "V", mods = "Control|Shift", action = "Paste" },
+]
