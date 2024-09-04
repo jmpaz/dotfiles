@@ -67,7 +67,7 @@
     "shell": {
       "with_arguments": {
         "program": "/usr/bin/fish",
-        "args": ["-c", "set -x SKIP_ZELLIJ 1; direnv reload; exec fish"]
+        "args": ["-c", "set -x SKIP_TMUX 1; direnv reload; exec fish"]
       }
     }
   },

@@ -45,8 +45,14 @@ if status is-interactive
     sleep 0.05 # Workaround for zellij-org/zellij#2126
     {{ end -}}
 
-    if test -z "$SKIP_ZELLIJ"  
+    if test "$USE_ZELLIJ"
       eval (zellij setup --generate-auto-start fish | string collect)
+    end
+
+    if test -z "$SKIP_TMUX"
+      if not set -q TMUX
+        tmux -f ~/.config/tmux/tmux.conf
+      end
     end
 
     atuin init fish --disable-up-arrow | source
@@ -54,6 +60,7 @@ if status is-interactive
     # ctrl + up
     bind \e\[1\;5A _atuin_search
     bind -M insert \e\[1\;5A _atuin_search
+
 end
 
 # pyenv
