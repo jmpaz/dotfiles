@@ -9,6 +9,12 @@ function fish_user_key_bindings
     fish_vi_key_bindings --no-erase insert
 end
 
+set fish_cursor_default block
+set fish_cursor_insert underscore
+set fish_cursor_replace_one underscore
+set fish_cursor_replace underscore
+set fish_cursor_external line
+
 {{ if eq .chezmoi.os "linux" }}
 fish_add_path /home/josh/.local/bin
 fish_add_path /home/josh/.nix-profile/bin
