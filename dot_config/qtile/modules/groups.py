@@ -38,12 +38,23 @@ scratchpad = ScratchPad(
     "scratchpad",
     [
         DropDown(
-            "term",
-            "alacritty",
+            "drop-term",
+            "alacritty --class drop-term",
+            match=Match(wm_class="drop-term"),
             width=0.997,
             height=0.6,
             x=0,
             y=0,
+            opacity=1,
+        ),
+        DropDown(
+            "float-term",
+            "alacritty --class float-term",
+            match=Match(wm_class="float-term"),
+            width=0.6,
+            height=0.6,
+            x=0.2,
+            y=0.2,
             opacity=1,
         ),
         DropDown(

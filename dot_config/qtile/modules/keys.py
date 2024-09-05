@@ -9,23 +9,29 @@ from libqtile.utils import guess_terminal
 
 from .groups import groups
 from .platform import get_number_of_screens, is_wayland
-from .theme import set_wallpaper, initialize_wallpapers
+from .theme import initialize_wallpapers, set_wallpaper
 
 num_screens = get_number_of_screens()
 previous_layouts = {0: None, 1: None}
 
 
 # Helper functions
-def window_to_adjacent_screen(qtile, direction, switch_group=False, focus_window=True, wrap=True):
+def window_to_adjacent_screen(
+    qtile, direction, switch_group=False, focus_window=True, wrap=True
+):
     num_screens = len(qtile.screens)
     current_index = qtile.screens.index(qtile.current_screen)
 
     if direction == "next":
         target_index = (
-            (current_index + 1) % num_screens if wrap else min(current_index + 1, num_screens - 1)
+            (current_index + 1) % num_screens
+            if wrap
+            else min(current_index + 1, num_screens - 1)
         )
     elif direction == "prev":
-        target_index = (current_index - 1) % num_screens if wrap else max(current_index - 1, 0)
+        target_index = (
+            (current_index - 1) % num_screens if wrap else max(current_index - 1, 0)
+        )
     else:
         return  # Invalid direction
 
@@ -93,7 +99,9 @@ def system_control(qtile, action, device, step=5):
             if action == "mute":
                 return qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
             else:
-                return qtile.cmd_spawn(f"pactl -- set-sink-volume @DEFAULT_SINK@ {action}{step}%")
+                return qtile.cmd_spawn(
+                    f"pactl -- set-sink-volume @DEFAULT_SINK@ {action}{step}%"
+                )
     elif device == "brightness":
         if is_wayland():
             return qtile.cmd_spawn(f"light -{action} {step}")
@@ -204,7 +212,9 @@ keys = [
         lazy.layout.normalize(),
         desc="Reset all window sizes",
     ),
-    EzKey("M-A-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."),
+    EzKey(
+        "M-A-r", lazy.layout.reset(), desc="Reset the sizes of all windows in group."
+    ),
     #
     # Manage groups/monitors
     EzKey("M-<tab>", lazy.screen.next_group(), desc="Switch to next group"),
@@ -297,7 +307,11 @@ for i in groups:
         keys.extend(
             [
                 Key([mod], i.name, lazy.function(go_to_group(i.name))),
-                Key([mod, "shift"], i.name, lazy.function(go_to_group_and_move_window(i.name))),
+                Key(
+                    [mod, "shift"],
+                    i.name,
+                    lazy.function(go_to_group_and_move_window(i.name)),
+                ),
             ]
         )
     elif i.name in ["I", "II", "III", "IV", "V"] and num_screens > 1:
@@ -317,7 +331,8 @@ for i in groups:
 keys.extend(
     [
         # KeyChord([mod], "s", []),
-        EzKey("C-M-<grave>", lazy.group["scratchpad"].dropdown_toggle("term")),
+        EzKey("C-M-<grave>", lazy.group["scratchpad"].dropdown_toggle("drop-term")),
+        EzKey("C-M-<return>", lazy.group["scratchpad"].dropdown_toggle("float-term")),
         EzKey("C-M-a", lazy.group["scratchpad"].dropdown_toggle("audio")),
         EzKey("C-M-n", lazy.group["scratchpad"].dropdown_toggle("obsidian")),
         EzKey("C-M-o", lazy.group["scratchpad"].dropdown_toggle("obs")),
@@ -349,7 +364,9 @@ keys.extend(
             desc="Volume Down (2x)",
         ),
         EzKey(
-            "<XF86AudioMute>", system_control(action="mute", device="volume"), desc="Toggle Mute"
+            "<XF86AudioMute>",
+            system_control(action="mute", device="volume"),
+            desc="Toggle Mute",
         ),
         EzKey(
             "<XF86MonBrightnessUp>",
@@ -363,7 +380,9 @@ keys.extend(
         ),
         EzKey("<XF86AudioPlay>", lazy.spawn("playerctl play-pause"), desc="Play/Pause"),
         EzKey("<XF86AudioNext>", lazy.spawn("playerctl next"), desc="Next Song"),
-        EzKey("<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"),
+        EzKey(
+            "<XF86AudioPrev>", lazy.spawn("playerctl previous"), desc="Previous Song"
+        ),
         EzKey("<XF86AudioStop>", lazy.spawn("playerctl stop"), desc="Stop music"),
     ]
 )
@@ -376,6 +395,8 @@ mouse = [
         lazy.window.set_position(),
         start=lazy.window.get_position(),
     ),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]

@@ -14,6 +14,7 @@ def autostart():
             "/home/josh/.nix-profile/bin/redshift",
             "darkman run",
             "picom",
+            "xset r rate 260 30",
         ]
         commands += [os.path.join(scripts_path, script) for script in scripts]
         for command in commands:
