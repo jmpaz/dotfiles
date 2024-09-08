@@ -18,6 +18,7 @@
     "context": "Editor && jupyter && !ContextEditor && VimControl && !VimWaiting && !menu",
     "bindings": {
       "ctrl-alt-r": "repl::Run",
+      ", ctrl-alt-r": "repl::Restart",
       ", r r": "repl::Run",
       ", r space": "repl::Run",
       ", r enter": "repl::RunInPlace",
@@ -64,6 +65,8 @@
       "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
       "alt-a -": "pane::SplitDown",
       "alt-a |": "pane::SplitRight",
+      "alt-a alt-_": "pane::SplitUp",
+      "alt-a alt-|": "pane::SplitLeft",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
