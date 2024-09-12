@@ -86,8 +86,8 @@
   "assistant": {
     "button": false,
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4"
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-20240620-fast-edit"
     },
     "version": "2",
     "provider": null
@@ -104,11 +104,24 @@
     }
   },
 
+  "jupyter": {
+    "enabled": true,
+    "kernel_selections": {
+    }
+  },
   "languages": {
     "Python": {
       "format_on_save": [
-        { "code_actions": { "source.organizeImports.ruff": true } },
-        { "language_server": { "name": "ruff" } }
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": true
+          }
+        },
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        }
       ]
     }
   },
