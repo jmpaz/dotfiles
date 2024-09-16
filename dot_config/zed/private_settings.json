@@ -95,7 +95,7 @@
   "slash_commands": {
     "docs": {
       "enabled": true
-    },
+    }
   },
 
   "git": {
@@ -106,8 +106,7 @@
 
   "jupyter": {
     "enabled": true,
-    "kernel_selections": {
-    }
+    "kernel_selections": {}
   },
   "languages": {
     "Python": {
@@ -125,6 +124,8 @@
       ]
     }
   },
+
+  "middle_click_paste": false,
 
   "lsp": {
     "ruff": {
