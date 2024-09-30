@@ -40,6 +40,7 @@
     "bindings": {
       "g y shift-g": ["workspace::SendKeystrokes", "shift-v shift-g g y"],
       "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"],
+      "shift-y": ["workspace::SendKeystrokes", "y $"],
       "alt-v": "editor::SelectEnclosingSymbol",
       "ctrl-alt-v": ["workspace::SendKeystrokes", "alt-v ctrl-enter"]
     }
@@ -67,6 +68,7 @@
       "alt-a |": "pane::SplitRight",
       "alt-a alt-_": "pane::SplitUp",
       "alt-a alt-|": "pane::SplitLeft",
+      "alt-a p": "pane::TogglePinTab",
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
@@ -149,6 +151,7 @@
 
       ", ,": ["editor::HandleInput", ","],
       ", c t": "theme_selector::Toggle",
+      ", n j": "journal::NewJournalEntry",
       ", o f": "workspace::Open",
       ", o s": "zed::OpenSettings",
       ", o shift-s": "zed::OpenDefaultSettings",

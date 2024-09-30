@@ -14,6 +14,11 @@
     "default_width": 350
   },
 
+  "preview_tabs": {
+    "enabled": true,
+    "enable_preview_from_code_navigation": true
+  },
+
   "gutter": {
     // "folds": false,
     "code_actions": false
@@ -24,7 +29,11 @@
 
   "active_pane_magnification": 1.2,
   "current_line_highlight": "gutter",
-  "use_autoclose": false,
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+  "use_autoclose": true,
   "always_treat_brackets_as_autoclosed": true,
 
   "vim_mode": true,
@@ -100,7 +109,8 @@
 
   "git": {
     "inline_blame": {
-      "enabled": false
+      "enabled": true,
+      "delay_ms": 500
     }
   },
 
@@ -110,7 +120,9 @@
   },
   "languages": {
     "Python": {
-      "format_on_save": [
+      "language_servers": ["ruff"],
+      "format_on_save": "on",
+      "formatter": [
         {
           "code_actions": {
             "source.organizeImports.ruff": true
