@@ -3,14 +3,15 @@ import = ["colors.toml"]
 [window]
 padding = { x = 23, y = 14 }
 opacity = 0.9
-decorations = "None"
+{{if eq .chezmoi.os "linux"}}decorations = "None"{{else if eq .chezmoi.os "darwin"}}decorations = "Buttonless"{{end}}
+option_as_alt = "Both"
 
 [font]
 normal = { family = "Maple Mono NF", style = "Regular" }
 bold = { family = "Maple Mono NF", style = "Bold" }
 italic = { family = "Maple Mono NF", style = "Italic" }
 bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
-size = 11
+{{if eq .chezmoi.os "linux"}}size = 11{{else if eq .chezmoi.os "darwin"}}size = 14{{end}}
 
 [cursor]
 style = { shape = "Underline", blinking = "Off" }
@@ -23,3 +24,9 @@ bindings = [
     { key = "C", mods = "Control|Shift", action = "Copy" },
     { key = "V", mods = "Control|Shift", action = "Paste" },
 ]
+
+{{ if eq .chezmoi.os "darwin" }}
+[shell]
+program = "/opt/homebrew/bin/fish"
+args = ["-c", "env USE_ZELLIJ=1 SKIP_TMUX=1 fish"]
+{{ end }}
