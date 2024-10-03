@@ -11,7 +11,8 @@
   },
 
   "outline_panel": {
-    "default_width": 350
+    "default_width": 420,
+    "indent_size": 18
   },
 
   "preview_tabs": {

@@ -170,24 +170,25 @@
     }
   },
   {
-    "context": "Editor || ProjectPanel || CollabPanel || Terminal || Workspace",
+    "context": "Editor || ProjectPanel || CollabPanel || OutlinePanel || Terminal || Workspace",
     "bindings": {
       "alt-a e": "workspace::ToggleLeftDock",
       "alt-a alt-e": "project_panel::ToggleFocus",
-      "alt-shift-a alt-shift-e": "outline_panel::ToggleFocus",
+      "alt-a alt-o": "outline_panel::ToggleFocus",
+      "alt-a alt-tab": "outline_panel::ToggleFocus",
+      "alt-a alt-c": "collab_panel::ToggleFocus",
       "alt-a h": "workspace::ToggleBottomDock",
       "alt-a \\": "workspace::ToggleRightDock",
       "alt-a alt-\\": "assistant::ToggleFocus",
       "alt-a alt-h": "terminal_panel::ToggleFocus",
       "alt--": "project_panel::ToggleFocus",
       "alt-=": "outline_panel::ToggleFocus",
-      "alt-backspace": "collab_panel::ToggleFocus",
       "alt-\\": "assistant::ToggleFocus"
     }
   },
 
   {
-    "context": "(ProjectPanel || OutlinePanel ) && not_editing",
+    "context": "ProjectPanel && not_editing",
     "bindings": {
       "space": null,
       "space e": "workspace::ToggleLeftDock",
@@ -200,16 +201,13 @@
     "bindings": {
       "enter": "outline_panel::Open",
       "g y": "outline_panel::CopyPath",
-      "h": "outline_panel::CollapseSelectedEntry",
-      "l": "outline_panel::ExpandSelectedEntry",
       "j": "menu::SelectNext",
       "k": "menu::SelectPrev",
       "alt-h": "outline_panel::CollapseSelectedEntry",
-      "alt-j": "outline_panel::CollapseSelectedEntry",
-      "alt-k": "outline_panel::CollapseSelectedEntry",
+      "alt-shift-h": "outline_panel::ExpandSelectedEntry",
       "alt-l": "outline_panel::ToggleFocus",
       "ctrl-l": "outline_panel::ToggleFocus",
-      "alt-a alt-e": "outline_panel::ToggleFocus"
+      "alt-p": "outline_panel::ToggleActiveEditorPin"
     }
   },
 
