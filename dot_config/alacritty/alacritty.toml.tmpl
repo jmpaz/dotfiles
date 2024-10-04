@@ -1,10 +1,13 @@
-import = ["colors.toml"]
+import = ["~/.config/alacritty/colors.toml"]
 
 [window]
 padding = { x = 23, y = 14 }
 opacity = 1
-{{if eq .chezmoi.os "linux"}}decorations = "None"{{else if eq .chezmoi.os "darwin"}}decorations = "Buttonless"{{end}}
+{{- if eq .chezmoi.os "darwin"}}
+dimensions = { lines = 52, columns = 160 }
 option_as_alt = "Both"
+{{- end}}
+{{if eq .chezmoi.os "linux"}}decorations = "None"{{else if eq .chezmoi.os "darwin"}}decorations = "Buttonless"{{end}}
 
 [font]
 normal = { family = "Maple Mono NF", style = "Regular" }
