@@ -2,7 +2,7 @@ import = ["colors.toml"]
 
 [window]
 padding = { x = 23, y = 14 }
-opacity = 0.9
+opacity = 1
 decorations = "None"
 
 [font]

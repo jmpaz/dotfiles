@@ -58,7 +58,7 @@ if status is-interactive
 
     if test -z "$SKIP_TMUX"
       if not set -q TMUX
-        tmux
+        TERM=xterm-256color tmux
       end
     end
 
