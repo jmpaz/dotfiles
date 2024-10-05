@@ -47,4 +47,5 @@ neovim = { src = 'neopywal.vim', target = '~/.cache/wallust/colors_neopywal.vim'
 {{- if eq .displayServer "X11" }}
 xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xresources' }
 rofi = { src = 'rofi.rasi', target = '~/.config/rofi/wal.rasi', new_engine = true }
+tmux = { src = 'tmux.conf', target = '~/.config/tmux/status.conf', new_engine = true }
 {{ end -}}

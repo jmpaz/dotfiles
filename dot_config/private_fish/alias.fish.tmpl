@@ -13,7 +13,7 @@ alias cz='chezmoi'
 abbr -a cze 'chezmoi edit'
 abbr -a czw 'chezmoi edit --watch'
 abbr -a cza 'chezmoi apply'
-alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && qtile cmd-obj -o cmd -f reload_config{{ end }}'
+alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && qtile cmd-obj -o cmd -f reload_config && tmux source-file ~/.config/tmux/tmux.conf{{ end }}'
 
 {{ if eq .chezmoi.os "darwin" }}
 alias copy='pbcopy'
