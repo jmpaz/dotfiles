@@ -1,0 +1,71 @@
+#!/bin/bash
+source "$HOME/.config/sketchybar/colors.sh"
+
+BAR_OPACITY=0.8  # Adjust to set opacity
+ALPHA=$(printf "%02X" $(echo "$BAR_OPACITY * 255" | bc | cut -d'.' -f1))
+TRANSPARENT_BACKGROUND="0x80${BACKGROUND_COLOR:4}"
+
+# Extract the background color without the leading "0xff"
+TRANSPARENT_BACKGROUND="0x${ALPHA}${BACKGROUND_COLOR:4}"
+
+# Base config
+sketchybar --bar height=38 \
+                 position=top \
+                 padding_left=10 \
+                 padding_right=10 \
+                 color=$TRANSPARENT_BACKGROUND \
+                 corner_radius=0 \
+                 border_width=0 \
+                 y_offset=0 \
+                 blur_radius=30 \
+                 sticky=off \
+                 notch_width=200
+
+
+# Global defaults
+sketchybar --default icon.font="Hack Nerd Font:Bold:12.0" \
+                icon.color=$FOREGROUND_COLOR \
+                label.font="Hack Nerd Font:Bold:12.0" \
+                label.color=$FOREGROUND_COLOR \
+                padding_left=2 \
+                padding_right=2 \
+                label.padding_left=2 \
+                label.padding_right=2 \
+                icon.padding_left=2 \
+                icon.padding_right=2
+
+
+# Left items
+sketchybar --add item window_title left \
+           --set window_title script="$HOME/.config/sketchybar/plugins/window_title.sh" \
+                update_freq=1 \
+                label.color=$FOREGROUND_COLOR
+
+
+# Right items
+sketchybar --add item clock right \
+            --set clock update_freq=10 \
+                script="$HOME/.config/sketchybar/plugins/clock.sh" \
+                padding_left=0 \
+                padding_right=15 \
+                label.padding_left=5 \
+                label.padding_right=10
+
+sketchybar --add item right_status right \
+            --set right_status script="$HOME/.config/sketchybar/plugins/right_status.sh" \
+                update_freq=1 \
+                background.color=$COLOR7 \
+                background.corner_radius=5 \
+                background.height=22 \
+                padding_left=0 \
+                padding_right=5 \
+                label.padding_left=2 \
+                label.padding_right=15 \
+                icon.padding_left=0 \
+                icon.padding_right=0 \
+                label.font="Hack Nerd Font:Regular:11.0" \
+                label.color=$BACKGROUND_COLOR \
+
+
+# Finalizing setup
+sketchybar --update

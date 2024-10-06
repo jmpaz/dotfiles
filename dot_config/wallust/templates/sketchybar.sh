@@ -1,0 +1,21 @@
+#!/bin/bash
+
+export BACKGROUND_COLOR="0xff{{background | strip}}"
+export FOREGROUND_COLOR="0xff{{foreground | strip}}"
+
+export COLOR0="0xff{{color0 | strip}}"
+export COLOR1="0xff{{color1 | strip}}"
+export COLOR2="0xff{{color2 | strip}}"
+export COLOR3="0xff{{color3 | strip}}"
+export COLOR4="0xff{{color4 | strip}}"
+export COLOR5="0xff{{color5 | strip}}"
+export COLOR6="0xff{{color6 | strip}}"
+export COLOR7="0xff{{color7 | strip}}"
+export COLOR8="0xff{{color8 | strip}}"
+export COLOR9="0xff{{color9 | strip}}"
+export COLOR10="0xff{{color10 | strip}}"
+export COLOR11="0xff{{color11 | strip}}"
+export COLOR12="0xff{{color12 | strip}}"
+export COLOR13="0xff{{color13 | strip}}"
+export COLOR14="0xff{{color14 | strip}}"
+export COLOR15="0xff{{color15 | strip}}"
