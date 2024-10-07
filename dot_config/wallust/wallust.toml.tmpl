@@ -51,3 +51,6 @@ xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xreso
 rofi = { src = 'rofi.rasi', target = '~/.config/rofi/wal.rasi', new_engine = true }
 tmux = { src = 'tmux.conf', target = '~/.config/tmux/theme.conf', new_engine = true }
 {{ end -}}
+{{- if eq .chezmoi.os "darwin" }}
+sketchybar = { src = 'sketchybar.sh', target = '~/.config/sketchybar/colors.sh', new_engine = true }
+{{ end -}}
