@@ -50,11 +50,11 @@ fish_add_path -P ~/.rye/shims
 zoxide init fish --cmd cd | source
 
 if status is-interactive
-    {{ if eq .displayServer "wayland" -}}
-    sleep 0.05 # Workaround for zellij-org/zellij#2126
-    {{ end -}}
 
     if test "$USE_ZELLIJ"
+      {{ if eq .displayServer "wayland" -}}
+      sleep 0.05 # Workaround for zellij-org/zellij#2126
+      {{ end -}}
       eval (zellij setup --generate-auto-start fish | string collect)
     end
 
