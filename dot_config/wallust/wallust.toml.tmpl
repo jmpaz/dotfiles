@@ -46,10 +46,10 @@ kitty = { src = 'kitty.conf', target = '~/.config/kitty/colors.conf', new_engine
 alacritty = { src = 'alacritty.toml', target = '~/.config/alacritty/colors.toml', new_engine = true }
 chezmoi = { src = 'chezmoi.toml', target = '~/.local/share/chezmoi/.toml/colors.toml', new_engine = true }
 neovim = { src = 'neopywal.vim', target = '~/.cache/wallust/colors_neopywal.vim', new_engine = true }
+tmux = { src = 'tmux.conf', target = '~/.config/tmux/theme.conf', new_engine = true }
 {{- if eq .displayServer "X11" }}
 xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xresources' }
 rofi = { src = 'rofi.rasi', target = '~/.config/rofi/wal.rasi', new_engine = true }
-tmux = { src = 'tmux.conf', target = '~/.config/tmux/theme.conf', new_engine = true }
 {{ end -}}
 {{- if eq .chezmoi.os "darwin" }}
 sketchybar = { src = 'sketchybar.sh', target = '~/.config/sketchybar/colors.sh', new_engine = true }
