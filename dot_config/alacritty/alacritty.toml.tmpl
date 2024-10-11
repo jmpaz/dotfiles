@@ -1,4 +1,5 @@
 # vim: ft=toml
+[general]
 import = ["~/.config/alacritty/colors.toml"]
 
 [window]
@@ -15,7 +16,7 @@ normal = { family = "Maple Mono NF", style = "Regular" }
 bold = { family = "Maple Mono NF", style = "Bold" }
 italic = { family = "Maple Mono NF", style = "Italic" }
 bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
-{{if eq .chezmoi.os "linux"}}size = 11{{else if eq .chezmoi.os "darwin"}}size = 14{{end}}
+{{if eq .chezmoi.os "linux"}}size = 10{{else if eq .chezmoi.os "darwin"}}size = 14{{end}}
 
 [cursor]
 style = { shape = "Underline", blinking = "Off" }
