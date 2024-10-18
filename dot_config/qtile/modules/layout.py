@@ -10,8 +10,8 @@ from .platform import get_number_of_screens
 layout_theme = {
     "border_focus": colors["focused_border"],
     "border_normal": colors["unfocused_border"],
-    "border_width": 4,
-    "margin": 2,
+    "border_width": 2,
+    "margin": 8,
 }
 
 
@@ -59,7 +59,7 @@ floating_layout = layout.Floating(
         *[Match(wm_class=wm_class) for wm_class in float_classes],
     ],
     fullscreen_border_width=0,
-    border_width=5,
+    border_width=2,
     border_focus=colors["focused_border"],
     border_normal=colors["unfocused_border"],
 )
