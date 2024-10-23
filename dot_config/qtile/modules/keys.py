@@ -146,7 +146,7 @@ alt = "mod1"
 hyper = [mod, "shift", "control", alt]
 hyper_str = "M-S-C-A"
 
-terminal = "alacritty"
+terminal = "kitty"
 launcher = "rofi -modi drun,run -show drun" if not is_wayland() else "fuzzel"
 
 
