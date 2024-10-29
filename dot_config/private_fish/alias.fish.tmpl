@@ -15,11 +15,13 @@ abbr -a cw 'colorweave'
 abbr -a cws 'colorweave scheme'
 abbr -a cww 'colorweave wallpaper'
 
+alias kitty-reload='kill -SIGUSR1 (pgrep kitty)'
+
 alias cz='chezmoi'
 abbr -a cze 'chezmoi edit'
 abbr -a czw 'chezmoi edit --watch'
 abbr -a cza 'chezmoi apply'
-alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates{{ if eq .chezmoi.os "linux" }} && qtile cmd-obj -o cmd -f reload_config && tmux source-file ~/.config/tmux/tmux.conf{{ end }}'
+alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates && kitty-reload{{ if eq .chezmoi.os "linux" }} && qtile cmd-obj -o cmd -f reload_config && tmux source-file ~/.config/tmux/tmux.conf{{ end }}'
 
 {{ if eq .chezmoi.os "darwin" }}
 alias copy='pbcopy'
