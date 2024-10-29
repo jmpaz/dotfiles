@@ -93,11 +93,39 @@
   "features": {
     "inline_completion_provider": "supermaven"
   },
+  "language_models": {
+    "openai": {
+      "version": "1",
+      "api_url": "https://api.consciousdata.dev/v1",
+      "available_models": [
+        {
+          "name": "claude-haiku",
+          "display_name": "Claude 3 Haiku",
+          "max_tokens": 200000
+        },
+        {
+          "name": "claude-sonnet",
+          "display_name": "Claude 3.5 Sonnet (New)",
+          "max_tokens": 200000
+        },
+        {
+          "name": "claude-sonnet-old",
+          "display_name": "Claude 3.5 Sonnet (Old)",
+          "max_tokens": 200000
+        },
+        {
+          "name": "claude-opus",
+          "display_name": "Claude 3 Opus",
+          "max_tokens": 200000
+        }
+      ]
+    }
+  },
   "assistant": {
     "button": false,
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-20240620-fast-edit"
+      "provider": "openai",
+      "model": "claude-sonnet"
     },
     "version": "2",
     "provider": null
@@ -121,12 +149,13 @@
   },
   "languages": {
     "Python": {
-      "language_servers": ["ruff"],
+      "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",
       "formatter": [
         {
           "code_actions": {
             "source.organizeImports.ruff": true
+            //"source.fixAll.ruff": false
           }
         },
         {
@@ -137,14 +166,30 @@
       ]
     }
   },
-
-  "middle_click_paste": false,
-
   "lsp": {
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "diagnosticMode": "workspace"
+          // "typeCheckingMode": "strict"
+        },
+        "python": {
+          "pythonPath": ".venv/bin/python"
+        }
+      }
+    },
     "ruff": {
       "initialization_options": {
-        "settings": {}
+        "settings": {
+          // "lineLength": 80,
+          "lint": {
+            // isort
+            // "extendSelect": ["I"]
+          }
+        }
       }
     }
-  }
+  },
+
+  "middle_click_paste": false
 }
