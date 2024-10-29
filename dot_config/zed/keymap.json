@@ -129,6 +129,11 @@
       "space ctrl-w": "workspace::SaveAll",
 
       "z s": "editor::UnfoldLines",
+      "z A": "editor::ToggleFoldRecursive",
+      "z C": "editor::FoldRecursive",
+      "z S": "editor::UnfoldRecursive",
+      "z alt-c": "editor::FoldAll",
+      "z alt-s": "editor::UnfoldAll",
 
       "\\ z": "workspace::ToggleCenteredLayout",
       "\\ w": "editor::ToggleSoftWrap",
