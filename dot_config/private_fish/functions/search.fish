@@ -1,56 +1,90 @@
 function search
-    set -l engine perplexity # Default search engine
-    set -l query ""
-
-    # Parse arguments
-    for arg in $argv
-        switch $arg
-            case -a
-                set engine "are.na"
-            case -p
-                set engine perplexity
-            case -m
-                set engine metaphor
-            case -gh
-                set engine github
-            case -sg
-                set engine sourcegraph
-            case --dest -d
-                if set -q argv[2]
-                    set engine $argv[2]
-                    set argv $argv[2..-1]
-                else
-                    echo "Error: No search engine specified after --dest or -d"
-                    return 1
-                end
-            case '*'
-                if test -z $query
-                    set query $arg
-                end
-        end
+    if contains -- --help $argv; or contains -- -h $argv
+        echo "Usage: search [options] [query]"
+        echo
+        echo "Options:"
+        echo "  -c, --clipboard    Inject clipboard content into search"
+        echo "  -p, --provider     Provider to use (default: claude)"
+        echo "  -h, --help         Show this help message"
+        echo
+        echo "Examples:"
+        echo "  search \"what is an inframodel\""
+        echo "  search -c \"explain this code\""
+        echo "  search -p chatgpt \"how do I write a fish function\""
+        return 0
     end
 
-    # Construct URL based on the selected search engine
-    switch $engine
-        case perplexity
-            set url "https://www.perplexity.ai/search?q=$query&focus=internet&copilot=true"
-        case metaphor
-            set url "https://search.metaphor.systems/search?q=$query&filters=%7B%22domainFilterType%22%3A%22include%22%2C%22timeFilterOption%22%3A%22any_time%22%2C%22activeTabFilter%22%3A%22all%22%7D"
-        case are.na
-            set url "https://sander.are.na/search?q={%22term%22%3A{%22facet%22%3A%22$query%22}}"
-        case github
-            set url "https://github.com/search?q=$query&type=code"
-        case sourcegraph
-            set url "https://sourcegraph.com/search?q=$query"
-        case '*'
-            echo "Unsupported search engine: $engine"
-            return 1
-    end
-
-    # Determine the OS and use the appropriate command to open the URL
-    if uname | grep -iq darwin
-        open $url
+    set -l clipboard_cmd
+    if type -q pbpaste # macOS
+        set clipboard_cmd pbpaste
+    else if type -q wl-paste # Wayland
+        set clipboard_cmd "wl-paste"
+    else if type -q xclip # X11
+        set clipboard_cmd "xclip -selection clipboard -o"
     else
-        xdg-open $url
+        echo "Error: No clipboard command found. Please install xclip (X11) or wl-paste (Wayland)." >&2
+        return 1
+    end
+
+    # Parse arguments for --clipboard/-c flag
+    set -l clipboard_mode 0
+    set -l other_args
+    set -l query_text
+    set -l provider_set 0
+
+    set -l i 1
+    while test $i -le (count $argv)
+        set -l arg $argv[$i]
+        switch $arg
+            case --clipboard -c
+                set clipboard_mode 1
+            case -p --provider
+                # Skip both the flag and its value
+                set -a other_args $arg
+                set i (math $i + 1)
+                set -a other_args $argv[$i]
+                set provider_set 1
+            case '*'
+                # Assume everything else is part of the query
+                set -a query_text $arg
+        end
+        set i (math $i + 1)
+    end
+
+    # Set default provider if none specified
+    if test $provider_set -eq 0
+        set -a other_args -p claude
+    end
+
+    # If not in clipboard mode, just forward everything to s
+    if test $clipboard_mode -eq 0
+        s $other_args $query_text
+        return
+    end
+
+    # Get clipboard content and preserve formatting
+    set -l clip_content (eval $clipboard_cmd | string collect)
+
+    # Check if clipboard is empty
+    if test -z "$clip_content"
+        echo "Error: Clipboard is empty" >&2
+        return 1
+    end
+
+    # Format clipboard content according to presence/absence of triple backticks
+    if string match -q '*```*' -- "$clip_content"
+        begin
+            echo '<paste>'
+            echo $clip_content
+            echo '</paste>'
+            test (count $query_text) -gt 0 && echo $query_text
+        end | s $other_args
+    else
+        begin
+            echo '```paste'
+            echo $clip_content
+            echo '```'
+            test (count $query_text) -gt 0 && echo $query_text
+        end | s $other_args
     end
 end
