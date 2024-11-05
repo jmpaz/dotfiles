@@ -100,7 +100,7 @@
       "available_models": [
         {
           "name": "claude-haiku",
-          "display_name": "Claude 3 Haiku",
+          "display_name": "Claude 3.5 Haiku",
           "max_tokens": 200000
         },
         {
@@ -109,8 +109,13 @@
           "max_tokens": 200000
         },
         {
+          "name": "claude-haiku-old",
+          "display_name": "Claude 3 Haiku",
+          "max_tokens": 200000
+        },
+        {
           "name": "claude-sonnet-old",
-          "display_name": "Claude 3.5 Sonnet (Old)",
+          "display_name": "Claude 3.5 Sonnet",
           "max_tokens": 200000
         },
         {
@@ -125,7 +130,7 @@
     "button": false,
     "default_model": {
       "provider": "openai",
-      "model": "claude-sonnet"
+      "model": "claude-haiku-old"
     },
     "version": "2",
     "provider": null
