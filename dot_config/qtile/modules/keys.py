@@ -146,7 +146,8 @@ alt = "mod1"
 hyper = [mod, "shift", "control", alt]
 hyper_str = "M-S-C-A"
 
-terminal = "kitty"
+terminal = "alacritty"
+terminal_alt = "kitty"
 launcher = "rofi -modi drun,run -show drun" if not is_wayland() else "fuzzel"
 
 
@@ -154,7 +155,7 @@ keys = [
     ########
     ## Windows
     EzKey("M-<return>", lazy.spawn(terminal), desc="Launch terminal"),
-    EzKey("M-S-<return>", lazy.spawn(guess_terminal()), desc="Fallback terminal"),
+    EzKey("M-S-<return>", lazy.spawn(terminal_alt), desc="Fallback terminal"),
     EzKey("M-<space>", lazy.spawn(launcher), desc="Launch rofi"),
     #
     EzKey("M-S-q", lazy.window.kill(), desc="Kill focused window"),
