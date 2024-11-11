@@ -42,7 +42,12 @@
       "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"],
       "shift-y": ["workspace::SendKeystrokes", "y $"],
       "alt-v": "editor::SelectEnclosingSymbol",
-      "ctrl-alt-v": ["workspace::SendKeystrokes", "alt-v ctrl-enter"]
+      "ctrl-alt-v": ["workspace::SendKeystrokes", "alt-v ctrl-enter"],
+      "backspace": "vim::PreviousWordStart",
+      "shift-backspace": [
+        "vim::PreviousWordStart",
+        { "ignorePunctuation": true }
+      ]
     }
   },
   {

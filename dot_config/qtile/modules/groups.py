@@ -69,6 +69,16 @@ scratchpad = ScratchPad(
             on_focus_lost_hide=False,
         ),
         DropDown(
+            "vial",
+            "/home/josh/bin/appimage-launch Vial",
+            match=Match(wm_class="Vial"),
+            width=0.7,
+            height=0.8,
+            x=0.15,
+            y=0.1,
+            opacity=1,
+        ),
+        DropDown(
             "audio",
             "pavucontrol",
             width=0.8,
