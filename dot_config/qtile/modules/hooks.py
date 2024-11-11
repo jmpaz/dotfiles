@@ -15,6 +15,8 @@ def autostart():
             "darkman run",
             "picom",
             "xset r rate 260 30",
+            "setxkbmap -option misc:typo,lv3:ralt_switch",
+            "numlockx on",
         ]
         commands += [os.path.join(scripts_path, script) for script in scripts]
         for command in commands:
