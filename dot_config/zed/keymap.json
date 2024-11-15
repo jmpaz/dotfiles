@@ -176,7 +176,9 @@
       ", o shift-p": "markdown::OpenPreviewToTheSide",
       ", o l": "assistant::DeployPromptLibrary",
       ", o x": "zed::Extensions",
-      ", o z": "zed::OpenZedRepo"
+      ", o z": "zed::OpenZedRepo",
+      ", d k": "debug::OpenKeyContextView",
+      ", d t": "debug::OpenThemePreview"
     }
   },
   {
@@ -286,9 +288,10 @@
     "context": "ContextEditor > Editor",
     "bindings": {
       "ctrl-r": "vim::Redo",
-      "alt-r": "assistant::CycleMessageRole",
-      "alt-enter": "assistant::Split",
-      "ctrl->": "assistant::QuoteSelection"
+      "ctrl->": "assistant::QuoteSelection",
+      ", r": "assistant::CycleMessageRole",
+      ", s": "assistant::Split",
+      ", enter": "assistant::Assist"
     }
   },
 
