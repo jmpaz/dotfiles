@@ -1,9 +1,10 @@
 # vim: ft=fish
 
-source ~/.config/fish/alias.fish
-source ~/.asdf/asdf.fish
-
 set -U fish_greeting ""
+source ~/.config/fish/alias.fish
+{{- if (ne .chezmoi.hostname "silverblue") }}
+source ~/.asdf/asdf.fish
+{{- end }}
 
 # vi + emacs bindings
 function fish_user_key_bindings
@@ -18,9 +19,8 @@ set fish_cursor_replace underscore
 set fish_cursor_external line
 
 {{ if eq .chezmoi.os "linux" }}
-fish_add_path /home/josh/.local/bin
 fish_add_path /home/josh/.nix-profile/bin
-fish_add_path /home/josh/Tools/consciousdata-cli/bin
+fish_add_path /home/josh/.local/bin
 {{ else if eq .chezmoi.os "darwin" }}
 fish_add_path /Users/josh/.local/bin
 fish_add_path /opt/homebrew/bin
@@ -28,6 +28,9 @@ fish_add_path /usr/local/bin
 fish_add_path /Users/josh/.nix-profile/bin
 fish_add_path /nix/var/nix/profiles/default/bin
 {{ end }}
+{{- if (eq .chezmoi.hostname "silverblue") }}
+fish_add_path /nix/var/nix/profiles/default/bin/
+{{- end }}
 
 # Add flatpak dirs to path
 set -gx XDG_DATA_DIRS $XDG_DATA_DIRS ~/.nix-profile/share/applications
@@ -74,22 +77,19 @@ if status is-interactive
 end
 
 # pyenv
-{{ if eq .chezmoi.os "linux" }}
+{{ if (and (eq .chezmoi.os "linux") (ne .chezmoi.hostname "silverblue")) }}
 set PYENV_ROOT /home/josh/.pyenv
 {{ else if eq .chezmoi.os "darwin" }}
 set PYENV_ROOT /Users/josh/.pyenv
 {{ end }}
+{{ if (ne .chezmoi.hostname "silverblue") }}
 set PYTHON_CONFIGURE_OPTS "--with-tcltk-includes='-I/usr/include' --with-tcltk-libs='-L/usr/lib64'"
 fish_add_path $PYENV_ROOT/bin
 pyenv init - | source
-
-
-# Configure Jump
-status --is-interactive; and source (jump shell fish | psub)
+{{ end }}
 
 # Set editor
 set -gx EDITOR nvim
-
 
 # Syntax highlighting
 set -g fish_color_autosuggestion 555 brblack
@@ -125,5 +125,5 @@ starship init fish | source
 export DIRENV_LOG_FORMAT="$(printf "\033[34mdirenv: %%s")"
 direnv hook fish | source
 
-source ~/.config/fish/functions/load_env.fish
-load_env
+# source ~/.config/fish/functions/load_env.fish
+# load_env
