@@ -5,12 +5,13 @@ if [ -n "$TMUX" ]; then
     popup_session="popup_${current_window}"
     current_session=$(tmux display-message -p '#{session_name}')
 
-    if [[ "$current_session" == popup_* ]]; then
-        # in a popup session, so detach
+    if [[ "$current_session" =~ ^popup_ ]]; then
         tmux detach-client || exit 1
     else
-        # not in a popup, so create one for this window
-        tmux popup -d '#{pane_current_path}' -xC -yC -w80% -h80% -E "tmux attach -t $popup_session || tmux new-session -s $popup_session" || exit 1
+        if ! tmux has-session -t "$popup_session" 2>/dev/null; then
+            tmux new-session -d -s "$popup_session" -c '#{pane_current_path}' || exit 1
+        fi
+        tmux popup -d '#{pane_current_path}' -xC -yC -w80% -h80% -E "tmux attach-session -t $popup_session" || exit 1
     fi
 else
     echo "Not in a tmux session" >&2
