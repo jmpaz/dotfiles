@@ -11,9 +11,16 @@ riverctl spawn wlsunset
 riverctl background-color 0x002b36
 riverctl border-color-focused 0x93a1a1
 riverctl border-color-unfocused 0x586e75
+riverctl border-width 2
 
 # keyboard
 riverctl set-repeat 30 260
+
+## cursor behavior
+riverctl hide-cursor timeout 10000 # 10 seconds
+riverctl hide-cursor when-typing enabled
+riverctl set-cursor-warp on-focus-change
+# riverctl xcursor-theme "Bibata-Modern-Classic" 18
 
 ## startup layout / focus
 # default layout generator and parameters
@@ -108,14 +115,69 @@ for mode in normal locked; do
     riverctl map $mode None XF86MonBrightnessDown spawn 'brightnessctl s 5%-'
 done
 
-# rules for specific apps, e.g., floating windows or client-side decorations
-# riverctl rule-add -app-id 'float_app' float
-# riverctl rule-add -app-id 'csd_app' csd
+## floating mode
+riverctl declare-mode floating
+riverctl map normal Super+Alt F enter-mode floating
+riverctl map floating None Escape enter-mode normal
 
-# additional services
-# riverctl spawn pipewire
-# riverctl spawn pipewire-pulse
-# riverctl spawn wireplumber
+# resize floating windows by 25px
+riverctl map -repeat floating None H resize horizontal -25
+riverctl map -repeat floating None J resize vertical 25
+riverctl map -repeat floating None K resize vertical -25
+riverctl map -repeat floating None L resize horizontal 25
+
+# move floating windows by 25px
+riverctl map -repeat floating Super H move left 25
+riverctl map -repeat floating Super J move down 25
+riverctl map -repeat floating Super K move up 25
+riverctl map -repeat floating Super L move right 25
+
+# snap floating windows to screen edges
+riverctl map floating Super+Shift H snap left
+riverctl map floating Super+Shift J snap down
+riverctl map floating Super+Shift K snap up
+riverctl map floating Super+Shift L snap right
+
+## resize mode
+riverctl declare-mode resize
+riverctl map normal Super+Alt R enter-mode resize
+riverctl map resize None Escape enter-mode normal
+
+# adjust layout main location
+riverctl map resize None Up send-layout-cmd rivertile "main-location top"
+riverctl map resize None Right send-layout-cmd rivertile "main-location right"
+riverctl map resize None Down send-layout-cmd rivertile "main-location bottom"
+riverctl map resize None Left send-layout-cmd rivertile "main-location left"
+
+# adjust layout ratios
+riverctl map resize Super H send-layout-cmd rivertile "main-ratio -0.05"
+riverctl map resize Super L send-layout-cmd rivertile "main-ratio +0.05"
+
+# adjust layout counts
+riverctl map resize Super+Shift H send-layout-cmd rivertile "main-count +1"
+riverctl map resize Super+Shift L send-layout-cmd rivertile "main-count -1"
+
+## rules
+# fullscreen rules
+riverctl rule-add -app-id "mpv" fullscreen
+riverctl rule-add -app-id "org.pwmt.zathura" fullscreen
+riverctl rule-add -app-id "feh" fullscreen
+
+# floating rules
+riverctl rule-add -app-id "galculator" float
+riverctl rule-add -app-id "org.kde.kcalc" float
+riverctl rule-add -app-id "blueman-manager" float
+riverctl rule-add -app-id "nm-connection-editor" float
+riverctl rule-add -app-id "org.pulseaudio.pavucontrol" float
+riverctl rule-add -app-id 'GParted' float
+riverctl rule-add -app-id 'nwg-look' float
+riverctl rule-add -app-id 'firefox' -title 'Picture-in-Picture' float
+
+## clipboard management
+riverctl spawn "wl-paste --type text --watch cliphist store"
+riverctl spawn "wl-paste --type image --watch cliphist store"
+
+riverctl map normal Super V spawn "cliphist list | rofi -dmenu -p 'Clipboard' -config $HOME/.config/rofi/regular.rasi | cliphist decode | wl-copy"
 
 # environment initialization
 exec dbus-update-activation-environment --all
