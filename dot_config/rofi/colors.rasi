@@ -1,0 +1,123 @@
+// vim:ft=rasi
+* {
+  font:                   "JetBrainsMono Nerd Font 10";
+  foreground:             #DEE0EF;
+  background:             #202231;
+  highlight:              #6B6D7C;
+
+  pink:                   #D1918F;
+  old-highlight:          #6B6D7C;
+  red:                    #D1918F;
+  darkred:                #D1918F;
+  yellow:                 #A392DC;
+  darkyellow:             #A392DC;
+  lightblue:              #D6B4B4;
+  oldforeground:          #DEE0EF;
+  altblue:                #A0B6E8;
+  altwhite:               #DEE0EF;
+  white:                  #DEE0EF;
+
+  b5:                     #202231;
+  b4:                     #202231;
+  b3:                     #202231;
+  b2:                     #202231;
+  b1:                     #202231;
+
+  lightgray:              #DEE0EF;
+  mediumgray:             #DEE0EF;
+  darkgray:               #202231;
+  black:                  #202231;
+  darkblack:              #202231;
+}
+
+element-icon {
+  size: 18;
+}
+
+element-text {
+  highlight:        @highlight;
+}
+
+window {
+  border-color:     @foreground;
+}
+
+inputbar {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+prompt {
+  text-color:       @background;
+  background-color: @foreground;
+}
+
+textbox-prompt-colon {
+  text-color:       @background;
+  background-color: @foreground;
+}
+
+message {
+  text-color: @foreground;
+  background-color: @background;
+}
+
+entry {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+listview {
+  background-color: @background;
+}
+
+mode-switcher {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+button {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+button selected {
+  text-color:       @background;
+  background-color: @foreground;
+}
+
+element {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+element normal.normal {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element normal.active {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element selected.normal {
+  text-color:       @background;
+  background-color: @foreground;
+}
+
+element selected.active {
+  background-color: @foreground;
+  text-color:       @background;
+}
+
+element alternate.normal {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element alternate.active {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
