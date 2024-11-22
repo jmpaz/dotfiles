@@ -10,6 +10,10 @@ source ~/.asdf/asdf.fish
 function fish_user_key_bindings
     fish_default_key_bindings -M insert
     fish_vi_key_bindings --no-erase insert
+
+    # backspace to go back a word
+    bind -M default \b backward-word
+    bind -M default \x7f backward-word
 end
 
 set fish_cursor_default block
