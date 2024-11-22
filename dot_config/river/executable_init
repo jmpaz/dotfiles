@@ -71,9 +71,15 @@ scratchpad_tag=$((1 << 19))
 riverctl map normal Super P toggle-focused-tags $scratchpad_tag
 riverctl map normal Super+Shift P set-view-tags $scratchpad_tag
 
-# sticky (tag 31)
-sticky_tag=$((1 << 30))
-riverctl map normal Super S toggle-focused-tags $sticky_tag
+## modes
+# screenshot
+riverctl declare-mode screenshot
+riverctl map normal Super S enter-mode screenshot
+riverctl map screenshot None Escape enter-mode normal
+riverctl map screenshot None F spawn 'grim - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
+riverctl map screenshot None R spawn 'grim -g "$(slurp)" - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
+
+
 
 ## layouts
 # adjust main ratio and count for rivertile layout
