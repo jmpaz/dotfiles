@@ -28,3 +28,9 @@
 .config/picom/
 {{- end }}
 
+{{- if and (eq .displayServer "wayland") (eq .chezmoi.hostname "silverblue") }}
+.config/i3/
+.config/fuzzel/
+.config/keyd/
+.config/zellij/
+{{- end }}
