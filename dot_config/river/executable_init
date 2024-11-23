@@ -7,6 +7,10 @@ riverctl spawn nm-applet
 riverctl spawn waybar
 riverctl spawn wlsunset
 
+# layout generator
+riverctl default-layout rivercarro
+~/.nix-profile/bin/rivercarro -outer-gaps 0 -per-tag &
+
 # visual
 riverctl background-color 0x002b36
 riverctl border-color-focused 0x93a1a1
@@ -20,12 +24,7 @@ riverctl set-repeat 30 260
 riverctl hide-cursor timeout 10000 # 10 seconds
 riverctl hide-cursor when-typing enabled
 riverctl set-cursor-warp on-focus-change
-# riverctl xcursor-theme "Bibata-Modern-Classic" 18
-
-## startup layout / focus
-# default layout generator and parameters
-riverctl default-layout rivertile
-rivertile -view-padding 2 -outer-padding 2 -main-ratio 0.5 -main-count 1 &
+riverctl xcursor-theme "Bibata-Modern-Classic" 18
 
 # ensure focus follows cursor behavior
 riverctl focus-follows-cursor always
@@ -79,20 +78,22 @@ riverctl map screenshot None Escape enter-mode normal
 riverctl map screenshot None F spawn 'grim - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
 riverctl map screenshot None R spawn 'grim -g "$(slurp)" - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
 
-
-
 ## layouts
-# adjust main ratio and count for rivertile layout
-riverctl map normal Super H send-layout-cmd rivertile "main-ratio -0.05"
-riverctl map normal Super L send-layout-cmd rivertile "main-ratio +0.05"
-riverctl map normal Super+Shift H send-layout-cmd rivertile "main-count +1"
-riverctl map normal Super+Shift L send-layout-cmd rivertile "main-count -1"
+# adjust main ratio and count for rivercarro layout
+riverctl map normal Super H send-layout-cmd rivercarro "main-ratio -0.05"
+riverctl map normal Super L send-layout-cmd rivercarro "main-ratio +0.05"
+riverctl map normal Super+Shift H send-layout-cmd rivercarro "main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd rivercarro "main-count -1"
 
 # change layout orientation
-riverctl map normal Super Up send-layout-cmd rivertile "main-location top"
-riverctl map normal Super Right send-layout-cmd rivertile "main-location right"
-riverctl map normal Super Down send-layout-cmd rivertile "main-location bottom"
-riverctl map normal Super Left send-layout-cmd rivertile "main-location left"
+riverctl map normal Super Up send-layout-cmd rivercarro "main-location top"
+riverctl map normal Super Right send-layout-cmd rivercarro "main-location right"
+riverctl map normal Super Down send-layout-cmd rivercarro "main-location bottom"
+riverctl map normal Super Left send-layout-cmd rivercarro "main-location left"
+
+# monocle/cycle
+riverctl map normal Super M send-layout-cmd rivercarro "main-location monocle"
+riverctl map normal Super W send-layout-cmd rivercarro "main-location-cycle left,monocle"
 
 ## fullscreen, float, zoom
 riverctl map normal Super Space toggle-float
@@ -150,18 +151,18 @@ riverctl map normal Super+Alt R enter-mode resize
 riverctl map resize None Escape enter-mode normal
 
 # adjust layout main location
-riverctl map resize None Up send-layout-cmd rivertile "main-location top"
-riverctl map resize None Right send-layout-cmd rivertile "main-location right"
-riverctl map resize None Down send-layout-cmd rivertile "main-location bottom"
-riverctl map resize None Left send-layout-cmd rivertile "main-location left"
+riverctl map resize None Up send-layout-cmd rivercarro "main-location top"
+riverctl map resize None Right send-layout-cmd rivercarro "main-location right"
+riverctl map resize None Down send-layout-cmd rivercarro "main-location bottom"
+riverctl map resize None Left send-layout-cmd rivercarro "main-location left"
 
 # adjust layout ratios
-riverctl map resize Super H send-layout-cmd rivertile "main-ratio -0.05"
-riverctl map resize Super L send-layout-cmd rivertile "main-ratio +0.05"
+riverctl map resize Super H send-layout-cmd rivercarro "main-ratio -0.05"
+riverctl map resize Super L send-layout-cmd rivercarro "main-ratio +0.05"
 
 # adjust layout counts
-riverctl map resize Super+Shift H send-layout-cmd rivertile "main-count +1"
-riverctl map resize Super+Shift L send-layout-cmd rivertile "main-count -1"
+riverctl map resize Super+Shift H send-layout-cmd rivercarro "main-count +1"
+riverctl map resize Super+Shift L send-layout-cmd rivercarro "main-count -1"
 
 ## rules
 # fullscreen rules
@@ -189,4 +190,3 @@ riverctl map normal Super V spawn "cliphist list | rofi -dmenu -p 'Clipboard' -c
 exec dbus-update-activation-environment --all
 exec gnome-keyring-daemon --start --components=secrets
 exec /usr/libexec/pam_kwallet_init
-
