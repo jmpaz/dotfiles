@@ -1,0 +1,198 @@
+#!/bin/sh
+
+# system services
+riverctl spawn "/usr/libexec/xfce-polkit"
+riverctl spawn kanshi
+riverctl spawn nm-applet
+riverctl spawn waybar
+riverctl spawn start_wlsunset
+
+# layout generator
+riverctl default-layout rivercarro
+~/.nix-profile/bin/rivercarro -inner-gaps 5 -outer-gaps 5 -per-tag &
+
+# visual
+riverctl background-color 0x002b36
+riverctl border-color-focused 0x93a1a1
+riverctl border-color-unfocused 0x586e75
+riverctl border-width 1
+
+# keyboard
+riverctl set-repeat 30 260
+
+## cursor behavior
+riverctl hide-cursor timeout 10000 # 10 seconds
+riverctl hide-cursor when-typing enabled
+riverctl set-cursor-warp on-focus-change
+riverctl xcursor-theme "Bibata-Modern-Classic" 18
+
+# ensure focus follows cursor behavior
+riverctl focus-follows-cursor always
+
+### Keybindings
+## window management
+# launch terminal and application launcher
+riverctl map normal Super Return spawn '~/.local/bin/ghostty'
+riverctl map normal Super D spawn "rofi -show drun"
+
+# close windows
+riverctl map normal Super+Shift Q close
+
+# focus/swap views
+riverctl map normal Super J focus-view next
+riverctl map normal Super K focus-view previous
+riverctl map normal Super+Shift J swap next
+riverctl map normal Super+Shift K swap previous
+
+# move views
+riverctl map normal Super+Alt H move left 100
+riverctl map normal Super+Alt J move down 100
+riverctl map normal Super+Alt K move up 100
+riverctl map normal Super+Alt L move right 100
+
+## tag management
+for i in $(seq 1 9); do
+    tag=$((1 << ($i - 1)))
+    riverctl map normal Super $i set-focused-tags $tag
+    riverctl map normal Super+Shift $i set-view-tags $tag
+    riverctl map normal Super+Control $i toggle-focused-tags $tag
+    riverctl map normal Super+Shift+Control $i toggle-view-tags $tag
+done
+
+# focus all tags
+all_tags=$(((1 << 32) - 1))
+riverctl map normal Super 0 set-focused-tags $all_tags
+riverctl map normal Super+Shift 0 set-view-tags $all_tags
+
+## extra tags
+# scratchpad (tag 20)
+scratchpad_tag=$((1 << 19))
+riverctl map normal Super P toggle-focused-tags $scratchpad_tag
+riverctl map normal Super+Shift P set-view-tags $scratchpad_tag
+
+## modes
+# screenshot
+riverctl declare-mode screenshot
+riverctl map normal Super S enter-mode screenshot
+riverctl map screenshot None Escape enter-mode normal
+riverctl map screenshot None F spawn 'grim - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
+riverctl map screenshot None R spawn 'grim -g "$(slurp)" - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
+
+## layouts
+# adjust main ratio and count for rivercarro layout
+riverctl map normal Super H send-layout-cmd rivercarro "main-ratio -0.05"
+riverctl map normal Super L send-layout-cmd rivercarro "main-ratio +0.05"
+riverctl map normal Super+Shift H send-layout-cmd rivercarro "main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd rivercarro "main-count -1"
+
+# change layout orientation
+riverctl map normal Super Up send-layout-cmd rivercarro "main-location top"
+riverctl map normal Super Right send-layout-cmd rivercarro "main-location right"
+riverctl map normal Super Down send-layout-cmd rivercarro "main-location bottom"
+riverctl map normal Super Left send-layout-cmd rivercarro "main-location left"
+
+# monocle/cycle
+riverctl map normal Super M send-layout-cmd rivercarro "main-location monocle"
+riverctl map normal Super W send-layout-cmd rivercarro "main-location-cycle left,monocle"
+
+## fullscreen, float, zoom
+riverctl map normal Super Space toggle-float
+riverctl map normal Super F toggle-fullscreen
+riverctl map normal Super+Shift Return zoom
+
+## mouse
+riverctl map-pointer normal Super BTN_LEFT move-view
+riverctl map-pointer normal Super BTN_RIGHT resize-view
+riverctl map-pointer normal Super BTN_MIDDLE toggle-float
+
+## media/brightness
+for mode in normal locked; do
+    # volume
+    riverctl map $mode None XF86AudioRaiseVolume spawn 'pamixer -i 5'
+    riverctl map $mode None XF86AudioLowerVolume spawn 'pamixer -d 5'
+    riverctl map $mode None XF86AudioMute spawn 'pamixer --toggle-mute'
+
+    # media
+    riverctl map $mode None XF86AudioPlay spawn 'playerctl play-pause'
+    riverctl map $mode None XF86AudioPrev spawn 'playerctl previous'
+    riverctl map $mode None XF86AudioNext spawn 'playerctl next'
+
+    # brightness
+    riverctl map $mode None XF86MonBrightnessUp spawn 'brightnessctl s +5%'
+    riverctl map $mode None XF86MonBrightnessDown spawn 'brightnessctl s 5%-'
+done
+
+## floating mode
+riverctl declare-mode floating
+riverctl map normal Super+Alt F enter-mode floating
+riverctl map floating None Escape enter-mode normal
+
+# resize floating windows by 25px
+riverctl map -repeat floating None H resize horizontal -25
+riverctl map -repeat floating None J resize vertical 25
+riverctl map -repeat floating None K resize vertical -25
+riverctl map -repeat floating None L resize horizontal 25
+
+# move floating windows by 25px
+riverctl map -repeat floating Super H move left 25
+riverctl map -repeat floating Super J move down 25
+riverctl map -repeat floating Super K move up 25
+riverctl map -repeat floating Super L move right 25
+
+# snap floating windows to screen edges
+riverctl map floating Super+Shift H snap left
+riverctl map floating Super+Shift J snap down
+riverctl map floating Super+Shift K snap up
+riverctl map floating Super+Shift L snap right
+
+## resize mode
+riverctl declare-mode resize
+riverctl map normal Super+Alt R enter-mode resize
+riverctl map resize None Escape enter-mode normal
+
+# adjust layout main location
+riverctl map resize None Up send-layout-cmd rivercarro "main-location top"
+riverctl map resize None Right send-layout-cmd rivercarro "main-location right"
+riverctl map resize None Down send-layout-cmd rivercarro "main-location bottom"
+riverctl map resize None Left send-layout-cmd rivercarro "main-location left"
+
+# adjust layout ratios
+riverctl map resize Super H send-layout-cmd rivercarro "main-ratio -0.05"
+riverctl map resize Super L send-layout-cmd rivercarro "main-ratio +0.05"
+
+# adjust layout counts
+riverctl map resize Super+Shift H send-layout-cmd rivercarro "main-count +1"
+riverctl map resize Super+Shift L send-layout-cmd rivercarro "main-count -1"
+
+## rules
+# fullscreen rules
+riverctl rule-add -app-id "mpv" fullscreen
+riverctl rule-add -app-id "org.pwmt.zathura" fullscreen
+riverctl rule-add -app-id "feh" fullscreen
+
+# floating rules
+riverctl rule-add -app-id "galculator" float
+riverctl rule-add -app-id "org.kde.kcalc" float
+riverctl rule-add -app-id "blueman-manager" float
+riverctl rule-add -app-id "nm-connection-editor" float
+riverctl rule-add -app-id "org.pulseaudio.pavucontrol" float
+riverctl rule-add -app-id 'GParted' float
+riverctl rule-add -app-id 'nwg-look' float
+riverctl rule-add -app-id 'firefox' -title 'Picture-in-Picture' float
+riverctl rule-add -app-id 'zen-alpha' -title 'Picture-in-Picture' float
+
+# ensure borders with server-side decorations
+riverctl rule-add -app-id 'zen-alpha' ssd
+riverctl rule-add -app-id 'firefox' ssd
+riverctl rule-add -app-id 'com.mitchellh.ghostty' ssd
+
+## clipboard management
+riverctl spawn "wl-paste --type text --watch cliphist store"
+riverctl spawn "wl-paste --type image --watch cliphist store"
+
+riverctl map normal Super V spawn "cliphist list | rofi -dmenu -p 'Clipboard' -config $HOME/.config/rofi/regular.rasi | cliphist decode | wl-copy"
+
+# environment initialization
+exec dbus-update-activation-environment --all
+exec gnome-keyring-daemon --start --components=secrets
+exec /usr/libexec/pam_kwallet_init
