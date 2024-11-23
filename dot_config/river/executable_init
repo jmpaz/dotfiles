@@ -5,7 +5,7 @@ riverctl spawn "/usr/libexec/xfce-polkit"
 riverctl spawn kanshi
 riverctl spawn nm-applet
 riverctl spawn waybar
-riverctl spawn wlsunset
+riverctl spawn start_wlsunset
 
 # layout generator
 riverctl default-layout rivercarro
