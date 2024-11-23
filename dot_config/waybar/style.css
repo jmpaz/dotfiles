@@ -1,8 +1,4 @@
-@define-color background #000000;
-@define-color foreground #a9b1d6;
-@define-color focused #bb9af7;
-@define-color occupied #c0caf5;
-@define-color empty #565f89;
+@import "colors.css";
 
 * {
   font-family: "JetBrainsMono Nerd Font";
@@ -11,14 +7,14 @@
 }
 
 window#waybar {
-  color: @foreground;
-  background: @background;
+  color: @color7;  /* main foreground */
+  background: alpha(@color0, 0.95);  /* main background with transparency */
 }
 
 #tags button {
   padding: 4px 6px;
   min-width: 25px;
-  color: @empty;
+  color: @color8;  /* dimmed foreground for inactive */
   border-radius: 4px;
 }
 
@@ -29,16 +25,24 @@ window#waybar {
 }
 
 #tags button.occupied {
-  color: @occupied;
+  color: @color4;  /* blue for occupied - matches terminal theme */
   font-weight: bold;
 }
 
 #tags button.focused {
-  color: @focused;
+  color: @color14;  /* cyan/bright blue for focused - matches terminal theme */
 }
 
 #clock {
   padding: 2px 8px;
   margin: 2px;
   border-radius: 4px;
+  background: alpha(@color8, 0.2);  /* subtle highlight */
+  color: @color7;  /* main foreground */
+}
+
+#window {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: @color7;  /* main foreground */
 }

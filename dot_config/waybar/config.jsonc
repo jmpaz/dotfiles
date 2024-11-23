@@ -1,6 +1,6 @@
 {
-  "modules-left": ["river/tags"],
-  "modules-center": ["clock"],
-  "modules-right": [],
+  "modules-left": ["river/window"],
+  "modules-center": ["river/tags"],
+  "modules-right": ["clock"],
 }
 
