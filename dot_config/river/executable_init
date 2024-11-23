@@ -9,13 +9,13 @@ riverctl spawn start_wlsunset
 
 # layout generator
 riverctl default-layout rivercarro
-~/.nix-profile/bin/rivercarro -outer-gaps 0 -per-tag &
+~/.nix-profile/bin/rivercarro -inner-gaps 5 -outer-gaps 5 -per-tag &
 
 # visual
 riverctl background-color 0x002b36
 riverctl border-color-focused 0x93a1a1
 riverctl border-color-unfocused 0x586e75
-riverctl border-width 2
+riverctl border-width 1
 
 # keyboard
 riverctl set-repeat 30 260
@@ -179,6 +179,12 @@ riverctl rule-add -app-id "org.pulseaudio.pavucontrol" float
 riverctl rule-add -app-id 'GParted' float
 riverctl rule-add -app-id 'nwg-look' float
 riverctl rule-add -app-id 'firefox' -title 'Picture-in-Picture' float
+riverctl rule-add -app-id 'zen-alpha' -title 'Picture-in-Picture' float
+
+# ensure borders with server-side decorations
+riverctl rule-add -app-id 'zen-alpha' ssd
+riverctl rule-add -app-id 'firefox' ssd
+riverctl rule-add -app-id 'com.mitchellh.ghostty' ssd
 
 ## clipboard management
 riverctl spawn "wl-paste --type text --watch cliphist store"
