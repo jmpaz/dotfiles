@@ -52,6 +52,9 @@ rofi = { src = 'rofi.rasi', target = '~/.config/rofi/colors.rasi', new_engine = 
 {{- if eq .displayServer "X11" }}
 xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xresources' }
 {{ end -}}
+{{- if eq .displayServer "wayland" }}
+waybar = { src = 'waybar.css', target = '~/.config/waybar/colors.css' }
+{{ end -}}
 {{- if eq .chezmoi.os "darwin" }}
 sketchybar = { src = 'sketchybar.sh', target = '~/.config/sketchybar/colors.sh', new_engine = true }
 {{ end -}}
