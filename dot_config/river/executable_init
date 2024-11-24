@@ -12,9 +12,7 @@ riverctl default-layout rivercarro
 ~/.nix-profile/bin/rivercarro -inner-gaps 5 -outer-gaps 5 -per-tag &
 
 # visual
-riverctl background-color 0x002b36
-riverctl border-color-focused 0x93a1a1
-riverctl border-color-unfocused 0x586e75
+~/.config/river/river.sh
 riverctl border-width 1
 
 # keyboard
@@ -43,6 +41,10 @@ riverctl map normal Super J focus-view next
 riverctl map normal Super K focus-view previous
 riverctl map normal Super+Shift J swap next
 riverctl map normal Super+Shift K swap previous
+riverctl map normal Super N focus-view next
+riverctl map normal Super P focus-view previous
+riverctl map normal Super+Shift N swap next
+riverctl map normal Super+Shift P swap previous
 
 # move views
 riverctl map normal Super+Alt H move left 100
@@ -67,8 +69,8 @@ riverctl map normal Super+Shift 0 set-view-tags $all_tags
 ## extra tags
 # scratchpad (tag 20)
 scratchpad_tag=$((1 << 19))
-riverctl map normal Super P toggle-focused-tags $scratchpad_tag
-riverctl map normal Super+Shift P set-view-tags $scratchpad_tag
+riverctl map normal Super grave toggle-focused-tags $scratchpad_tag
+riverctl map normal Super+Shift grave set-view-tags $scratchpad_tag
 
 ## modes
 # screenshot
@@ -173,6 +175,9 @@ riverctl rule-add -app-id "feh" fullscreen
 # floating rules
 riverctl rule-add -app-id "galculator" float
 riverctl rule-add -app-id "org.kde.kcalc" float
+riverctl rule-add -app-id 'thunar' float
+riverctl rule-add -app-id 'Bitwarden' -title 'Picture-in-Picture' float
+riverctl rule-add -app-id 'Vial' -title 'Picture-in-Picture' float
 riverctl rule-add -app-id "blueman-manager" float
 riverctl rule-add -app-id "nm-connection-editor" float
 riverctl rule-add -app-id "org.pulseaudio.pavucontrol" float
@@ -180,16 +185,20 @@ riverctl rule-add -app-id 'GParted' float
 riverctl rule-add -app-id 'nwg-look' float
 riverctl rule-add -app-id 'firefox' -title 'Picture-in-Picture' float
 riverctl rule-add -app-id 'zen-alpha' -title 'Picture-in-Picture' float
+riverctl rule-add -app-id 'io.github.elevenhsoft.WebApps' float
+riverctl rule-add -app-id 'WebApp-*' float
 
 # ensure borders with server-side decorations
 riverctl rule-add -app-id 'zen-alpha' ssd
 riverctl rule-add -app-id 'firefox' ssd
 riverctl rule-add -app-id 'com.mitchellh.ghostty' ssd
+riverctl rule-add -app-id 'dev.zed.Zed' ssd
+riverctl rule-add -app-id 'dev.zed.Zed-Dev' ssd
+
 
 ## clipboard management
 riverctl spawn "wl-paste --type text --watch cliphist store"
 riverctl spawn "wl-paste --type image --watch cliphist store"
-
 riverctl map normal Super V spawn "cliphist list | rofi -dmenu -p 'Clipboard' -config $HOME/.config/rofi/regular.rasi | cliphist decode | wl-copy"
 
 # environment initialization
