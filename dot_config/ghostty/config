@@ -1,22 +1,18 @@
 # vim: ft=conf
 
-term = xterm-256color
 config-file = theme
-shell-integration = fish
+term = xterm-256color
+
+config-file = fonts
+font-size = 15
 
 window-padding-balance = false
 window-padding-x = 14,0
 window-padding-y = 4,0
 
-font-family = "Symbols Nerd Font Mono"
-font-family = "Fira Code"
-font-family-bold = "Fira Code"
-font-family-italic = "Maple Mono"
-font-family-bold-italic = "Maple Mono"
-font-size = 18
-
 window-decoration = false
-# background-opacity = 0.9
+resize-overlay = never
+
 cursor-style = block
 cursor-style-blink = false
 cursor-invert-fg-bg = true
@@ -24,6 +20,8 @@ cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
 copy-on-select = clipboard
+
+shell-integration = fish
 
 # keybinds
 keybind = clear
