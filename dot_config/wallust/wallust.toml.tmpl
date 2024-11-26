@@ -54,7 +54,7 @@ xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xreso
 {{ end -}}
 {{- if eq .displayServer "wayland" }}
 waybar = { src = 'waybar.css', target = '~/.config/waybar/colors.css' }
-river = { src = 'river.sh', target = '~/.config/river/colors.sh' }
+river = { src = 'river.sh', target = '~/.config/river/modules/colors.sh' }
 {{ end -}}
 {{- if eq .chezmoi.os "darwin" }}
 sketchybar = { src = 'sketchybar.sh', target = '~/.config/sketchybar/colors.sh', new_engine = true }

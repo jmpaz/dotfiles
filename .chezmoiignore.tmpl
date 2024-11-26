@@ -26,6 +26,7 @@
 {{- if eq .displayServer "wayland" }}
 .config/polybar/
 .config/picom/
+.config/river/modules/colors.sh
 {{- end }}
 
 {{- if and (eq .displayServer "wayland") (eq .chezmoi.hostname "silverblue") }}
