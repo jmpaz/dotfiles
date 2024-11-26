@@ -7,13 +7,31 @@ riverctl spawn nm-applet
 riverctl spawn waybar
 riverctl spawn start_wlsunset
 
-# layout generator
-riverctl default-layout rivercarro
-~/.nix-profile/bin/rivercarro -inner-gaps 5 -outer-gaps 5 -per-tag &
-
 # visual
-~/.config/river/colors.sh
-riverctl border-width 4
+source ~/.config/river/colors.sh
+riverctl border-width 3
+
+riverctl default-layout wideriver
+~/.nix-profile/bin/wideriver \
+    --layout                       left               \
+    --layout-alt                   monocle            \
+    --stack                        dwindle            \
+    --count-master                 1                  \
+    --ratio-master                 0.50               \
+    --count-wide-left              0                  \
+    --ratio-wide                   0.35               \
+    --no-smart-gaps                                   \
+    --inner-gaps                   6                  \
+    --outer-gaps                   6                  \
+    --border-width                 3                  \
+    --border-width-monocle         0                  \
+    --border-width-smart-gaps      0                  \
+    --border-color-focused         "$RIVER_FOCUSED"   \
+    --border-color-focused-monocle "$RIVER_FOCUSED"   \
+    --border-color-unfocused       "$RIVER_UNFOCUSED" \
+    --log-threshold                info               \
+   > "/tmp/wideriver.${XDG_VTNR}.${USER}.log" 2>&1 &
+
 
 # keyboard
 riverctl set-repeat 30 260
@@ -71,11 +89,17 @@ all_tags=$(((1 << 32) - 1))
 riverctl map normal Super 0 set-focused-tags $all_tags
 riverctl map normal Super+Shift 0 set-view-tags $all_tags
 
+#scratchpads
+term_tag=$((1 << 19))
+filemanager_tag=$((1 << 20))
+discord_tag=$((1 << 21))
+
 ## extra tags
-# scratchpad (tag 20)
+# scratchpads
 scratchpad_tag=$((1 << 19))
 riverctl map normal Super grave toggle-focused-tags $scratchpad_tag
 riverctl map normal Super+Shift grave set-view-tags $scratchpad_tag
+
 
 ## modes
 # screenshot
@@ -85,22 +109,28 @@ riverctl map screenshot None Escape enter-mode normal
 riverctl map screenshot None F spawn 'grim - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
 riverctl map screenshot None R spawn 'grim -g "$(slurp)" - | tee ~/Pictures/screenshots/screenshot-$(date +%Y-%m-%d-%H%M%S).png | wl-copy && riverctl enter-mode normal'
 
-## layouts
-# adjust main ratio and count for rivercarro layout
-riverctl map normal Super H send-layout-cmd rivercarro "main-ratio -0.05"
-riverctl map normal Super L send-layout-cmd rivercarro "main-ratio +0.05"
-riverctl map normal Super+Shift H send-layout-cmd rivercarro "main-count +1"
-riverctl map normal Super+Shift L send-layout-cmd rivercarro "main-count -1"
+## layout: wideriver
+riverctl map normal Super H send-layout-cmd wideriver "--ratio -0.05"
+riverctl map normal Super L send-layout-cmd wideriver "--ratio +0.05"
+riverctl map normal Super+Shift H send-layout-cmd wideriver "--count +1"
+riverctl map normal Super+Shift L send-layout-cmd wideriver "--count -1"
 
-# change layout orientation
-riverctl map normal Super Up send-layout-cmd rivercarro "main-location top"
-riverctl map normal Super Right send-layout-cmd rivercarro "main-location right"
-riverctl map normal Super Down send-layout-cmd rivercarro "main-location bottom"
-riverctl map normal Super Left send-layout-cmd rivercarro "main-location left"
+riverctl map normal Super Escape send-layout-cmd wideriver "--ratio 0.5"
+riverctl map normal Super+Shift Escape send-layout-cmd wideriver "--count 1"
+riverctl map normal Super+Shift D send-layout-cmd wideriver "--stack diminish"
+riverctl map normal Super+Shift W send-layout-cmd wideriver "--stack dwindle"
+riverctl map normal Super+Shift E send-layout-cmd wideriver "--stack even"
+
+# orientation
+riverctl map normal Super Up send-layout-cmd wideriver "--layout top"
+riverctl map normal Super Right send-layout-cmd wideriver "--layout right"
+riverctl map normal Super Down send-layout-cmd wideriver "--layout bottom"
+riverctl map normal Super Left send-layout-cmd wideriver "--layout left"
 
 # monocle/cycle
-riverctl map normal Super M send-layout-cmd rivercarro "main-location monocle"
-riverctl map normal Super W send-layout-cmd rivercarro "main-location-cycle left,monocle"
+riverctl map normal Super M send-layout-cmd wideriver "--layout monocle"
+riverctl map normal Super F2 send-layout-cmd wideriver "--layout wide"
+riverctl map normal Super W send-layout-cmd wideriver "--layout-toggle"
 
 ## fullscreen, float, zoom
 riverctl map normal Super Space toggle-float
@@ -194,7 +224,8 @@ riverctl rule-add -app-id "zen-alpha" -title 'Picture-in-Picture' float
 riverctl rule-add -app-id "io.github.elevenhsoft.WebApps" float
 riverctl rule-add -app-id "WebApp-*" float
 
-# ensure borders with server-side decorations
+# server-side decorations
+riverctl rule-add ssd
 riverctl rule-add -app-id "zen-alpha" ssd
 riverctl rule-add -app-id "firefox" ssd
 riverctl rule-add -app-id "com.github.wwmm.easyeffects" ssd
@@ -203,7 +234,6 @@ riverctl rule-add -app-id "dev.zed.Zed" ssd
 riverctl rule-add -app-id "dev.zed.Zed-Dev" ssd
 riverctl rule-add -app-id "io.github.elevenhsoft.WebApps" ssd
 riverctl rule-add -app-id "WebApp-*" float
-
 
 ## clipboard management
 riverctl spawn "wl-paste --type text --watch cliphist store"
