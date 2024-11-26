@@ -19,6 +19,7 @@ cursor-invert-fg-bg = true
 
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
+mouse-shift-capture = true
 copy-on-select = clipboard
 
 shell-integration = fish
