@@ -12,11 +12,16 @@ riverctl default-layout rivercarro
 ~/.nix-profile/bin/rivercarro -inner-gaps 5 -outer-gaps 5 -per-tag &
 
 # visual
-~/.config/river/river.sh
-riverctl border-width 1
+~/.config/river/colors.sh
+riverctl border-width 4
 
 # keyboard
 riverctl set-repeat 30 260
+
+# trackpad
+riverctl input "pointer-1452-613-Apple_Inc._Magic_Trackpad" tap enabled
+riverctl input "pointer-1452-613-Apple_Inc._Magic_Trackpad" scroll-factor 0.3
+riverctl input "pointer-1452-613-Apple_Inc._Magic_Trackpad" pointer-accel 0.11
 
 ## cursor behavior
 riverctl hide-cursor timeout 10000 # 10 seconds
@@ -57,8 +62,8 @@ for i in $(seq 1 9); do
     tag=$((1 << ($i - 1)))
     riverctl map normal Super $i set-focused-tags $tag
     riverctl map normal Super+Shift $i set-view-tags $tag
-    riverctl map normal Super+Control $i toggle-focused-tags $tag
-    riverctl map normal Super+Shift+Control $i toggle-view-tags $tag
+    riverctl map normal Super+Alt $i toggle-focused-tags $tag
+    riverctl map normal Super+Alt+Shift $i toggle-view-tags $tag
 done
 
 # focus all tags
@@ -175,25 +180,29 @@ riverctl rule-add -app-id "feh" fullscreen
 # floating rules
 riverctl rule-add -app-id "galculator" float
 riverctl rule-add -app-id "org.kde.kcalc" float
-riverctl rule-add -app-id 'thunar' float
-riverctl rule-add -app-id 'Bitwarden' -title 'Picture-in-Picture' float
-riverctl rule-add -app-id 'Vial' -title 'Picture-in-Picture' float
+riverctl rule-add -app-id "thunar" float
+riverctl rule-add -app-id "Bitwarden" float
+riverctl rule-add -app-id "Vial" float
 riverctl rule-add -app-id "blueman-manager" float
 riverctl rule-add -app-id "nm-connection-editor" float
 riverctl rule-add -app-id "org.pulseaudio.pavucontrol" float
-riverctl rule-add -app-id 'GParted' float
-riverctl rule-add -app-id 'nwg-look' float
-riverctl rule-add -app-id 'firefox' -title 'Picture-in-Picture' float
-riverctl rule-add -app-id 'zen-alpha' -title 'Picture-in-Picture' float
-riverctl rule-add -app-id 'io.github.elevenhsoft.WebApps' float
-riverctl rule-add -app-id 'WebApp-*' float
+riverctl rule-add -app-id "com.github.wwmm.easyeffects" float
+riverctl rule-add -app-id "GParted" float
+riverctl rule-add -app-id "nwg-look" float
+riverctl rule-add -app-id "firefox" -title 'Picture-in-Picture' float
+riverctl rule-add -app-id "zen-alpha" -title 'Picture-in-Picture' float
+riverctl rule-add -app-id "io.github.elevenhsoft.WebApps" float
+riverctl rule-add -app-id "WebApp-*" float
 
 # ensure borders with server-side decorations
-riverctl rule-add -app-id 'zen-alpha' ssd
-riverctl rule-add -app-id 'firefox' ssd
-riverctl rule-add -app-id 'com.mitchellh.ghostty' ssd
-riverctl rule-add -app-id 'dev.zed.Zed' ssd
-riverctl rule-add -app-id 'dev.zed.Zed-Dev' ssd
+riverctl rule-add -app-id "zen-alpha" ssd
+riverctl rule-add -app-id "firefox" ssd
+riverctl rule-add -app-id "com.github.wwmm.easyeffects" ssd
+riverctl rule-add -app-id "com.mitchellh.ghostty" ssd
+riverctl rule-add -app-id "dev.zed.Zed" ssd
+riverctl rule-add -app-id "dev.zed.Zed-Dev" ssd
+riverctl rule-add -app-id "io.github.elevenhsoft.WebApps" ssd
+riverctl rule-add -app-id "WebApp-*" float
 
 
 ## clipboard management
