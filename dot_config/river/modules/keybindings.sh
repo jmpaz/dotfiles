@@ -1,3 +1,4 @@
+hyper="Super+Shift+Alt+Control"
 
 ## window management
 # launch terminal and application launcher
@@ -41,6 +42,15 @@ riverctl map normal Super+Shift 0 set-view-tags $all_tags
 scratchpad_tag=$((1 << 19))
 riverctl map normal Super grave toggle-focused-tags $scratchpad_tag
 riverctl map normal Super+Shift grave set-view-tags $scratchpad_tag
+
+SCRATCHPAD="~/.config/river/scripts/scratchpad.sh"
+riverctl map normal $hyper W spawn "$SCRATCHPAD browser"
+riverctl map normal $hyper D spawn "$SCRATCHPAD discord"
+riverctl map normal $hyper C spawn "$SCRATCHPAD ferdium"
+riverctl map normal $hyper A spawn "$SCRATCHPAD applemusic"
+riverctl map normal $hyper S spawn "$SCRATCHPAD soundcloud"
+riverctl map normal $hyper P spawn "$SCRATCHPAD pavucontrol"
+riverctl map normal $hyper E spawn "$SCRATCHPAD easyeffects"
 
 ## modes
 # screenshot
