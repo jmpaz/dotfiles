@@ -1,6 +1,44 @@
 {
-  "modules-left": ["river/window"],
+  "modules-left": ["river/mode", "river/window"],
   "modules-center": ["river/tags"],
-  "modules-right": ["clock"],
-}
+  "modules-right": ["bluetooth", "pulseaudio", "clock", "clock#date"],
 
+  "river/window": {
+    "max-length": 50,
+    "format": "{}",
+  },
+
+  "river/mode": {
+    "format": "󰩨 {}",
+  },
+
+  "bluetooth": {
+    "format": "󰂯 {status}",
+    "format-connected": "󰂯 {device_alias}",
+    "format-disabled": "󰂲",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "blueman-manager",
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 M",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"],
+    },
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+  },
+
+  "clock": {
+    "format": "󰥔 {:%H:%M}",
+  },
+
+  "clock#date": {
+    "format": "󰃮 {:%d %b}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+  },
+}

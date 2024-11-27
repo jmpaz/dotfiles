@@ -1,50 +1,89 @@
 @import "colors.css";
 
 * {
-  font-family: "JetBrainsMono Nerd Font";
-  font-size: 12pt;
-  min-height: 0px;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12pt;
+    min-height: 0px;
 }
 
 window#waybar {
-  color: @color7;  /* main fg */
-  background: alpha(@color0, 0.95);  /* main bg */
+    color: @color7; /* main fg */
+    background: alpha(@color0, 0.95); /* main bg */
 }
 
 #window {
-  padding-left: 14px;
-  padding-right: 10px;
-  color: @color7;
+    padding: 2px 4px;
+    color: @color7;
 }
 
-#clock {
-  margin: 2px 4px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: alpha(@color8, 0.2);
-  color: @color7;
+#mode {
+    margin: 2px 6px;
+    padding: 2px 8px;
+    color: @color7;
+    background: alpha(@color8, 0.2);
+    border-radius: 4px;
+}
+
+#bluetooth {
+    margin: 2px 4px;
+    padding: 2px 8px;
+    color: @color7;
+    background: alpha(@color8, 0.2);
+    border-radius: 4px;
+}
+
+#bluetooth.connected {
+    color: @color14;
+}
+
+#bluetooth.disabled {
+    color: @color8_reduced;
+}
+
+#pulseaudio {
+    margin: 2px 4px;
+    padding: 2px 8px;
+    color: @color7;
+    background: alpha(@color8, 0.2);
+    border-radius: 4px;
+}
+
+#pulseaudio.muted {
+    color: @color8_reduced;
+}
+
+#clock,
+#clock.date {
+    margin: 2px 4px;
+    padding: 2px 8px;
+    color: @color7;
+    background: alpha(@color8, 0.2);
+    border-radius: 4px;
+}
+
+#clock.date {
+    margin: 2px 7px 2px 4px;
+    padding: 2px 8px;
 }
 
 #tags button {
-  padding: 4px 6px;
-  min-width: 25px;
-  color: @color8_reduced;  /* dimmed foreground / inactive */
-  border-radius: 4px;
+    padding: 4px 6px;
+    min-width: 25px;
+    color: @color8_reduced; /* dimmed foreground / inactive */
+    border-radius: 4px;
 }
 
 #tags button:hover {
-  box-shadow: none;
-  text-shadow: none;
-  background: transparent;
+    box-shadow: none;
+    text-shadow: none;
+    background: transparent;
 }
 
 #tags button.occupied {
-  color: @color8;  /* light focus */
-  font-weight: bold;
+    color: @color8; /* light focus */
+    font-weight: bold;
 }
 
 #tags button.focused {
-  color: @color14;  /* heavy focus */
+    color: @color14; /* heavy focus */
 }
-
-
