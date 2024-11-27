@@ -38,16 +38,9 @@ riverctl map normal Super 0 set-focused-tags $all_tags
 riverctl map normal Super+Shift 0 set-view-tags $all_tags
 
 # scratchpads
-term_tag=$((1 << 19))
-filemanager_tag=$((1 << 20))
-discord_tag=$((1 << 21))
-
-## extra tags
-# scratchpads
 scratchpad_tag=$((1 << 19))
 riverctl map normal Super grave toggle-focused-tags $scratchpad_tag
 riverctl map normal Super+Shift grave set-view-tags $scratchpad_tag
-
 
 ## modes
 # screenshot
@@ -90,48 +83,47 @@ riverctl map-pointer normal Super BTN_LEFT move-view
 riverctl map-pointer normal Super BTN_RIGHT resize-view
 riverctl map-pointer normal Super BTN_MIDDLE toggle-float
 
+## window move mode
+riverctl declare-mode move
+riverctl map normal Super G enter-mode move
+riverctl map move None Escape enter-mode normal
 
-# ## floating mode
-# riverctl declare-mode floating
-# riverctl map normal Super+Alt F enter-mode floating
-# riverctl map floating None Escape enter-mode normal
+# move
+riverctl map -repeat move None H move left 100
+riverctl map -repeat move None J move down 100
+riverctl map -repeat move None K move up 100
+riverctl map -repeat move None L move right 100
 
-# # resize floating windows by 25px
-# riverctl map -repeat floating None H resize horizontal -25
-# riverctl map -repeat floating None J resize vertical 25
-# riverctl map -repeat floating None K resize vertical -25
-# riverctl map -repeat floating None L resize horizontal 25
+riverctl map -repeat move Super H move left 200
+riverctl map -repeat move Super J move down 200
+riverctl map -repeat move Super K move up 200
+riverctl map -repeat move Super L move right 200
 
-# # move floating windows by 25px
-# riverctl map -repeat floating Super H move left 25
-# riverctl map -repeat floating Super J move down 25
-# riverctl map -repeat floating Super K move up 25
-# riverctl map -repeat floating Super L move right 25
+riverctl map -repeat move Alt H move left 50
+riverctl map -repeat move Alt J move down 50
+riverctl map -repeat move Alt K move up 50
+riverctl map -repeat move Alt L move right 50
 
-# # snap floating windows to screen edges
-# riverctl map floating Super+Shift H snap left
-# riverctl map floating Super+Shift J snap down
-# riverctl map floating Super+Shift K snap up
-# riverctl map floating Super+Shift L snap right
+riverctl map floating Shift H snap left
+riverctl map floating Super+Shift J snap down
+riverctl map floating Super+Shift K snap up
+riverctl map floating Super+Shift L snap right
 
-## resize mode
-riverctl declare-mode resize
-riverctl map normal Super+Alt R enter-mode resize
-riverctl map resize None Escape enter-mode normal
+# resize
+riverctl map -repeat move Shift H resize horizontal -100
+riverctl map -repeat move Shift J resize vertical -100
+riverctl map -repeat move Shift K resize vertical 100
+riverctl map -repeat move Shift L resize horizontal 100
 
-# adjust layout orientation
-riverctl map resize None Up send-layout-cmd wideriver "--layout top"
-riverctl map resize None Right send-layout-cmd wideriver "--layout right"
-riverctl map resize None Down send-layout-cmd wideriver "--layout bottom"
-riverctl map resize None Left send-layout-cmd wideriver "--layout left"
+riverctl map -repeat move Super+Shift H resize horizontal -200
+riverctl map -repeat move Super+Shift J resize vertical -200
+riverctl map -repeat move Super+Shift K resize vertical 200
+riverctl map -repeat move Super+Shift L resize horizontal 200
 
-# adjust layout ratios
-riverctl map resize Super H send-layout-cmd wideriver "--ratio -0.05"
-riverctl map resize Super L send-layout-cmd wideriver "--ratio +0.05"
-
-# adjust master count
-riverctl map resize Super+Shift H send-layout-cmd wideriver "--count +1"
-riverctl map resize Super+Shift L send-layout-cmd wideriver "--count -1"
+riverctl map -repeat move Alt+Shift H resize horizontal -50
+riverctl map -repeat move Alt+Shift J resize vertical -50
+riverctl map -repeat move Alt+Shift K resize vertical 50
+riverctl map -repeat move Alt+Shift L resize horizontal 50
 
 ## system
 for mode in normal locked; do
