@@ -3,6 +3,8 @@
 {{- if eq .chezmoi.os "darwin" }}
 .config/i3/
 .config/polybar/
+.config/river/
+.config/qtile/
 .config/picom/
 .config/rofi/
 .config/keyd/
@@ -21,6 +23,7 @@
 .config/waybar/
 .config/kanshi/
 .config/fuzzel/
+.config/river/
 {{- end }}
 
 {{- if eq .displayServer "wayland" }}
@@ -31,6 +34,7 @@
 
 {{- if and (eq .displayServer "wayland") (eq .chezmoi.hostname "silverblue") }}
 .config/i3/
+.config/qtile/
 .config/fuzzel/
 .config/keyd/
 .config/zellij/
