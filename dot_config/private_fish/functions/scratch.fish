@@ -25,7 +25,7 @@ function scratch
                    echo "Error: --latest doesn't accept additional arguments"
                    return 1
                end
-               set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+               set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' 2>/dev/null)
                if test (count $dirs) -gt 0
                    set -l latest_dir (string join \n $dirs | sort -r | head -n1)
                    cd $latest_dir
@@ -42,7 +42,7 @@ function scratch
                    echo "Error: --recent argument must be a number"
                    return 1
                end
-               set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+               set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' 2>/dev/null)
                if test (count $dirs) -gt 0
                    set -l target_dir (string join \n $dirs | sort -r | sed -n (math $argv[2] + 1)"p")
                    if test -n "$target_dir"
@@ -58,7 +58,7 @@ function scratch
    end
 
    # if a scratch dir exists from today, use it; otherwise prompt for new one
-   set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+   set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' 2>/dev/null)
    if test (count $dirs) -gt 0
        set -l latest_dir (string join \n $dirs | sort -r | head -n1)
        set -l latest_date (string match -r '\d{2}-\d{2}' $latest_dir)
