@@ -16,6 +16,7 @@ apps=(
     [soundcloud]="app_id=WebApp-SoundCloud4871 tag=$((1 << 24)) cmd='gtk-launch webapp-SoundCloud4871.desktop'"
     [pavucontrol]="app_id=org.pulseaudio.pavucontrol tag=$((1 << 25)) cmd='pavucontrol'"
     [easyeffects]="app_id=com.github.wwmm.easyeffects tag=$((1 << 26)) cmd='gtk-launch com.github.wwmm.easyeffects.desktop'"
+    [obs]="app_id=com.obsproject.Studio tag=$((1 << 27)) cmd='gtk-launch com.obsproject.Studio.desktop'"
 )
 
 # Get app configuration
