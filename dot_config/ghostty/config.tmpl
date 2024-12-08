@@ -1,5 +1,17 @@
 # vim: ft=conf
 
+keybind = clear
+{{ if eq .chezmoi.os "darwin" }}
+macos-option-as-alt = true
+window-decoration = true
+macos-titlebar-style = hidden
+macos-non-native-fullscreen = true
+keybind = ctrl+shift+enter=toggle_quick_terminal
+{{ else }}
+window-decoration = false
+resize-overlay = never
+{{ end }}
+
 config-file = theme
 term = xterm-256color
 
@@ -7,11 +19,8 @@ config-file = fonts
 font-size = 16
 
 window-padding-balance = false
-window-padding-x = 14,0
+window-padding-x = 17,0
 window-padding-y = 4,0
-
-window-decoration = false
-resize-overlay = never
 
 cursor-style = block
 cursor-style-blink = false
@@ -25,7 +34,6 @@ copy-on-select = clipboard
 shell-integration = fish
 
 # keybinds
-keybind = clear
 keybind = ctrl+comma=open_config
 keybind = ctrl+shift+comma=reload_config
 
