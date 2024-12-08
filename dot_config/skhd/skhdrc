@@ -1,46 +1,39 @@
 #!/usr/bin/env sh
 
-ctrl + fn - r : skhd --restart-service
+ctrl + ralt - r : skhd --restart-service
 
-# alt - return : open -na "/Applications/kitty.app" ~
-# alt - w : open -na "Firefox"
+# Space Navigation (four spaces per display)
+ralt - 1 : yabai -m space --focus "$(yabai -m query --displays --display | jq '.spaces[0]')"
+ralt - 2 : yabai -m space --focus "$(yabai -m query --displays --display | jq '.spaces[1]')"
+ralt - 3 : yabai -m space --focus "$(yabai -m query --displays --display | jq '.spaces[2]')"
+ralt - 4 : yabai -m space --focus "$(yabai -m query --displays --display | jq '.spaces[3]')"
 
-fn - h : aerospace focus left
-fn - j : aerospace focus down
-fn - k : aerospace focus up
-fn - l : aerospace focus right
+# Window Navigation (through display borders)
+ralt - h    : yabai -m window --focus west  || yabai -m display --focus west
+ralt - j    : yabai -m window --focus south || yabai -m display --focus south
+ralt - k    : yabai -m window --focus north || yabai -m display --focus north
+ralt - l : yabai -m window --focus east  || yabai -m display --focus east
 
-fn + ctrl - h : aerospace move left
-fn + ctrl - j : aerospace move down
-fn + ctrl - k : aerospace move up
-fn + ctrl - l : aerospace move right
+# Float / Unfloat window: lalt - space
+ralt - space : yabai -m window --toggle float
 
-fn - s : aerospace layout v_accordion
-fn - w : aerospace layout h_accordion
-fn - e : aerospace layout tiles horizontal vertical  # toggle split
-fn - r : aerospace mode resize
+# Make window zoom to fullscreen
+shift + ralt - f : yabai -m window --toggle zoom-fullscreen
 
-fn - f : aerospace fullscreen
-alt - f : aerospace layout floating tiling  # toggle floating window
+# Make window zoom to parent node
+ralt - f : yabai -m window --toggle zoom-parent
 
-fn - 1 : aerospace workspace 1
-fn - 2 : aerospace workspace 2
-fn - 3 : aerospace workspace 3
-fn - 4 : aerospace workspace 4
-fn - 5 : aerospace workspace 5
-fn - 6 : aerospace workspace 6
-fn - 7 : aerospace workspace 7
-fn - 8 : aerospace workspace 8
-fn - 9 : aerospace workspace 9
-fn - 0 : aerospace workspace 10
+############## Aerospace
 
-shift + fn - 1 : aerospace move-node-to-workspace 1
-shift + fn - 2 : aerospace move-node-to-workspace 2
-shift + fn - 3 : aerospace move-node-to-workspace 3
-shift + fn - 4 : aerospace move-node-to-workspace 4
-shift + fn - 5 : aerospace move-node-to-workspace 5
-shift + fn - 6 : aerospace move-node-to-workspace 6
-shift + fn - 7 : aerospace move-node-to-workspace 7
-shift + fn - 8 : aerospace move-node-to-workspace 8
-shift + fn - 9 : aerospace move-node-to-workspace 9
-shift + fn - 0 : aerospace move-node-to-workspace 10
+# fn + ctrl - h : aerospace move left
+# fn + ctrl - j : aerospace move down
+# fn + ctrl - k : aerospace move up
+# fn + ctrl - l : aerospace move right
+#
+# fn - s : aerospace layout v_accordion
+# fn - w : aerospace layout h_accordion
+# fn - e : aerospace layout tiles horizontal vertical  # toggle split
+# fn - r : aerospace mode resize
+#
+# fn - f : aerospace fullscreen
+# alt - f : aerospace layout floating tiling  # toggle floating window
