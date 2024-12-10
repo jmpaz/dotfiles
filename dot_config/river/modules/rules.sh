@@ -28,8 +28,8 @@ riverctl rule-add -app-id "dev.zed.Zed" dimensions 2400 1600
 riverctl rule-add -app-id "dev.zed.Zed-Dev" dimensions 2400 1600
 riverctl rule-add -app-id "com.mitchellh.ghostty" dimensions 1800 1200
 riverctl rule-add -app-id "discord" dimensions 2400 1600
-riverctl rule-add -app-id "Ferdium" dimensions 2000 1600
 riverctl rule-add -app-id "Webapp-*" dimensions 1800 1200
+riverctl rule-add -app-id "Ferdium" dimensions 1800 1600
 riverctl rule-add -app-id "org.pulseaudio.pavucontrol" dimensions 1000 1200
 riverctl rule-add -app-id "com.github.wwmm.easyeffects" dimensions 1000 1200
 

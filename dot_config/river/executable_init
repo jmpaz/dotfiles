@@ -17,8 +17,8 @@ source ~/.config/river/modules/colors.sh
     --count-wide-left              0                  \
     --ratio-wide                   0.35               \
     --no-smart-gaps                                   \
-    --inner-gaps                   6                  \
-    --outer-gaps                   6                  \
+    --inner-gaps                   20                 \
+    --outer-gaps                   20                 \
     --border-width                 3                  \
     --border-width-monocle         0                  \
     --border-width-smart-gaps      0                  \

@@ -4,6 +4,7 @@ hyper="Super+Shift+Alt+Control"
 # launch terminal and application launcher
 riverctl map normal Super Return spawn '~/.local/bin/ghostty'
 riverctl map normal Super D spawn "rofi -show drun"
+riverctl map normal Super Space spawn "rofi -show drun"
 
 # close windows
 riverctl map normal Super+Shift Q close
@@ -46,6 +47,7 @@ riverctl map normal Super+Shift grave set-view-tags $scratchpad_tag
 SCRATCHPAD="~/.config/river/scripts/scratchpad.sh"
 riverctl map normal $hyper D spawn "$SCRATCHPAD discord"
 riverctl map normal $hyper C spawn "$SCRATCHPAD ferdium"
+riverctl map normal $hyper G spawn "$SCRATCHPAD chatgpt"
 riverctl map normal $hyper A spawn "$SCRATCHPAD applemusic"
 riverctl map normal $hyper S spawn "$SCRATCHPAD soundcloud"
 riverctl map normal $hyper P spawn "$SCRATCHPAD pavucontrol"
@@ -85,7 +87,7 @@ riverctl map normal Super F2 send-layout-cmd wideriver "--layout wide"
 riverctl map normal Super W send-layout-cmd wideriver "--layout-toggle"
 
 ## fullscreen, float, zoom
-riverctl map normal Super Space toggle-float
+riverctl map normal Super+Control F toggle-float
 riverctl map normal Super F toggle-fullscreen
 riverctl map normal Super+Shift Return zoom
 

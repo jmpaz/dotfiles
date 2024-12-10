@@ -17,6 +17,7 @@ apps=(
     [pavucontrol]="app_id=org.pulseaudio.pavucontrol tag=$((1 << 25)) cmd='pavucontrol'"
     [easyeffects]="app_id=com.github.wwmm.easyeffects tag=$((1 << 26)) cmd='gtk-launch com.github.wwmm.easyeffects.desktop'"
     [obs]="app_id=com.obsproject.Studio tag=$((1 << 27)) cmd='gtk-launch com.obsproject.Studio.desktop'"
+    [chatgpt]="app_id=WebApp-ChatGPT9452 tag=$((1 << 28)) cmd='gtk-launch webapp-ChatGPT9452.desktop'"
 )
 
 # Get app configuration
