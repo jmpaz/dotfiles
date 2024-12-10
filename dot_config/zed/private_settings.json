@@ -50,8 +50,8 @@
     "light": "Rosé Pine Dawn",
     "dark": "Rosé Pine Moon"
   },
-  "buffer_font_family": "Maple Mono NF",
-  "ui_font_family": "Hack Nerd Font",
+  "buffer_font_family": "iMWritingMono Nerd Font",
+  "ui_font_family": "iMWritingQuat Nerd Font",
   "ui_font_size": 18,
   "buffer_font_size": 19,
   "experimental.theme_overrides": {
@@ -83,10 +83,6 @@
   },
 
   "collaboration_panel": {
-    "button": false
-  },
-
-  "chat_panel": {
     "button": false
   },
 
