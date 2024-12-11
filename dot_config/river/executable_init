@@ -2,6 +2,7 @@
 
 riverctl border-width 3
 riverctl default-layout wideriver
+riverctl default-attach-mode top
 
 source ~/.config/river/modules/system.sh
 source ~/.config/river/modules/keybindings.sh
@@ -30,3 +31,5 @@ source ~/.config/river/modules/colors.sh
 
 # launch terminal and application launcher
 riverctl map normal Super Return spawn '~/.local/bin/ghostty'
+
+

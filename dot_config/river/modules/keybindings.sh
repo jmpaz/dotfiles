@@ -6,6 +6,8 @@ riverctl map normal Super Return spawn '~/.local/bin/ghostty'
 riverctl map normal Super D spawn "rofi -show drun"
 riverctl map normal Super Space spawn "rofi -show drun"
 
+riverctl map normal Super+Control Space spawn "riverctl zoom"
+
 # close windows
 riverctl map normal Super+Shift Q close
 
@@ -47,13 +49,14 @@ riverctl map normal Super+Shift grave set-view-tags $scratchpad_tag
 SCRATCHPAD="~/.config/river/scripts/scratchpad.sh"
 riverctl map normal $hyper D spawn "$SCRATCHPAD discord"
 riverctl map normal $hyper C spawn "$SCRATCHPAD ferdium"
-riverctl map normal $hyper G spawn "$SCRATCHPAD chatgpt"
 riverctl map normal $hyper A spawn "$SCRATCHPAD applemusic"
 riverctl map normal $hyper S spawn "$SCRATCHPAD soundcloud"
 riverctl map normal $hyper P spawn "$SCRATCHPAD pavucontrol"
 riverctl map normal $hyper E spawn "$SCRATCHPAD easyeffects"
 riverctl map normal $hyper Z spawn "$SCRATCHPAD browser"
 riverctl map normal $hyper O spawn "$SCRATCHPAD obs"
+riverctl map normal $hyper G spawn "$SCRATCHPAD chatgpt"
+riverctl map normal Alt Space spawn "$SCRATCHPAD chatgpt"
 
 ## modes
 # screenshot
