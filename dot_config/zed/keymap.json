@@ -38,6 +38,8 @@
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
+      "ctrl-alt-space": "pane::JoinIntoNext",
+      "ctrl-alt-shift-space": "pane::JoinAll",
       "g y shift-g": ["workspace::SendKeystrokes", "shift-v shift-g g y"],
       "g y g g": ["workspace::SendKeystrokes", "shift-v g g g y"],
       "shift-y": ["workspace::SendKeystrokes", "y $"],
@@ -256,8 +258,7 @@
     "bindings": {
       "ctrl-o": "zed::NoAction",
       "ctrl-w": "zed::NoAction",
-      "alt-l": "pane::ActivateNextItem",
-      "alt-h": "pane::ActivatePrevItem",
+      "alt-;": "command_palette::Toggle",
       "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"]
     }
