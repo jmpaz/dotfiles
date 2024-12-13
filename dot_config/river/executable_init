@@ -20,7 +20,7 @@ source ~/.config/river/modules/colors.sh
     --no-smart-gaps                                   \
     --inner-gaps                   20                 \
     --outer-gaps                   20                 \
-    --border-width                 3                  \
+    --border-width                 4                  \
     --border-width-monocle         0                  \
     --border-width-smart-gaps      0                  \
     --border-color-focused         "$RIVER_FOCUSED"   \

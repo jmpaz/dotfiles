@@ -19,7 +19,7 @@ riverctl rule-add -app-id "mpv" float
 riverctl rule-add -app-id "discord" float
 riverctl rule-add -app-id "Ferdium" float
 riverctl rule-add -app-id "firefox" -title 'Picture-in-Picture' float
-riverctl rule-add -app-id "zen-alpha" -title 'Picture-in-Picture' float
+riverctl rule-add -app-id "zen-beta" -title 'Picture-in-Picture' float
 riverctl rule-add -app-id "io.github.elevenhsoft.WebApps" float
 riverctl rule-add -app-id "WebApp-*" float
 
@@ -35,7 +35,7 @@ riverctl rule-add -app-id "com.github.wwmm.easyeffects" dimensions 1000 1200
 
 # server-side decorations
 riverctl rule-add ssd
-riverctl rule-add -app-id "zen-alpha" ssd
+riverctl rule-add -app-id "zen-beta" ssd
 riverctl rule-add -app-id "firefox" ssd
 riverctl rule-add -app-id "com.github.wwmm.easyeffects" ssd
 riverctl rule-add -app-id "com.mitchellh.ghostty" ssd

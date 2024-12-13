@@ -1,4 +1,5 @@
 hyper="Super+Shift+Alt+Control"
+meh="Shift+Alt+Control"
 
 ## window management
 # launch terminal and application launcher
