@@ -61,7 +61,17 @@ function scratch
         end
     end
 
-    # Default behavior (no args)
+    __scratch_ensure_today_dir
+end
+
+function __scratch_ensure_today_dir
+    set -l base_dir ~/scratch
+    set -l current_date (date '+%m-%d')
+    set -l current_time (date '+%H-%M-%S')
+    set -l new_dir "$base_dir/$current_date@$current_time"
+
+    mkdir -p $base_dir
+
     set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' 2>/dev/null)
     if test (count $dirs) -gt 0
         set -l latest_dir (string join \n $dirs | sort -r | head -n1)
@@ -69,23 +79,32 @@ function scratch
 
         if test "$latest_date" = "$current_date"
             cd $latest_dir
-            return
+            return 0
         end
     end
 
     read -l -P "Create new scratch directory for today? [Y/n] " confirm
+    if test $status -ne 0
+        echo "Aborted."
+        return 1
+    end
+
     if test -z "$confirm" -o "$confirm" = "y" -o "$confirm" = "Y"
         mkdir -p $new_dir
         cd $new_dir
+        return 0
+    else
+        echo "Aborted."
+        return 1
     end
 end
 
+
 function __scratch_handle_note
-    set -l current_time (date '+%H-%M@%Ss.md')  # Modified timestamp format
     set -l force_new 0
     set -l use_latest 0
 
-    # Parse flags and check for mutual exclusivity
+    # Parse flags for note
     for arg in $argv
         switch $arg
             case "--new" "-n"
@@ -100,38 +119,47 @@ function __scratch_handle_note
         return 1
     end
 
-    # Ensure we're in a scratch directory (contains the date format)
+    # Check if we're in a scratch directory. If not, try to ensure one.
     if not string match -q -r '\d{2}-\d{2}@' $PWD
-        echo "Error: Must be in a scratch directory to create/edit notes"
-        return 1
+        __scratch_ensure_today_dir
+        if test $status -ne 0
+            # User opted not to create a new directory
+            echo "Cannot create/open notes without a scratch directory."
+            return 1
+        end
     end
 
-    # Fix any nested notes directories if they exist
+    # Ensure notes directory is properly structured
     if test -d "notes/notes"
         mv notes/notes/* notes/ 2>/dev/null
         rm -rf notes/notes
     end
 
-    # Create notes directory at the scratch dir level if it doesn't exist
     if not test -d "notes"
         mkdir -p notes
     end
+
+    set -l current_time (date '+%H-%M@%Ss.md')
 
     if test $force_new -eq 1
         $EDITOR "notes/$current_time"
         return
     end
 
-    # Default behavior (including --latest) is to open most recent note
+    # Default or --latest: open most recent note if it exists
     set -l latest_note (find notes/ -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort -r | head -n1)
     if test -n "$latest_note"
         $EDITOR $latest_note
         return
     end
 
-    # Only prompt if no notes exist
+    # No notes exist, prompt
     read -l -P "No notes exist. Create new note? [Y/n] " confirm
     if test -z "$confirm" -o "$confirm" = "y" -o "$confirm" = "Y"
         $EDITOR "notes/$current_time"
+    else
+        echo "No note created."
+        return 1
     end
 end
+
