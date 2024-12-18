@@ -1,22 +1,26 @@
 # vim: ft=conf
 
 keybind = clear
-{{ if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 macos-option-as-alt = true
 window-decoration = true
 macos-titlebar-style = hidden
 macos-non-native-fullscreen = true
 keybind = ctrl+shift+enter=toggle_quick_terminal
-{{ else }}
-window-decoration = false
+{{- else }}
+window-height = 50
+window-width = 150
 resize-overlay = never
-{{ end }}
+{{- if ne (env "XDG_CURRENT_DESKTOP") "KDE" }}
+window-decoration = false
+{{- end }}
+{{- end }}
 
 config-file = theme
 term = xterm-256color
 
 config-file = fonts
-font-size = 16
+font-size = 14
 
 window-padding-balance = false
 window-padding-x = 17,0
@@ -27,7 +31,7 @@ cursor-style-blink = false
 cursor-invert-fg-bg = true
 
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 2
+mouse-scroll-multiplier = 0.5
 mouse-shift-capture = true
 copy-on-select = clipboard
 
@@ -35,6 +39,7 @@ shell-integration = fish
 
 # keybinds
 keybind = ctrl+comma=open_config
+keybind = ctrl+shift+n=new_window
 keybind = ctrl+shift+comma=reload_config
 
 keybind = shift+page_up=scroll_page_up
@@ -53,3 +58,4 @@ keybind = ctrl+zero=reset_font_size
 
 keybind = ctrl+shift+page_down=jump_to_prompt:1
 keybind = ctrl+shift+page_up=jump_to_prompt:-1
+
