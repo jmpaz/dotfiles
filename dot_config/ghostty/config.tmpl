@@ -8,12 +8,15 @@ macos-titlebar-style = hidden
 macos-non-native-fullscreen = true
 keybind = ctrl+shift+enter=toggle_quick_terminal
 {{- else }}
-window-height = 50
-window-width = 150
+window-height = 44
+window-width = 130
 resize-overlay = never
 {{- if ne (env "XDG_CURRENT_DESKTOP") "KDE" }}
 window-decoration = false
+{{- else }}
+gtk-titlebar = false
 {{- end }}
+window-theme = system
 {{- end }}
 
 config-file = theme
