@@ -8,8 +8,13 @@ macos-titlebar-style = hidden
 macos-non-native-fullscreen = true
 keybind = ctrl+shift+enter=toggle_quick_terminal
 {{- else }}
+  {{- if eq .chezmoi.hostname "asahi" }}
+window-height = 30
+window-width = 90
+  {{- else }}
 window-height = 44
 window-width = 130
+  {{- end }}
 resize-overlay = never
 {{- if ne (env "XDG_CURRENT_DESKTOP") "KDE" }}
 window-decoration = false
