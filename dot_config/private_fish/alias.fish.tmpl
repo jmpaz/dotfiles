@@ -20,7 +20,12 @@ alias cz='chezmoi'
 abbr -a cze 'chezmoi edit'
 abbr -a czw 'chezmoi edit --watch'
 abbr -a cza 'chezmoi apply'
-alias cz-applytheme='chezmoi apply --include scripts && chezmoi apply --include templates {{ if eq .displayServer "wayland" }} && ~/.config/river/modules/colors.sh && ~/.config/waybar/launch.sh && tmux source-file ~/.config/tmux/tmux.conf{{ end }}'
+alias cz-applytheme='chezmoi apply --include scripts \
+  && chezmoi apply --include templates \
+  {{- if and (eq .displayServer "wayland") (ne (env "XDG_CURRENT_DESKTOP") "KDE") }} \
+  && ~/.config/river/modules/colors.sh \
+  && ~/.config/waybar/launch.sh {{- end }}
+  && tmux source-file ~/.config/tmux/tmux.conf'
 
 {{ if eq .chezmoi.os "darwin" }}
 alias copy='pbcopy'
