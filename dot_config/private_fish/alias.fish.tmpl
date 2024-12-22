@@ -26,7 +26,6 @@ alias cz-applytheme='chezmoi apply --include scripts \
   && ~/.config/river/modules/colors.sh \
   && ~/.config/waybar/launch.sh {{- end }}
   && tmux source-file ~/.config/tmux/tmux.conf'
-
 {{ if eq .chezmoi.os "darwin" }}
 alias copy='pbcopy'
 {{ else if eq .displayServer "wayland" }}
@@ -64,3 +63,6 @@ abbr -a cxfc 'contextualize fetch --output clipboard'
 # abbr -a cxfe 'contextualize-edit fetch'
 
 alias nvim-scratch="nvim --cmd 'let g:no_startscreen = 1' --cmd 'set wrap'"
+{{- if ne .chezmoi.os "darwin" }}
+alias zed='/var/lib/flatpak/app/dev.zed.Zed/current/active/files/bin/zed'
+{{- end }}
