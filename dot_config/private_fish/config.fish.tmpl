@@ -60,16 +60,18 @@ zoxide init fish --cmd cd | source
 if status is-interactive
 
     if test "$USE_ZELLIJ"
-      {{ if eq .displayServer "wayland" -}}
-      sleep 0.05 # Workaround for zellij-org/zellij#2126
-      {{ end -}}
-      eval (zellij setup --generate-auto-start fish | string collect)
+        {{ if eq .displayServer "wayland" -}}
+        sleep 0.05 # Workaround for zellij-org/zellij#2126
+        {{ end -}}
+        eval (zellij setup --generate-auto-start fish | string collect)
     end
 
-    if test -z "$SKIP_TMUX"
-      if not set -q TMUX
-        TERM=xterm-256color tmux
-      end
+    if not set -q SSH_TTY
+        if test -z "$SKIP_TMUX"
+            if not set -q TMUX
+                TERM=xterm-256color tmux
+            end
+        end
     end
 
     atuin init fish --disable-up-arrow | source
@@ -79,6 +81,7 @@ if status is-interactive
     bind -M insert \e\[1\;5A _atuin_search
 
 end
+
 
 # pyenv
 {{ if (and (eq .chezmoi.os "linux") (ne .chezmoi.hostname "silverblue")) }}
