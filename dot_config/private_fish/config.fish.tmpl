@@ -2,7 +2,7 @@
 
 set -U fish_greeting ""
 source ~/.config/fish/alias.fish
-{{- if (ne .chezmoi.hostname "silverblue") }}
+{{- if (ne .displayServer "wayland") }}
 source ~/.asdf/asdf.fish
 {{- end }}
 
@@ -84,13 +84,8 @@ end
 
 
 # pyenv
-{{ if (and (eq .chezmoi.os "linux") (ne .chezmoi.hostname "silverblue")) }}
-set PYENV_ROOT /home/josh/.pyenv
-{{ else if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" }}
 set PYENV_ROOT /Users/josh/.pyenv
-{{ end }}
-{{ if (ne .chezmoi.hostname "silverblue") }}
-set PYTHON_CONFIGURE_OPTS "--with-tcltk-includes='-I/usr/include' --with-tcltk-libs='-L/usr/lib64'"
 fish_add_path $PYENV_ROOT/bin
 pyenv init - | source
 {{ end }}
