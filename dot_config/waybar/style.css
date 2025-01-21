@@ -1,89 +1,73 @@
 @import "colors.css";
 
 * {
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 12pt;
-    min-height: 0px;
+  font-family: "JetBrainsMono Nerd Font";
+  min-height: 0px;
 }
 
 window#waybar {
-    color: @color7; /* main fg */
-    background: alpha(@color0, 0.95); /* main bg */
+  color: @color7; /* main fg */
+  background: alpha(@color0, 0.95); /* main bg */
 }
 
 #window {
-    padding: 2px 4px;
+    /* margin: 2px 4px; */
+    /* padding: 2px 6px; */
     color: @color7;
+    font-size: 10pt;
+    /* background: alpha(@color8, 0.15); */
+    /* border-radius: 4px; */
 }
 
-#mode {
-    margin: 2px 6px;
-    padding: 2px 8px;
-    color: @color7;
-    background: alpha(@color8, 0.2);
-    border-radius: 4px;
+#workspaces {
+  margin: 2px 8px 2px 4px;
+  font-size: 12pt;
+}
+#workspaces button {
+  padding: 2px 8px;
+  color: @color8;
+}
+#workspaces button:hover {
+  box-shadow: none;
+  text-shadow: none;
+  background: transparent;
+}
+#workspaces button.active {
+  color: @color8;
+  font-weight: bold;
+}
+#workspaces button.focused {
+  color: @color14;
+}
+#workspaces button.empty {
+  color: @color8_reduced;
 }
 
-#bluetooth {
-    margin: 2px 4px;
-    padding: 2px 8px;
-    color: @color7;
-    background: alpha(@color8, 0.2);
-    border-radius: 4px;
+
+#bluetooth,
+#pulseaudio,
+#clock,
+#clock.date {
+  margin: 2px 4px;
+  padding: 2px 8px;
+  font-size: 11pt;
+  color: @color7;
+  background: alpha(@color8, 0.2);
+  border-radius: 4px;
 }
 
 #bluetooth.connected {
-    color: @color14;
+  color: @color14;
 }
-
 #bluetooth.disabled {
-    color: @color8_reduced;
-}
-
-#pulseaudio {
-    margin: 2px 4px;
-    padding: 2px 8px;
-    color: @color7;
-    background: alpha(@color8, 0.2);
-    border-radius: 4px;
+  color: mix(@color8, #000, 0.35);
 }
 
 #pulseaudio.muted {
-    color: @color8_reduced;
-}
-
-#clock,
-#clock.date {
-    margin: 2px 4px;
-    padding: 2px 8px;
-    color: @color7;
-    background: alpha(@color8, 0.2);
-    border-radius: 4px;
+  color: mix(@color8, #000, 0.35);
 }
 
 #clock.date {
-    margin: 2px 7px 2px 4px;
-    padding: 2px 8px;
+  margin: 2px 7px 2px 4px;
 }
 
-#tags button {
-    padding: 4px 6px;
-    min-width: 25px;
-    color: @color8_reduced; /* dimmed foreground / inactive */
-    border-radius: 4px;
-}
-
-#tags button:hover {
-    box-shadow: none;
-    text-shadow: none;
-    background: transparent;
-}
-
-#tags button.occupied {
-    color: @color8; /* light focus */
-    font-weight: bold;
-}
-
-#tags button.focused {
-    color: @color14; /* heavy focus */
-}

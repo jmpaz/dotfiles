@@ -1,15 +1,26 @@
 {
-  "modules-left": ["river/mode", "river/window"],
-  "modules-center": ["river/tags"],
-  "modules-right": ["bluetooth", "pulseaudio", "clock", "clock#date"],
+  "layer": "top",
 
-  "river/window": {
-    "max-length": 50,
-    "format": "{}",
+  "modules-left": [
+    "niri/workspaces",
+  ],
+  "modules-center": ["niri/window"],
+  "modules-right": [
+    "bluetooth",
+    "pulseaudio",
+    "clock",
+    "clock#date"
+  ],
+
+  "niri/workspaces": {
+    "all-outputs": true,
+    "format": "{value}",
   },
 
-  "river/mode": {
-    "format": "󰩨 {}",
+  "niri/window": {
+    // "format": "{title}",
+    "separate-outputs": false,
+    "icon": false
   },
 
   "bluetooth": {
@@ -19,26 +30,27 @@
     "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "on-click": "blueman-manager",
+    "on-click": "blueman-manager"
   },
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": "󰝟 M",
     "format-icons": {
-      "default": ["󰕿", "󰖀", "󰕾"],
+      "default": ["󰕿", "󰖀", "󰕾"]
     },
     "scroll-step": 5,
     "on-click": "pavucontrol",
-    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
   },
 
   "clock": {
-    "format": "󰥔 {:%H:%M}",
+    "format": "󰥔 {:%H:%M}"
   },
 
   "clock#date": {
     "format": "󰃮 {:%d %b}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
-  },
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+  }
 }
+
