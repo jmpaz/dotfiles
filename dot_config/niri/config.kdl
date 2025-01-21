@@ -3,19 +3,17 @@
 // Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
 
+workspace "chat"
+workspace "media"
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
     keyboard {
-        xkb {
-            // You can set rules, model, layout, variant and options.
-            // For more information, see xkeyboard-config(7).
-
-            // For example:
-            // layout "us,ru"
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
-        }
+        xkb {}
+        repeat-rate 30
+        repeat-delay 260
     }
 
     // Next sections include libinput settings.
@@ -51,11 +49,7 @@ input {
     }
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
-    // warp-mouse-to-focus
-
-    // Focus windows and outputs automatically when moving the mouse into them.
-    // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -145,7 +139,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 2
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -153,10 +147,10 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#7fc8ff"
+        active-color "#9CCFD8"
 
         // Color of the ring on inactive monitors.
-        inactive-color "#505050"
+        inactive-color "#6E6A86"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -181,8 +175,8 @@ layout {
         off
 
         width 4
-        active-color "#ffc87f"
-        inactive-color "#505050"
+        active-color "#9CCFD8"
+        inactive-color "#6E6A86"
 
         // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
@@ -194,10 +188,10 @@ layout {
     // Top and bottom struts will simply add outer gaps in addition to the area occupied by
     // layer-shell panels and regular gaps.
     struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
+        left 8
+        right 8
+        top 6
+        bottom 6
     }
 }
 
@@ -205,14 +199,15 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "ghostty"
+spawn-at-startup "wlsunset -l 40.7128 -L -74.0060"
+spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -229,8 +224,16 @@ animations {
     // Uncomment to turn off all animations.
     // off
 
+    workspace-switch {
+        spring damping-ratio=0.95 stiffness=1200 epsilon=0.0001
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
+    }
+
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    slowdown 0.8
+    slowdown 1.0
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -252,7 +255,7 @@ window-rule {
     // This app-id regular expression will work for both:
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"floorp$"# title="^Picture-in-Picture$"
     open-floating true
 }
 
@@ -305,7 +308,6 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-
     Mod+Shift+Q { close-window; }
 
     Mod+H     { focus-column-left; }
@@ -315,17 +317,24 @@ binds {
     // Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
 
-    Mod+Ctrl+H     { move-column-left; }
-    Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
-    // Mod+Ctrl+J     { move-window-down; }
-    Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
-    // Mod+Ctrl+K     { move-window-up; }
-    Mod+Ctrl+L     { move-column-right; }
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+L     { move-column-right; }
+
+    // Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    // Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+
+    Mod+Ctrl+J     { move-window-down; }
+    Mod+Ctrl+K     { move-window-up; }
+
+    Mod+Shift+J  { move-column-to-workspace-down; }
+    Mod+Shift+K    { move-column-to-workspace-up; }
+    Mod+Ctrl+Shift+J   { move-window-to-workspace-down; }
+    Mod+Ctrl+Shift+K     { move-window-to-workspace-up; }
 
     Mod+Left       { focus-column-first; }
     Mod+Right      { focus-column-last; }
-    Mod+Ctrl+Left  { move-column-to-first; }
-    Mod+Ctrl+Right { move-column-to-last; }
+    Mod+Shift+Left  { move-column-to-first; }
+    Mod+Shift+Right { move-column-to-last; }
 
     // Mod+Shift+H     { focus-monitor-left; }
     // Mod+Shift+J     { focus-monitor-down; }
@@ -349,11 +358,6 @@ binds {
     Mod+Up         { focus-workspace-up; }
     Mod+Shift+Down { move-workspace-down; }
     Mod+Shift+Up   { move-workspace-up; }
-    Mod+Ctrl+Down  { move-column-to-workspace-down; }
-    Mod+Ctrl+Up    { move-column-to-workspace-up; }
-    Mod+Alt+Down   { move-window-to-workspace-down; }
-    Mod+Alt+Up     { move-window-to-workspace-up; }
-
     // Mod+Shift+N    { move-workspace-down; }
     // Mod+Shift+P    { move-workspace-up; }
     // Mod+N          { focus-workspace-down; }
@@ -367,15 +371,17 @@ binds {
     // You can set a cooldown on any bind, but it's most useful for the wheel.
     Mod+WheelScrollDown      { focus-column-right; }
     Mod+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+WheelScrollUp   { move-column-left; }
+    Mod+Shift+WheelScrollDown { move-column-right; }
+    Mod+Shift+WheelScrollUp   { move-column-left; }
     // Mod+WheelScrollRight      { focus-column-right; }
     // Mod+WheelScrollLeft       { focus-column-left; }
     // Mod+Ctrl+WheelScrollRight { move-column-right; }
     // Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 
-    Mod+Shift+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+Shift+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Alt+Shift+WheelScrollDown { move-workspace-down; }
+    Mod+Alt+Shift+WheelScrollUp   { move-workspace-up; }
+    Mod+Alt+WheelScrollDown        cooldown-ms=150 { focus-workspace-down; }
+    Mod+Alt+WheelScrollUp          cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
     Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
@@ -396,15 +402,15 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
-    Mod+Ctrl+3 { move-column-to-workspace 3; }
-    Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
 
     // Alternatively, there are commands to move just a single window:
     Mod+Alt+1 { move-window-to-workspace 1; }
@@ -423,10 +429,10 @@ binds {
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
     // If the window is already in a column, they will expel it out.
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Ctrl+H  { consume-or-expel-window-left; }
+    Mod+Ctrl+L  { consume-or-expel-window-right; }
 
-    // Consume one window from the right to the bottom of the focused column.
+    // Consume one window from the right into the bottom of the focused column.
     Mod+Comma  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
     Mod+Period { expel-window-from-column; }
@@ -434,10 +440,10 @@ binds {
     Mod+R { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
-    Mod+Shift+F { maximize-column; }
-    Mod+F { fullscreen-window; }
+    Mod+F { maximize-column; }
+    Mod+Ctrl+F { fullscreen-window; }
     Mod+C { center-column; }
-    Mod+Alt+MouseLeft { center-column; }
+    Mod+Shift+MouseLeft { center-column; }
 
     // Finer width adjustments.
     // This command can also:
@@ -447,12 +453,12 @@ binds {
     // * adjust width as a percentage of screen width: "-10%" or "+10%"
     // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
     // set-column-width "100" will make the column occupy 200 physical screen pixels.
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+BracketLeft { set-column-width "-10%"; }
+    Mod+Shift+BracketRight { set-column-width "+10%"; }
 
     // Finer height adjustments when in column with other windows.
-    Mod+Shift+Minus { set-window-height "-10%"; }
-    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+BracketLeft { set-window-height "-10%"; }
+    Mod+BracketRight { set-window-height "+10%"; }
 
     // Move the focused window between the floating and the tiling layout.
     Mod+V       { toggle-window-floating; }
@@ -477,5 +483,5 @@ binds {
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    // Mod+Shift+P { power-off-monitors; }
+    Mod+Shift+P { power-off-monitors; }
 }
