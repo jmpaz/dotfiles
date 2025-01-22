@@ -136,7 +136,7 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
-        // off
+        off
 
         // How many logical pixels the ring extends out from the windows.
         width 2
@@ -147,10 +147,10 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#9CCFD8"
+        active-color "#56949F"
 
         // Color of the ring on inactive monitors.
-        inactive-color "#6E6A86"
+        inactive-color "#9893A5"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -172,14 +172,19 @@ layout {
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        off
+        // off
 
-        width 4
-        active-color "#9CCFD8"
-        inactive-color "#6E6A86"
+        width 2
+        active-color "#56949F"
+        inactive-color "#9893A5"
 
         // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    }
+
+    insert-hint {
+        // color "#c8c8c880"
+        // gradient from="#ffbb6680" to="#ffc88080" angle=45 relative-to="workspace-view"
     }
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -250,6 +255,7 @@ window-rule {
     default-column-width {}
 }
 
+
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
@@ -257,6 +263,21 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"floorp$"# title="^Picture-in-Picture$"
     open-floating true
+    default-floating-position x=32 y=32 relative-to="bottom-left"
+}
+
+// float
+window-rule {
+    open-floating true
+    default-column-width { fixed 1200; }
+    default-window-height { fixed 870; }
+    match app-id=r#"^org\.gnome\.Nautilus$"# title="^Open File$"
+}
+window-rule {
+    open-floating true
+    default-column-width { fixed 0; }
+    default-window-height { fixed 0; }
+    match app-id=r#"^setroubleshoot$"# title=".*"
 }
 
 // Example: block out two password managers from screen capture.
@@ -273,7 +294,7 @@ window-rule {
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
 }
@@ -302,15 +323,19 @@ binds {
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
 
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+5%" ; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-" ; }
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
+    XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioPlay         allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPause        allow-when-locked=true { spawn "playerctl" "pause"; }
+    XF86AudioNext         allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev         allow-when-locked=true { spawn "playerctl" "previous"; }
+
     Mod+Shift+Q { close-window; }
 
-    Mod+H     { focus-column-left; }
+    Mod+H     { focus-column-left; } 
     Mod+J        { focus-window-or-workspace-down; }
     // Mod+J     { focus-window-down; }
     Mod+K        { focus-window-or-workspace-up; }
