@@ -24,7 +24,7 @@ window#waybar {
   font-size: 12pt;
 }
 #workspaces button {
-  padding: 2px 8px;
+  padding: 2px 7px;
   color: @color8;
 }
 #workspaces button:hover {
