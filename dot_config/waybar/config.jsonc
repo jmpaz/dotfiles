@@ -18,8 +18,9 @@
     "format-icons": {
         "default": "󱓼",
         "focus": "󱓻",
-        "chat": "󰍡",
-        "media": "󰋋"
+        "chat": "󰻞",
+        "media": "󰋋",
+        "scratchpad": ""
     }
   },
 

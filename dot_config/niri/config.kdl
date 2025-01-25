@@ -6,6 +6,7 @@
 workspace "focus"
 workspace "chat"
 workspace "media"
+workspace "scratchpad"
 
 // Input device configuration.
 // Find the full list of options on the wiki:
@@ -51,6 +52,8 @@ input {
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
     focus-follows-mouse max-scroll-amount="0%"
+
+    workspace-auto-back-and-forth
 }
 
 // You can configure outputs by their name, which you can find
@@ -107,9 +110,10 @@ layout {
         // Proportion sets the width as a fraction of the output width, taking gaps into account.
         // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
         // The default preset widths are 1/3, 1/2 and 2/3 of the output.
-        proportion 0.33333
+        proportion 0.3
+        proportion 0.4
         proportion 0.5
-        proportion 0.66667
+        proportion 0.6
 
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
@@ -119,20 +123,7 @@ layout {
     // preset-window-heights { }
 
     // You can change the default width of the new windows.
-    default-column-width { proportion 0.5; }
-    // If you leave the brackets empty, the windows themselves will decide their initial width.
-    // default-column-width {}
-
-    // By default focus ring and border are rendered as a solid background rectangle
-    // behind windows. That is, they will show up through semitransparent windows.
-    // This is because windows using client-side decorations can have an arbitrary shape.
-    //
-    // If you don't like that, you should uncomment `prefer-no-csd` below.
-    // Niri will draw focus ring and border *around* windows that agree to omit their
-    // client-side decorations.
-    //
-    // Alternatively, you can override it with a window rule called
-    // `draw-border-with-background`.
+    default-column-width { proportion 0.4; }
 
     // You can change how the focus ring looks.
     focus-ring {
@@ -175,7 +166,7 @@ layout {
         // If you enable the border, you probably want to disable the focus ring.
         // off
 
-        width 2
+        width 4
         active-color "#56949F"
         inactive-color "#9893A5"
 
@@ -207,6 +198,7 @@ layout {
 // See the binds section below for more spawn examples.
 spawn-at-startup "wlsunset -l 40.7128 -L -74.0060"
 spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
+spawn-at-startup "ghostty" "--class=ghostty.scratchpad"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -256,29 +248,80 @@ window-rule {
     default-column-width {}
 }
 
-
-// Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+    match app-id="ghostty.scratchpad"
+
+    open-on-workspace "scratchpad"
+    open-floating true
+}
+
+window-rule {
+    match app-id="com.github.wwmm.easyeffects"
+
+    default-column-width { proportion 0.38; }
+    default-window-height { proportion 0.60; }
+    open-on-workspace "media"
+}
+
+window-rule {
+    match app-id="org.gnome.Fractal"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="im.riot.Riot"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="blueman-manager"
+    default-column-width { proportion 0.10; }
+    default-window-height { proportion 0.25; }
+    default-floating-position x=8 y=12 relative-to="top-right"
+    open-floating true
+}
+
+window-rule {
+    match app-id="org.pulseaudio"
+    default-column-width { proportion 0.25; }
+    default-window-height { proportion 0.55; }
+    default-floating-position x=8 y=12 relative-to="top-right"
+    open-floating true
+}
+
+window-rule {
+    match app-id="nm-connection-editor"
+    default-column-width { proportion 0.15; }
+    default-window-height { proportion 0.25; }
+    open-floating true
+}
+
+window-rule {
     match app-id=r#"floorp$"# title="^Picture-in-Picture$"
     open-floating true
     default-floating-position x=32 y=32 relative-to="bottom-left"
 }
 
-// float
 window-rule {
+    match app-id=r#"^org\.gnome\.Nautilus$"# title="^(Open File|Save (As|Image)|Upload File|Enter name of file to save to…)$"
     open-floating true
-    default-column-width { fixed 1200; }
-    default-window-height { fixed 870; }
-    match app-id=r#"^org\.gnome\.Nautilus$"# title="^Open File$"
+    default-column-width { proportion 0.38; }
+    default-window-height { proportion 0.52; }
 }
+
 window-rule {
+    match app-id=r#"^setroubleshoot$"# title=".*"
     open-floating true
     default-column-width { fixed 0; }
     default-window-height { fixed 0; }
-    match app-id=r#"^setroubleshoot$"# title=".*"
+}
+
+window-rule {
+    match app-id=r#"^wev$"# title=".*"
+    open-floating true
+    default-column-width { fixed 400; }
+    default-window-height { fixed 400; }
+    default-floating-position x=32 y=32 relative-to="bottom-right"
 }
 
 // Example: block out two password managers from screen capture.
@@ -449,6 +492,9 @@ binds {
     Mod+Alt+8 { move-window-to-workspace 8; }
     Mod+Alt+9 { move-window-to-workspace 9; }
 
+    // show/hide scratchpad terminal
+    Super+Backslash { focus-workspace "scratchpad"; }
+
     // Switches focus between the current and the previous workspace.
     Mod+Tab { focus-workspace-previous; }
 
@@ -479,12 +525,10 @@ binds {
     // * adjust width as a percentage of screen width: "-10%" or "+10%"
     // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
     // set-column-width "100" will make the column occupy 200 physical screen pixels.
-    Mod+Shift+BracketLeft { set-column-width "-10%"; }
-    Mod+Shift+BracketRight { set-column-width "+10%"; }
-
-    // Finer height adjustments when in column with other windows.
     Mod+BracketLeft { set-window-height "-10%"; }
     Mod+BracketRight { set-window-height "+10%"; }
+    Mod+Shift+BracketLeft { set-column-width "-5%"; }
+    Mod+Shift+BracketRight { set-column-width "+5%"; }
 
     // Move the focused window between the floating and the tiling layout.
     Mod+V       { toggle-window-floating; }
@@ -499,9 +543,12 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Print       { screenshot; }
-    Mod+Shift+S { screenshot; }
     Ctrl+Print  { screenshot-screen; }
     Alt+Print   { screenshot-window; }
+
+    Mod+Shift+S { screenshot; }
+    Mod+Ctrl+Shift+S { screenshot-window; }
+    Mod+Shift+Alt+S { screenshot-screen; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E { quit; }
