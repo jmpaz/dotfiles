@@ -45,6 +45,7 @@ tmux = { src = 'tmux.conf', target = '~/.config/tmux/theme.conf', new_engine = t
 chezmoi = { src = 'chezmoi.toml', target = '~/.local/share/chezmoi/.toml/colors.toml', new_engine = true }
 ghostty = { src = 'ghostty', target = '~/.config/ghostty/theme', new_engine = true }
 neovim = { src = 'neopywal.vim', target = '~/.cache/wal/colors-wal.vim', new_engine = true }
+aider = { src = 'aider.env', target = '~/.config/aider/colors.env', new_engine = true }
 {{- if eq .displayServer "X11" }}
 rofi = { src = 'rofi.rasi', target = '~/.config/rofi/colors.rasi', new_engine = true }
 xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xresources' }
