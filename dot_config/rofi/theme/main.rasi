@@ -1,0 +1,82 @@
+@import "colors.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 12";
+
+    urgent: #e78a4e;
+    radius: 4px;
+
+    background-color: transparent;
+    text-color: @fg0;
+
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+element-icon,
+element-text,
+scrollbar {
+    cursor: pointer;
+}
+
+window {
+    location: north;
+    y-offset: calc(50% - 280px);
+    width: 600px;
+
+    background-color: @bg1;
+    border: 3px solid;
+    border-color: @border;
+    border-radius: @radius;
+}
+
+inputbar {
+    padding: 8px 12px;
+    spacing: 8px;
+    background-color: @bg0;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: @fg1;
+}
+
+textbox {
+    padding: 8px;
+    background-color: @bg2;
+}
+
+listview {
+    lines: 8;
+    spacing: 4px;
+    fixed-height: false;
+}
+
+element {
+    orientation: horizontal;
+    spacing: 8px;
+    padding: 4px 12px;
+}
+
+element normal urgent {
+    text-color: @urgent;
+}
+
+element normal active {
+    text-color: @fg1;
+}
+
+element selected {
+    text-color: @bg0;
+    background-color: @bg2;
+}
+
+element selected urgent {
+    background-color: @urgent;
+}
+
+element-text {
+    text-color: inherit;
+    highlight: none;
+}

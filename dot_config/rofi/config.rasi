@@ -1,2 +1,17 @@
-// vim:ft=rasi
-@import "topbox.rasi"
+configuration {
+  modes: "drun";
+  show-icons: true;
+
+  cycle: false;
+  hover-select: true;
+
+  kb-page-prev: "Page_Up,Alt+u,ScrollUp";
+  kb-page-next: "Page_Down,Alt+d,ScrollDown";
+  ml-row-up: "";
+  ml-row-down: "";
+  me-select-entry: "";
+  me-accept-entry: "MousePrimary";
+}
+
+@theme "~/.config/rofi/theme/main.rasi"
+

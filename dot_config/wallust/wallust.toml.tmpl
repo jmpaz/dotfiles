@@ -46,8 +46,8 @@ chezmoi = { src = 'chezmoi.toml', target = '~/.local/share/chezmoi/.toml/colors.
 ghostty = { src = 'ghostty', target = '~/.config/ghostty/theme', new_engine = true }
 neovim = { src = 'neopywal.vim', target = '~/.cache/wal/colors-wal.vim', new_engine = true }
 aider = { src = 'aider.env', target = '~/.config/aider/colors.env', new_engine = true }
+rofi = { src = 'rofi.rasi', target = '~/.config/rofi/theme/colors.rasi', new_engine = true }
 {{- if eq .displayServer "X11" }}
-rofi = { src = 'rofi.rasi', target = '~/.config/rofi/colors.rasi', new_engine = true }
 xresources = { src = 'colors.xresources', target = '~/.Xresources.d/colors.xresources' }
 {{ end -}}
 {{- if eq .displayServer "wayland" }}
