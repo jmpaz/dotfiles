@@ -492,7 +492,9 @@ binds {
     Mod+Alt+8 { move-window-to-workspace 8; }
     Mod+Alt+9 { move-window-to-workspace 9; }
 
-    // show/hide scratchpad terminal
+    // show/hide named workspaces
+    Mod+Ctrl+C { focus-workspace "chat"; }
+    Mod+Ctrl+S { focus-workspace "media"; }
     Super+Backslash { focus-workspace "scratchpad"; }
 
     // Switches focus between the current and the previous workspace.
