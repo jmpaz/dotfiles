@@ -1,0 +1,198 @@
+#!/usr/bin/env bash
+
+# ------------------------------------------------------------------------------
+# CONFIGURATION
+# ------------------------------------------------------------------------------
+
+LAUNCHER='rofi -dmenu -p window -i -width 70 -l 20 -cycle'
+
+# Workspace icons. We'll select based on `.name` if set, or the fallback:
+#  - If a workspace is currently focused, we use the "focus" icon
+#  - If .name is "chat", we use 󰻞, etc.
+#  - Otherwise we use the "default" icon (󱓼).
+declare -A WORKSPACE_ICONS=(
+  ["focus"]="󱓻"
+  ["chat"]="󰻞"
+  ["media"]="󰋋"
+  ["scratchpad"]=""
+  ["default"]="󱓼"
+)
+
+# ------------------------------------------------------------------------------
+# FUNCTIONS
+# ------------------------------------------------------------------------------
+
+# Return an appropriate icon (glyph) for the workspace, factoring in whether it’s focused.
+get_workspace_icon() {
+  local ws_name="$1"
+  local is_focused="$2"
+
+  if [[ "$is_focused" == "true" ]]; then
+    echo "${WORKSPACE_ICONS["focus"]}"
+    return
+  fi
+
+  if [[ -n "${WORKSPACE_ICONS[$ws_name]}" ]]; then
+    echo "${WORKSPACE_ICONS[$ws_name]}"
+    return
+  fi
+
+  # fallback
+  echo "${WORKSPACE_ICONS["default"]}"
+}
+
+# ------------------------------------------------------------------------------
+# MAIN
+# ------------------------------------------------------------------------------
+
+# 1) Fetch workspace & window data from niri
+workspaces_json="$(niri msg --json workspaces)"
+windows_json="$(niri msg --json windows)"
+
+if [[ -z "$workspaces_json" || -z "$windows_json" ]]; then
+  echo "Error: Could not fetch data from niri. Is niri running?" >&2
+  exit 1
+fi
+
+# 2) Parse the workspaces and reorder so the *focused* one is at the front
+
+readarray -t WORKSPACE_ROWS < <(
+  echo "$workspaces_json" \
+  | jq -r '.[] | "\(.id)\t\(.idx)\t\(.name)\t\(.focused)"'
+)
+
+((${#WORKSPACE_ROWS[@]}==0)) && exit 0
+
+declare -a WS_IDS=()
+declare -a WS_IDXS=()
+declare -a WS_NAMES=()
+declare -a WS_FOCUSED=()
+
+for line in "${WORKSPACE_ROWS[@]}"; do
+  IFS=$'\t' read -r wsid wsidx wsname wsfocus <<< "$line"
+  WS_IDS+=( "$wsid" )
+  WS_IDXS+=( "$wsidx" )
+  WS_NAMES+=( "$wsname" )
+  WS_FOCUSED+=( "$wsfocus" )
+done
+
+# Indices 0..(n-1)
+num_ws=${#WS_IDS[@]}
+ws_indices=( $(seq 0 $((num_ws-1))) )
+
+# Sort by .idx
+readarray -t ws_indices < <(
+  for i in "${ws_indices[@]}"; do
+    echo "$i ${WS_IDXS[$i]}"
+  done | sort -k2n | awk '{print $1}'
+)
+
+# Rotate so that the focused workspace is at the front
+focused_array_index=-1
+for i in "${ws_indices[@]}"; do
+  if [[ "${WS_FOCUSED[$i]}" == "true" ]]; then
+    focused_array_index="$i"
+    break
+  fi
+done
+
+if [[ "$focused_array_index" -ge 0 ]]; then
+  # Find its position in ws_indices
+  pos=0
+  for ((x=0; x<${#ws_indices[@]}; x++)); do
+    if [[ "${ws_indices[$x]}" -eq "$focused_array_index" ]]; then
+      pos=$x
+      break
+    fi
+  done
+  # Rotate
+  ws_indices=( "${ws_indices[@]:$pos}" "${ws_indices[@]:0:$pos}" )
+fi
+
+# Build a map from workspace_id -> the order we want them to appear
+declare -A WORKSPACE_SORT_ORDER
+for order_pos in "${!ws_indices[@]}"; do
+  i="${ws_indices[$order_pos]}"
+  wsid="${WS_IDS[$i]}"
+  WORKSPACE_SORT_ORDER["$wsid"]="$order_pos"
+done
+
+# Also build name/focus maps
+declare -A WS_NAME_MAP=()
+declare -A WS_FOCUSED_MAP=()
+for i in "${!WS_IDS[@]}"; do
+  wsid="${WS_IDS[$i]}"
+  wsname="${WS_NAMES[$i]}"
+  wsfocus="${WS_FOCUSED[$i]}"
+  [[ -z "$wsname" || "$wsname" == "null" ]] && wsname="$wsid"
+  WS_NAME_MAP["$wsid"]="$wsname"
+  WS_FOCUSED_MAP["$wsid"]="$wsfocus"
+done
+
+# 3) Parse windows
+readarray -t WINDOW_ROWS < <(
+  echo "$windows_json" \
+  | jq -r '.[] | "\(.id)\t\(.workspace_id)\t\(.title)"'
+)
+
+((${#WINDOW_ROWS[@]}==0)) && exit 0
+
+declare -a W_SORT_ORDER=()
+declare -a W_ID=()
+declare -a W_WS_ID=()
+declare -a W_TITLE=()
+
+for line in "${WINDOW_ROWS[@]}"; do
+  IFS=$'\t' read -r wid wws wtitle <<< "$line"
+  sort_pos="${WORKSPACE_SORT_ORDER[$wws]}"
+  [[ -z "$sort_pos" ]] && sort_pos=9999
+  W_SORT_ORDER+=( "$sort_pos" )
+  W_ID+=( "$wid" )
+  W_WS_ID+=( "$wws" )
+  W_TITLE+=( "$wtitle" )
+done
+
+num_w=${#W_ID[@]}
+win_indices=( $(seq 0 $((num_w-1))) )
+
+# Sort
+readarray -t win_indices < <(
+  for i in "${win_indices[@]}"; do
+    echo "$i ${W_SORT_ORDER[$i]}"
+  done | sort -s -k2n | awk '{print $1}'
+)
+
+# 4) Build lines for rofi
+declare -a MENU_LINES=()
+declare -A LINE_TO_WIN_ID=()
+
+for i in "${win_indices[@]}"; do
+  local_ws_id="${W_WS_ID[$i]}"
+  local_id="${W_ID[$i]}"
+  local_title="${W_TITLE[$i]}"
+
+  local_ws_name="${WS_NAME_MAP[$local_ws_id]}"
+  local_ws_focus="${WS_FOCUSED_MAP[$local_ws_id]}"
+  ws_icon="$(get_workspace_icon "$local_ws_name" "$local_ws_focus")"
+
+  # Just text: "<workspace_glyph>  <title>"
+  display_text="$ws_icon  $local_title"
+
+  MENU_LINES+=( "$display_text" )
+  LINE_TO_WIN_ID["$display_text"]="$local_id"
+done
+
+# 5) Show in rofi
+chosen_line="$(
+  printf '%s\n' "${MENU_LINES[@]}" \
+  | $LAUNCHER
+)"
+
+[[ -z "$chosen_line" ]] && exit 0
+
+chosen_id="${LINE_TO_WIN_ID["$chosen_line"]}"
+[[ -z "$chosen_id" ]] && exit 0
+
+# 6) Focus the chosen window
+niri msg action focus-window --id "$chosen_id"
+

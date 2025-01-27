@@ -497,7 +497,7 @@ binds {
     Super+Backslash { focus-workspace "scratchpad"; }
 
     // Switches focus between the current and the previous workspace.
-    Mod+Tab { focus-workspace-previous; }
+    Mod+Tab { spawn "bash" "-c" "~/.config/niri/scripts/window-switcher"; }
 
     Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/niri/scripts/cliphist-rofi-img" "-show" "clipboard" "-show-icons"; }
 
