@@ -193,8 +193,7 @@ layout {
 }
 
 // Add lines like this to spawn processes at startup.
-// Note that running niri as a session supports xdg-desktop-autostart,
-// which may be more convenient to use.
+// Note that running niri as a session supports xdg-desktop-autostart, which may be more convenient to use.
 // See the binds section below for more spawn examples.
 spawn-at-startup "wlsunset -l 40.7128 -L -74.0060"
 spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
@@ -303,7 +302,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^org\.gnome\.Nautilus$"# title="^(Open File|Save (As|Image)|Upload File|Enter name of file to save to…)$"
+    match app-id=r#"^org\.gnome\.Nautilus$"# title="^(Open File|Save (As|Image)|Upload File|File Upload|Enter name of file to save to…)$"
     open-floating true
     default-column-width { proportion 0.38; }
     default-window-height { proportion 0.52; }
@@ -360,7 +359,7 @@ binds {
 
     // Binds for running programs: terminal, app launcher, screen locker.
     Mod+Return       { spawn "ghostty"; }
-    Mod+D            { spawn "fuzzel"; }
+    Mod+D            { spawn "rofi" "-modes" "drun,window" "-show" "drun"; }
     Ctrl+Super+Alt+L { spawn "swaylock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -499,6 +498,8 @@ binds {
 
     // Switches focus between the current and the previous workspace.
     Mod+Tab { focus-workspace-previous; }
+
+    Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/niri/scripts/cliphist-rofi-img" "-show" "clipboard" "-show-icons"; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
