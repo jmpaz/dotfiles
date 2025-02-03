@@ -1,0 +1,8 @@
+# vim:ft=conf
+
+--theme="ansi"
+
+--style="numbers"
+
+--color=always
+
