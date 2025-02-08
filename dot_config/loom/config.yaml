@@ -1,0 +1,57 @@
+model_map:
+  ollama:
+    llama3.2-1b:
+      model_str: "llama3.2:1b-text-fp16"
+      type: text
+    llama3.2-3b:
+      model_str: "llama3.2:3b-text-fp16"
+      type: text
+    llama3.1-8b:
+      model_str: "llama3.1:8b-text-q5_K_M"
+      type: text
+    gemma2-2b:
+      model_str: "gemma2:2b-text-fp16"
+      type: text
+    gemma2-9b:
+      model_str: "gemma2:9b-text-q5_K_M"
+      type: text
+    smollm2-1.7b:
+      model_str: "smollm2:1.7b-text-fp16"
+      type: text
+    yi-1.5b:
+      model_str: "yi-coder:1.5b-base"
+      type: text
+    qwen2.5-0.5b:
+      model_str: "qwen2.5-coder:0.5b-base-fp16"
+      type: text
+    qwen2.5-7b:
+      model_str: "qwen2.5-coder:7b-base-q5_K_M"
+      type: text
+    qwen2.5-1.5b:
+      model_str: "qwen2.5-coder:1.5b-base-fp16"
+      type: text
+    qwen2.5-14b:
+      model_str: "qwen2.5-coder:14b-base-q4_K_M"
+      type: text
+    mistral-nemo-12b:
+      model_str: "mistral-nemo:12b-text-2407-q5_K_M"
+      type: text
+    mistral-small-24b:
+      model_str: "mistral-small:24b-text-2501-Q5_K_M"
+      type: text
+  bedrock:
+    claude-3-opus:
+      region: us-west-2
+    claude-3.5-sonnet:
+      region: us-west-2
+    claude-3.5-haiku:
+      region: us-west-2
+    llama3.1-70b-chat:
+      region: us-west-2
+    llama3.1-405b-chat:
+      region: us-west-2
+    mistral-large:
+      region: us-west-2
+    mistral-large-old:
+      region: us-west-2
+
