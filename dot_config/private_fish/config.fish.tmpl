@@ -90,8 +90,8 @@ fish_add_path $PYENV_ROOT/bin
 pyenv init - | source
 {{ end }}
 
-# Set editor
 set -gx EDITOR nvim
+set -gx ZK_NOTEBOOK_DIR ~/notes
 
 # Syntax highlighting
 set -g fish_color_autosuggestion 555 brblack
