@@ -195,6 +195,7 @@ layout {
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart, which may be more convenient to use.
 // See the binds section below for more spawn examples.
+spawn-at-startup "xwayland-satellite"
 spawn-at-startup "wlsunset -l 40.7128 -L -74.0060"
 spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
 spawn-at-startup "ghostty" "--class=ghostty.scratchpad"
@@ -492,14 +493,15 @@ binds {
     Mod+Alt+9 { move-window-to-workspace 9; }
 
     // show/hide named workspaces
-    Mod+Ctrl+C { focus-workspace "chat"; }
-    Mod+Ctrl+S { focus-workspace "media"; }
+    // Mod+Ctrl+C { focus-workspace "chat"; }
+    // Mod+Ctrl+S { focus-workspace "media"; }
     Super+Backslash { focus-workspace "scratchpad"; }
 
     // Switches focus between the current and the previous workspace.
     Mod+Tab { spawn "bash" "-c" "~/.config/niri/scripts/window-switcher"; }
 
     Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/niri/scripts/cliphist-rofi-img" "-show" "clipboard" "-show-icons"; }
+    Mod+Ctrl+C { spawn "sh" "-c" "notify-send \"$(count-tokens)\""; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
