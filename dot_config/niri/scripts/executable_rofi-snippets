@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# ~/.config/niri/scripts/rofi-snippets
+
+snippets_file="$HOME/.config/rofi/snippets.yaml"
+
+if [[ -n "$1" ]]; then
+    # Paste mode: Look up the snippet by its name and copy its content.
+    snippet=$(yq -r ".snippets[] | select(.name == \"${1}\") | .string" "$snippets_file")
+    echo -n "$snippet" | wl-copy
+    exit 0
+fi
+
+# List mode: Output each snippet as a single-line rofi entry.
+# Replace newline characters in the snippet text with a marker (here, the "⏎" symbol)
+yq -r '.snippets[] | "\(.name)\u0000info\u001f\(.string | gsub("\n"; "⏎"))"' "$snippets_file"
+

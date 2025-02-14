@@ -1,0 +1,11 @@
+snippets:
+  - name: "```"
+    string: |
+      ```
+
+      ```
+  - name: "<paste>"
+    string: |
+      <paste>
+
+      </paste>
