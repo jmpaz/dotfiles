@@ -513,10 +513,10 @@ binds {
     Super+Backslash { focus-workspace "scratchpad"; }
 
     // Switches focus between the current and the previous workspace.
-    Mod+Tab { spawn "bash" "-c" "~/.config/niri/scripts/window-switcher"; }
+    Mod+Tab { spawn "bash" "-c" "~/.config/rofi/scripts/window-switcher"; }
 
-    Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/niri/scripts/cliphist-rofi-img" "-show" "clipboard" "-show-icons"; }
-    Mod+Shift+T { spawn "rofi" "-modi" "snippet:~/.config/niri/scripts/rofi-snippets" "-show" "snippet"; }
+    Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/rofi/scripts/cliphist" "-show" "clipboard" "-show-icons"; }
+    Mod+Shift+T { spawn "rofi" "-modi" "snippet:~/.config/rofi/scripts/snippets" "-show" "snippet"; }
     Mod+Ctrl+C { spawn "sh" "-c" "notify-send \"$(count-tokens)\""; }
 
     // The following binds move the focused window in and out of a column.
