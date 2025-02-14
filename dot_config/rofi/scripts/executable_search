@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+#
+# rofi-search
+#
+# A tiny wrapper script around the `search` CLI.
+#
+# If invoked with `-c`, we’ll use `search -c`.
+# Otherwise, we just run plain `search`.
+#
+
+export PATH="$HOME/.cargo/bin:$PATH"
+use_clipboard=false
+
+# Look for “-c” in the script’s arguments
+if [[ "$1" == "-c" ]]; then
+  use_clipboard=true
+  shift  # remove the '-c' from $@
+fi
+
+# Whatever the user typed in rofi is passed as $@
+prompt="$*"
+
+# If user typed nothing, do nothing
+if [[ -z "$prompt" ]]; then
+  exit 0
+fi
+
+if $use_clipboard; then
+  search -c "$prompt"
+else
+  search "$prompt"
+fi
+
