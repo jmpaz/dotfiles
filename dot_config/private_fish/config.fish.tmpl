@@ -48,12 +48,11 @@ for flatpakdir in ~/.local/share/flatpak/exports/bin /var/lib/flatpak/exports/bi
     end
 end
 
-
-
-fish_add_path -P ~/bin
+set -Ux GOPATH ~/.go
+fish_add_path -P ~/.go/bin
 fish_add_path -P ~/.cargo/bin
 fish_add_path -P ~/.bun/bin
-fish_add_path -P ~/.rye/shims
+fish_add_path -P ~/bin
 
 zoxide init fish --cmd cd | source
 

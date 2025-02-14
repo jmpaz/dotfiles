@@ -3,8 +3,8 @@
 alias tree='eza --tree'
 alias shcopy='shcopy --term tmux'
 
-alias fe='yazi'
-alias yz='yazi'
+alias f='yazi'
+alias y='yazi'
 alias lg='lazygit'
 
 alias zj='zellij'
@@ -49,16 +49,15 @@ alias print-staged='git ls-files --stage | awk "{print \$4}" | grep -v -e "__ini
 # contextualize
 abbr -a cx 'contextualize'
 abbr -a cxxc 'collect_context'
-# contextualize cat
+# cat
 abbr -a cxc 'contextualize cat'
 abbr -a cxcc 'contextualize cat --output clipboard'
-# abbr -a cxce 'contextualize cat | nvim -c "set ft=markdown" -'  # these need to be functions
-# abbr -a cxce 'contextualize-edit cat'
-# contextualize fetch
+# map
+abbr -a cxm 'contextualize map'
+abbr -a cxmc 'contextualize map --output clipboard'
+# fetch
 abbr -a cxf 'contextualize fetch'
 abbr -a cxfc 'contextualize fetch --output clipboard'
-# abbr -a cxfe 'contextualize fetch | nvim -c "set ft=markdown" -'
-# abbr -a cxfe 'contextualize-edit fetch'
 
 alias nvim-scratch="nvim --cmd 'let g:no_startscreen = 1' --cmd 'set wrap'"
 {{- if ne .chezmoi.os "darwin" }}
