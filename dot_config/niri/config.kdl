@@ -256,6 +256,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id="scrcpy"
+    open-on-workspace "scratchpad"
+}
+
+window-rule {
     match app-id="com.github.wwmm.easyeffects"
 
     default-column-width { proportion 0.38; }
@@ -270,6 +275,16 @@ window-rule {
 
 window-rule {
     match app-id="im.riot.Riot"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="vesktop"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="BeeperTexts"
     open-on-workspace "chat"
 }
 
