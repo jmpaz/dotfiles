@@ -125,6 +125,22 @@ layout {
     // You can change the default width of the new windows.
     default-column-width { proportion 0.4; }
 
+    default-column-display "tabbed"
+    tab-indicator {
+        position "top"
+        // position "bottom"
+        hide-when-single-tab
+        gaps-between-tabs 3
+        length total-proportion=0.4
+    }
+
+    shadow {
+      on
+      spread 1
+      softness 4
+      draw-behind-window true
+    }
+
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
@@ -305,6 +321,12 @@ window-rule {
 }
 
 window-rule {
+    match app-id="dragon"
+    default-floating-position x=8 y=12 relative-to="top-left"
+    open-floating true
+}
+
+window-rule {
     match app-id="nm-connection-editor"
     default-column-width { proportion 0.15; }
     default-window-height { proportion 0.25; }
@@ -394,26 +416,30 @@ binds {
 
     Mod+Shift+Q { close-window; }
 
-    Mod+H     { focus-column-left; } 
-    Mod+J        { focus-window-or-workspace-down; }
-    // Mod+J     { focus-window-down; }
-    Mod+K        { focus-window-or-workspace-up; }
-    // Mod+K     { focus-window-up; }
+    Mod+H     { focus-column-left; }
     Mod+L     { focus-column-right; }
+
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+    // Mod+J        { focus-window-or-workspace-down; }
+    // Mod+K        { focus-window-or-workspace-up; }
 
     Mod+Shift+H     { move-column-left; }
     Mod+Shift+L     { move-column-right; }
-
-    // Mod+Shift+J     { move-window-down-or-to-workspace-down; }
-    // Mod+Shift+K     { move-window-up-or-to-workspace-up; }
 
     Mod+Ctrl+J     { move-window-down; }
     Mod+Ctrl+K     { move-window-up; }
 
     Mod+Shift+J  { move-column-to-workspace-down; }
     Mod+Shift+K    { move-column-to-workspace-up; }
+    // Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    // Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+
     Mod+Ctrl+Shift+J   { move-window-to-workspace-down; }
     Mod+Ctrl+Shift+K     { move-window-to-workspace-up; }
+
+    Mod+W { toggle-column-tabbed-display; }
+    // Mod+W { toggle-column-tabbed-display; }
 
     Mod+Left       { focus-column-first; }
     Mod+Right      { focus-column-last; }
@@ -455,15 +481,15 @@ binds {
     // You can set a cooldown on any bind, but it's most useful for the wheel.
     Mod+WheelScrollDown      { focus-column-right; }
     Mod+WheelScrollUp        { focus-column-left; }
-    Mod+Shift+WheelScrollDown { move-column-right; }
-    Mod+Shift+WheelScrollUp   { move-column-left; }
+    Mod+Shift+WheelScrollDown { focus-window-down-or-top; }
+    Mod+Shift+WheelScrollUp   { focus-window-up-or-bottom; }
     // Mod+WheelScrollRight      { focus-column-right; }
     // Mod+WheelScrollLeft       { focus-column-left; }
     // Mod+Ctrl+WheelScrollRight { move-column-right; }
     // Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 
-    Mod+Alt+Shift+WheelScrollDown { move-workspace-down; }
-    Mod+Alt+Shift+WheelScrollUp   { move-workspace-up; }
+    Mod+Alt+Shift+WheelScrollDown { move-column-right; }
+    Mod+Alt+Shift+WheelScrollUp   { move-column-left; }
     Mod+Alt+WheelScrollDown        cooldown-ms=150 { focus-workspace-down; }
     Mod+Alt+WheelScrollUp          cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
@@ -535,8 +561,9 @@ binds {
     Mod+Period { expel-window-from-column; }
 
     Mod+R { switch-preset-column-width; }
-    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Shift+R { expand-column-to-available-width; }
     Mod+Ctrl+R { reset-window-height; }
+    Mod+Ctrl+Shift+R { switch-preset-window-height; }
     Mod+F { maximize-column; }
     Mod+Ctrl+F { fullscreen-window; }
     Mod+C { center-column; }
@@ -582,4 +609,7 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+
+    // deactivate shortcut inhibiting
+    Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
 }
