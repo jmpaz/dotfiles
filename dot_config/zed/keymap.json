@@ -86,10 +86,10 @@
       "ctrl-alt-l": ["workspace::SwapPaneInDirection", "Right"],
       "ctrl-w -": "pane::SplitDown",
       "ctrl-w |": "pane::SplitRight",
-      "ctrl-w shift-h": "zed::NoAction",
-      "ctrl-w shift-l": "zed::NoAction",
-      "ctrl-w shift-k": "zed::NoAction",
-      "ctrl-w shift-j": "zed::NoAction"
+      "ctrl-w shift-h": null,
+      "ctrl-w shift-l": null,
+      "ctrl-w shift-k": null,
+      "ctrl-w shift-j": null
     }
   },
   {
@@ -123,7 +123,7 @@
 
       "\\ g b": "editor::ToggleGitBlameInline",
       "space g b": "editor::ToggleGitBlame",
-      "space g d": "editor::ToggleHunkDiff",
+      "space g d": "editor::ToggleSelectedDiffHunks",
       "space g r": "editor::RevertSelectedHunks",
       "space g shift-r": "editor::RevertFile",
 
@@ -168,8 +168,8 @@
       ", o s": "zed::OpenSettings",
       ", o shift-s": "zed::OpenDefaultSettings",
       ", o t": "zed::OpenTasks",
-      ", o alt-t": "zed::OpenLocalTasks",
-      ", o alt-s": "zed::OpenLocalSettings",
+      ", o alt-t": "zed::OpenProjectTasks",
+      ", o alt-s": "zed::OpenProjectSettings",
       ", o `": "workspace::OpenInTerminal",
       ", o k": "zed::OpenKeymap",
       ", o shift-k": "zed::OpenDefaultKeymap",
@@ -256,8 +256,8 @@
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-o": "zed::NoAction",
-      "ctrl-w": "zed::NoAction",
+      "ctrl-o": null,
+      "ctrl-w": null,
       "alt-;": "command_palette::Toggle",
       "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"]
@@ -325,7 +325,7 @@
   },
   {
     "context": "Terminal || Editor",
-    "bindings": { "ctrl-k": "zed::NoAction" }
+    "bindings": { "ctrl-k": null }
   },
   {
     "context": "Pane",

@@ -46,14 +46,14 @@
   "cursor_blink": false,
 
   "theme": {
-    "mode": "light",
+    "mode": "system",
     "light": "Rosé Pine Dawn",
-    "dark": "Rosé Pine Moon"
+    "dark": "Rosé Pine"
   },
-  "buffer_font_family": "iMWritingMono Nerd Font",
+  "buffer_font_family": "Input Mono",
   "ui_font_family": "iMWritingQuat Nerd Font",
-  "ui_font_size": 18,
-  "buffer_font_size": 19,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
   "experimental.theme_overrides": {
     "syntax": {
       "property": {}
@@ -87,7 +87,7 @@
   },
 
   "features": {
-    "inline_completion_provider": "supermaven"
+    "edit_prediction_provider": "zed"
   },
   "language_models": {
     "openai": {
@@ -95,29 +95,39 @@
       "api_url": "https://api.consciousdata.dev/v1",
       "available_models": [
         {
-          "name": "claude-haiku",
+          "name": "claude-3.7-sonnet",
+          "display_name": "Claude 3.7 Sonnet",
+          "max_tokens": 200000
+        },
+        {
+          "name": "claude-3.6-sonnet",
+          "display_name": "Claude 3.6 Sonnet",
+          "max_tokens": 200000
+        },
+        {
+          "name": "claude-3.5-sonnet",
+          "display_name": "Claude 3.5 Sonnet",
+          "max_tokens": 200000
+        },
+        {
+          "name": "claude-3.5-haiku",
           "display_name": "Claude 3.5 Haiku",
           "max_tokens": 200000
         },
         {
-          "name": "claude-sonnet",
-          "display_name": "Claude 3.5 Sonnet (New)",
-          "max_tokens": 200000
-        },
-        {
-          "name": "claude-haiku-old",
+          "name": "claude-3-haiku",
           "display_name": "Claude 3 Haiku",
-          "max_tokens": 200000
-        },
-        {
-          "name": "claude-sonnet-old",
-          "display_name": "Claude 3.5 Sonnet",
           "max_tokens": 200000
         },
         {
           "name": "claude-opus",
           "display_name": "Claude 3 Opus",
           "max_tokens": 200000
+        },
+        {
+          "name": "deepseek-r1-fp8",
+          "display_name": "Deepseek R1",
+          "max_tokens": 128000
         }
       ]
     }
@@ -126,7 +136,7 @@
     "button": false,
     "default_model": {
       "provider": "openai",
-      "model": "claude-haiku-old"
+      "model": "claude-3.6-sonnet"
     },
     "version": "2",
     "provider": null
