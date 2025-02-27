@@ -305,6 +305,12 @@ window-rule {
 }
 
 window-rule {
+    match app-id="mpv"
+
+    open-floating true
+}
+
+window-rule {
     match app-id="blueman-manager"
     default-column-width { proportion 0.10; }
     default-window-height { proportion 0.25; }
@@ -424,19 +430,22 @@ binds {
     // Mod+J        { focus-window-or-workspace-down; }
     // Mod+K        { focus-window-or-workspace-up; }
 
+    Mod+N          { focus-window-down-or-top; }
+    Mod+P          { focus-window-up-or-bottom; }
+
     Mod+Shift+H     { move-column-left; }
     Mod+Shift+L     { move-column-right; }
 
-    Mod+Ctrl+J     { move-window-down; }
-    Mod+Ctrl+K     { move-window-up; }
+    Mod+Alt+J     { move-window-down; }
+    Mod+Alt+K     { move-window-up; }
 
     Mod+Shift+J  { move-column-to-workspace-down; }
     Mod+Shift+K    { move-column-to-workspace-up; }
     // Mod+Shift+J     { move-window-down-or-to-workspace-down; }
     // Mod+Shift+K     { move-window-up-or-to-workspace-up; }
 
-    Mod+Ctrl+Shift+J   { move-window-to-workspace-down; }
-    Mod+Ctrl+Shift+K     { move-window-to-workspace-up; }
+    Mod+Alt+Shift+J   { move-window-to-workspace-down; }
+    Mod+Alt+Shift+K     { move-window-to-workspace-up; }
 
     Mod+W { toggle-column-tabbed-display; }
     // Mod+W { toggle-column-tabbed-display; }
@@ -464,16 +473,10 @@ binds {
     // Mod+Shift+Ctrl+H  { move-workspace-to-monitor-left; }
     // ...
 
-    Mod+Down       { focus-workspace-down; }
-    Mod+Up         { focus-workspace-up; }
-    Mod+Shift+Down { move-workspace-down; }
-    Mod+Shift+Up   { move-workspace-up; }
-    // Mod+Shift+N    { move-workspace-down; }
-    // Mod+Shift+P    { move-workspace-up; }
-    // Mod+N          { focus-workspace-down; }
-    // Mod+P          { focus-workspace-up; }
-    // Mod+Ctrl+N     { move-column-to-workspace-down; }
-    // Mod+Ctrl+P     { move-column-to-workspace-up; }
+    Mod+Ctrl+J       { focus-workspace-down; }
+    Mod+Ctrl+K         { focus-workspace-up; }
+    Mod+Ctrl+Shift+J { move-workspace-down; }
+    Mod+Ctrl+Shift+K   { move-workspace-up; }
 
 
     // You can bind mouse wheel scroll ticks using the following syntax. These binds will change direction based on the natural-scroll setting.
@@ -481,15 +484,15 @@ binds {
     // You can set a cooldown on any bind, but it's most useful for the wheel.
     Mod+WheelScrollDown      { focus-column-right; }
     Mod+WheelScrollUp        { focus-column-left; }
-    Mod+Shift+WheelScrollDown { focus-window-down-or-top; }
-    Mod+Shift+WheelScrollUp   { focus-window-up-or-bottom; }
+    Mod+Alt+Shift+WheelScrollDown { focus-window-down-or-top; }
+    Mod+Alt+Shift+WheelScrollUp   { focus-window-up-or-bottom; }
     // Mod+WheelScrollRight      { focus-column-right; }
     // Mod+WheelScrollLeft       { focus-column-left; }
     // Mod+Ctrl+WheelScrollRight { move-column-right; }
     // Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 
-    Mod+Alt+Shift+WheelScrollDown { move-column-right; }
-    Mod+Alt+Shift+WheelScrollUp   { move-column-left; }
+    Mod+Shift+WheelScrollDown { move-column-right; }
+    Mod+Shift+WheelScrollUp   { move-column-left; }
     Mod+Alt+WheelScrollDown        cooldown-ms=150 { focus-workspace-down; }
     Mod+Alt+WheelScrollUp          cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
@@ -553,8 +556,8 @@ binds {
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
     // If the window is already in a column, they will expel it out.
-    Mod+Ctrl+H  { consume-or-expel-window-left; }
-    Mod+Ctrl+L  { consume-or-expel-window-right; }
+    Mod+Alt+H  { consume-or-expel-window-left; }
+    Mod+Alt+L  { consume-or-expel-window-right; }
 
     // Consume one window from the right into the bottom of the focused column.
     Mod+Comma  { consume-window-into-column; }
