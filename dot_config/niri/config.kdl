@@ -548,7 +548,10 @@ binds {
     Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/rofi/scripts/cliphist" "-show" "clipboard" "-show-icons"; }
     Mod+Shift+T { spawn "rofi" "-modi" "snippet:~/.config/rofi/scripts/snippets" "-show" "snippet"; }
 
-    Mod+Shift+G { spawn "sh" "-c" "rofi -modi 'search:~/.config/rofi/scripts/search,+clipboard:~/.config/rofi/scripts/search -c' -show search"; }
+    Mod+Shift+V { spawn "sh" "-c" "~/.local/bin/wrap-insert md"; }
+    Mod+Ctrl+Shift+V { spawn "sh" "-c" "~/.local/bin/wrap-insert xml"; }
+
+    Mod+Ctrl+G { spawn "sh" "-c" "rofi -modi 'search:~/.config/rofi/scripts/search,+clipboard:~/.config/rofi/scripts/search -c' -show search"; }
     Mod+Ctrl+Shift+G { spawn "sh" "-c" "rofi -modi '+clipboard:~/.config/rofi/scripts/search -c' -show +clipboard"; }
 
     Mod+Ctrl+C { spawn "sh" "-c" "notify-send \"$(count-tokens)\""; }
@@ -587,8 +590,8 @@ binds {
     Mod+Shift+BracketRight { set-column-width "+5%"; }
 
     // Move the focused window between the floating and the tiling layout.
-    Mod+V       { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+G       { toggle-window-floating; }
+    Mod+Shift+G { switch-focus-between-floating-and-tiling; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
