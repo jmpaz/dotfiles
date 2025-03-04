@@ -270,6 +270,10 @@ window-rule {
     open-on-workspace "scratchpad"
     open-floating true
 }
+window-rule {
+    match app-id="ghostty.separator"
+    default-column-width { proportion 0.1; }
+}
 
 window-rule {
     match app-id="scrcpy"
@@ -288,17 +292,14 @@ window-rule {
     match app-id="org.gnome.Fractal"
     open-on-workspace "chat"
 }
-
 window-rule {
     match app-id="im.riot.Riot"
     open-on-workspace "chat"
 }
-
 window-rule {
     match app-id="vesktop"
     open-on-workspace "chat"
 }
-
 window-rule {
     match app-id="BeeperTexts"
     open-on-workspace "chat"
@@ -306,7 +307,6 @@ window-rule {
 
 window-rule {
     match app-id="mpv"
-
     open-floating true
 }
 
@@ -539,7 +539,10 @@ binds {
     // show/hide named workspaces
     // Mod+Ctrl+C { focus-workspace "chat"; }
     // Mod+Ctrl+S { focus-workspace "media"; }
-    Super+Backslash { focus-workspace "scratchpad"; }
+    Mod+Backslash { focus-workspace "scratchpad"; }
+    Mod+Ctrl+Backslash {
+        spawn "env" "SKIP_TMUX=1" "ghostty" "--class=ghostty.separator";
+    }
 
     // Switches focus between the current and the previous workspace.
     Mod+Tab { focus-workspace-previous; }
@@ -548,8 +551,8 @@ binds {
     Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/rofi/scripts/cliphist" "-show" "clipboard" "-show-icons"; }
     Mod+Shift+T { spawn "rofi" "-modi" "snippet:~/.config/rofi/scripts/snippets" "-show" "snippet"; }
 
-    Mod+Shift+V { spawn "sh" "-c" "~/.local/bin/wrap-insert md"; }
-    Mod+Ctrl+Shift+V { spawn "sh" "-c" "~/.local/bin/wrap-insert xml"; }
+    Mod+Shift+V { spawn "sh" "-c" "~/.go/bin/wrap paste md"; }
+    Mod+Ctrl+Shift+V { spawn "sh" "-c" "~/.go/bin/wrap paste xml"; }
 
     Mod+Ctrl+G { spawn "sh" "-c" "rofi -modi 'search:~/.config/rofi/scripts/search,+clipboard:~/.config/rofi/scripts/search -c' -show search"; }
     Mod+Ctrl+Shift+G { spawn "sh" "-c" "rofi -modi '+clipboard:~/.config/rofi/scripts/search -c' -show +clipboard"; }
