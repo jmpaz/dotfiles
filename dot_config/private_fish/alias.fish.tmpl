@@ -56,16 +56,18 @@ abbr -a cx 'contextualize'
 abbr -a cxxc 'collect_context'
 # cat
 abbr -a cxc 'contextualize cat'
-abbr -a cxcc 'contextualize cat --output clipboard'
+abbr -a cxcc 'contextualize --copy cat'
+abbr -a cxcp 'contextualize -p "" -p "" --wrap md --copy cat'
 # shell
 abbr -a cxs 'contextualize shell'
-abbr -a cxsc 'contextualize shell' --output clipboard
+abbr -a cxsc 'contextualize --copy shell'
+abbr -a cxsp 'contextualize -p "" -p "" --wrap md --copy shell'
 # map
 abbr -a cxm 'contextualize map'
-abbr -a cxmc 'contextualize map --output clipboard'
+abbr -a cxmc 'contextualize --copy map'
 # fetch
 abbr -a cxf 'contextualize fetch'
-abbr -a cxfc 'contextualize fetch --output clipboard'
+abbr -a cxfc 'contextualize --copy fetch'
 
 alias nvim-scratch="nvim --cmd 'let g:no_startscreen = 1' --cmd 'set wrap'"
 {{- if ne .chezmoi.os "darwin" }}
