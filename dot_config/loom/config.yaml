@@ -15,6 +15,18 @@ model_map:
     gemma2-9b:
       model_str: "gemma2:9b-text-q5_K_M"
       type: text
+    gemma3-1b:
+      model_str: "gemma3:1b-pt"
+      type: text
+    gemma3-4b:
+      model_str: "gemma3:4b-pt-q8_0"
+      type: text
+    gemma3-12b:
+      model_str: "gemma3:12b-pt-q5_K_M"
+      type: text
+    gemma3-27b:
+      model_str: "gemma3:27b-pt-q3_K_M"
+      type: text
     smollm2-1.7b:
       model_str: "smollm2:1.7b-text-fp16"
       type: text
