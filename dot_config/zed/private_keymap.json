@@ -48,7 +48,7 @@
       "backspace": "vim::PreviousWordStart",
       "shift-backspace": [
         "vim::PreviousWordStart",
-        { "ignorePunctuation": true }
+        { "ignore_punctuation": true }
       ]
     }
   },
@@ -69,21 +69,25 @@
       "alt-a enter": "assistant::InlineAssist",
       "alt-a >": "assistant::QuoteSelection",
 
-      "alt-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "alt-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "alt-h": "workspace::ActivatePaneLeft",
+      "alt-l": "workspace::ActivatePaneRight",
       "alt-a -": "pane::SplitDown",
       "alt-a |": "pane::SplitRight",
       "alt-a alt-_": "pane::SplitUp",
       "alt-a alt-|": "pane::SplitLeft",
       "alt-a p": "pane::TogglePinTab",
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-alt-h": ["workspace::SwapPaneInDirection", "Left"],
-      "ctrl-alt-j": ["workspace::SwapPaneInDirection", "Down"],
-      "ctrl-alt-k": ["workspace::SwapPaneInDirection", "Up"],
-      "ctrl-alt-l": ["workspace::SwapPaneInDirection", "Right"],
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-alt-h": "workspace::SwapPaneLeft",
+      "ctrl-alt-j": "workspace::SwapPaneDown",
+      "ctrl-alt-k": "workspace::SwapPaneUp",
+      "ctrl-alt-l": "workspace::SwapPaneRight",
+      "alt--": "vim::ResizePaneLeft",
+      "alt-+": "vim::ResizePaneRight",
+      "ctrl-alt--": "vim::ResizePaneDown",
+      "ctrl-alt-+": "vim::ResizePaneUp",
       "ctrl-w -": "pane::SplitDown",
       "ctrl-w |": "pane::SplitRight",
       "ctrl-w shift-h": null,
@@ -121,11 +125,16 @@
       "\\ a": "editor::ToggleCodeActions",
       ", shift-r": "editor::Rename",
 
-      "\\ g b": "editor::ToggleGitBlameInline",
-      "space g b": "editor::ToggleGitBlame",
+      "alt-]": "editor::GoToHunk",
+      "alt-[": "editor::GoToPreviousHunk",
+      "space g b": "git::Blame",
       "space g d": "editor::ToggleSelectedDiffHunks",
-      "space g r": "editor::RevertSelectedHunks",
-      "space g shift-r": "editor::RevertFile",
+      "space g h": "editor::ExpandAllDiffHunks",
+      "space g r": "git::Restore",
+      "space g s": "git::StageAndNext",
+      "space g u": "git::UnstageAndNext",
+      "space g shift-r": "git::RestoreFile",
+      "\\ g b": "editor::ToggleGitBlameInline",
 
       "space c a": "editor::ToggleCodeActions",
       "space c f": "editor::Format",
@@ -145,7 +154,7 @@
       "\\ z": "workspace::ToggleCenteredLayout",
       "\\ w": "editor::ToggleSoftWrap",
       "\\ n": "editor::ToggleLineNumbers",
-      "shift-h": "pane::ActivatePrevItem",
+      "shift-h": "pane::ActivatePreviousItem",
       "shift-l": "pane::ActivateNextItem",
       "space e": "workspace::ToggleLeftDock",
       "space shift-e": "pane::RevealInProjectPanel",
@@ -157,7 +166,7 @@
       "space o": "outline::Toggle",
       "space p": "project_symbols::Toggle",
       "space t": "task::Spawn",
-      "space alt-b": "branches::OpenRecent",
+      "space alt-b": "git::Branch",
       "space alt-p": "projects::OpenRecent",
       "ctrl-w z": "workspace::ToggleZoom",
 
@@ -186,7 +195,8 @@
   {
     "context": "Editor || ProjectPanel || CollabPanel || OutlinePanel || Terminal || Workspace",
     "bindings": {
-      "alt-a e": "workspace::ToggleLeftDock",
+      "shift-tab": "workspace::ToggleLeftDock",
+      "alt-a alt-g": "git_panel::ToggleFocus",
       "alt-a alt-e": "project_panel::ToggleFocus",
       "alt-a alt-o": "outline_panel::ToggleFocus",
       "alt-a alt-tab": "outline_panel::ToggleFocus",
@@ -195,9 +205,14 @@
       "alt-a \\": "workspace::ToggleRightDock",
       "alt-a alt-\\": "assistant::ToggleFocus",
       "alt-a alt-h": "terminal_panel::ToggleFocus",
-      "alt--": "project_panel::ToggleFocus",
-      "alt-=": "outline_panel::ToggleFocus",
-      "alt-\\": "assistant::ToggleFocus"
+      "alt-\\": "assistant::ToggleFocus",
+      "alt-|": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "GitPanel && ChangesList",
+    "bindings": {
+      "shift-tab": "workspace::ToggleLeftDock"
     }
   },
 
@@ -214,9 +229,9 @@
     "context": "OutlinePanel",
     "bindings": {
       "enter": "outline_panel::Open",
-      "g y": "outline_panel::CopyPath",
+      "g y": "workspace::CopyPath",
       "j": "menu::SelectNext",
-      "k": "menu::SelectPrev",
+      "k": "menu::SelectPrevious",
       "alt-h": "outline_panel::CollapseSelectedEntry",
       "alt-shift-h": "outline_panel::ExpandSelectedEntry",
       "alt-l": "outline_panel::ToggleFocus",
@@ -239,8 +254,8 @@
       "space e": "workspace::ToggleLeftDock",
       "alt-a alt-e": "project_panel::ToggleFocus",
       "shift-d": "project_panel::Delete",
-      "g y": "project_panel::CopyPath",
-      "g shift-y": "project_panel::CopyRelativePath",
+      "g y": "workspace::CopyPath",
+      "g shift-y": "workspace::CopyRelativePath",
       "shift-o": "project_panel::RevealInFileManager",
       "alt-l": "project_panel::ToggleFocus",
       "ctrl-l": "project_panel::ToggleFocus"
@@ -259,16 +274,16 @@
       "ctrl-o": null,
       "ctrl-w": null,
       "alt-;": "command_palette::Toggle",
-      "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"]
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight"
     }
   },
   {
     "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || (Terminal || Workspace)",
     "bindings": {
-      "alt-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "alt-left": "pane::ActivatePrevItem",
-      "alt-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "alt-j": "workspace::ActivatePaneDown",
+      "alt-left": "pane::ActivatePreviousItem",
+      "alt-k": "workspace::ActivatePaneUp",
       "alt-right": "pane::ActivateNextItem",
       "alt-a z": "workspace::ToggleZoom",
       "alt-a n": "workspace::NewTerminal",
