@@ -23,11 +23,12 @@ input {
     touchpad {
         // off
         tap
-        // dwt
-        // dwtp
+        dwt
+        drag-lock
         natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
+        accel-profile "adaptive"
+        accel-speed 0.2
+        scroll-factor 0.4
         // scroll-method "two-finger"
         // disabled-on-external-mouse
     }
@@ -61,7 +62,10 @@ input {
 // The built-in laptop monitor is usually called "eDP-1".
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
+output "eDP-1" {
+    scale 1.75
+}
+
 output "HDMI-A-2" {
     // Resolution and, optionally, refresh rate of the output.
     // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
@@ -211,6 +215,7 @@ layout {
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart, which may be more convenient to use.
 // See the binds section below for more spawn examples.
+spawn-at-startup "~/.config/waybar/launch.sh"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "wlsunset -l 40.7128 -L -74.0060"
 spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
@@ -410,8 +415,10 @@ binds {
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
 
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+5%" ; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-" ; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+2%" ; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "2%-" ; }
+
+
     XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
     XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
     XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
