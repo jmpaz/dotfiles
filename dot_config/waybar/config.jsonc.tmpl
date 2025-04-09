@@ -2,25 +2,33 @@
   "layer": "top",
 
   "modules-left": [
-    "niri/workspaces",
+    "niri/workspaces"
   ],
   "modules-center": ["niri/window"],
   "modules-right": [
     "bluetooth",
     "pulseaudio",
+    {{- if eq .chezmoi.hostname "asahi" }}
+    "network",
+    "battery",
+    {{- end }}
     "clock",
-    "clock#date"
+    "clock#date",
   ],
 
   "niri/workspaces": {
     "all-outputs": true,
     "format": "{icon}",
     "format-icons": {
+      {{- if (eq .chezmoi.hostname "asahi") }}
+        "focus": "[]",
+      {{- else }}
         "default": "󱓼",
         "focus": "󱓻",
         "chat": "󰻞",
         "media": "󰋋",
         "scratchpad": ""
+      {{- end }}
     }
   },
 
@@ -28,6 +36,16 @@
     // "format": "{title}",
     "separate-outputs": false,
     "icon": false
+  },
+
+  "network": {
+    "format-wifi": "{icon}  {essid}",
+    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+    "format-ethernet": "󰈀 {ipaddr}/{cidr}",
+    "format-linked": "󰛳 {ifname}",
+    "format-disconnected": "󰅛 disconnected",
+    "tooltip-format": "{ifname}\n{ipaddr}",
+    "on-click": "nm-connection-editor"
   },
 
   "bluetooth": {
@@ -51,6 +69,17 @@
     "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
   },
 
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 10
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "{capacity}%  plugged",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+  },
+
   "clock": {
     "format": "󰥔 {:%H:%M}"
   },
@@ -60,4 +89,3 @@
     "tooltip-format": "<tt><small>{calendar}</small></tt>"
   }
 }
-

@@ -28,7 +28,11 @@ config-file = theme
 term = xterm-256color
 
 config-file = fonts
+{{- if eq .chezmoi.hostname "asahi" }}
+font-size = 13
+{{- else }}
 font-size = 14
+{{- end }}
 
 window-padding-balance = false
 window-padding-x = 17,0

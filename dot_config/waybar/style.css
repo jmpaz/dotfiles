@@ -43,7 +43,8 @@ window#waybar {
   color: @color8_reduced;
 }
 
-
+#network,
+#battery,
 #bluetooth,
 #pulseaudio,
 #clock,
@@ -54,6 +55,11 @@ window#waybar {
   color: @color7;
   background: alpha(@color8, 0.2);
   border-radius: 4px;
+}
+
+#network.disconnected {
+  color: mix(@color8, #000, 0.35);
+  background: alpha(@color8, 0.1);
 }
 
 #bluetooth.connected {
