@@ -4,6 +4,6 @@ show_preview = true
 invert = true
 show_help = false
 enter_accept = true
-search_mode = "skim"
+search_mode = "fulltext"
 keymap_mode = "vim-insert"
 # keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
