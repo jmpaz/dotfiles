@@ -7,7 +7,6 @@ workspace "focus"
 {{- if (eq .chezmoi.hostname "fedora") }}
 workspace "chat"
 workspace "media"
-workspace "scratchpad"
 {{- end }}
 
 // Input device configuration.
@@ -231,7 +230,6 @@ spawn-at-startup "~/.config/waybar/launch.sh"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "wlsunset -l 40.7128 -L -74.0060"
 spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
-spawn-at-startup "ghostty" "--class=ghostty.scratchpad"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -282,19 +280,8 @@ window-rule {
 }
 
 window-rule {
-    match app-id="ghostty.scratchpad"
-
-    open-on-workspace "scratchpad"
-    open-floating true
-}
-window-rule {
     match app-id="ghostty.separator"
     default-column-width { proportion 0.1; }
-}
-
-window-rule {
-    match app-id="scrcpy"
-    open-on-workspace "scratchpad"
 }
 
 window-rule {

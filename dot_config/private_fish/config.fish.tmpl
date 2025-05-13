@@ -55,6 +55,7 @@ fish_add_path -P ~/.bun/bin
 fish_add_path -P ~/bin
 
 zoxide init fish --cmd cd | source
+fnm env --use-on-cd --shell fish | source
 
 if status is-interactive
 
