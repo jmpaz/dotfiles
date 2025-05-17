@@ -15,6 +15,7 @@ workspace "media"
 input {
     keyboard {
         xkb {}
+        numlock
         repeat-rate 30
         repeat-delay 260
     }
@@ -390,6 +391,12 @@ window-rule {
     clip-to-geometry true
 }
 
+layer-rule {
+    match namespace="^rofi$"
+
+    baba-is-float true
+}
+
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
@@ -551,7 +558,7 @@ binds {
     }
 
     // Switches focus between the current and the previous workspace.
-    Mod+Tab { focus-workspace-previous; }
+    Mod+Tab { toggle-overview; }
     Mod+Shift+Tab { spawn "sh" "-c" "~/.config/rofi/scripts/window-switcher"; }
 
     Mod+Shift+C { spawn "rofi" "-modi" "clipboard:~/.config/rofi/scripts/cliphist" "-show" "clipboard" "-show-icons"; }
@@ -583,6 +590,7 @@ binds {
     Mod+F { maximize-column; }
     Mod+Ctrl+F { fullscreen-window; }
     Mod+C { center-column; }
+    Mod+Alt+C { center-visible-columns; }
     Mod+Shift+MouseLeft { center-column; }
 
     // Finer width adjustments.
@@ -628,4 +636,23 @@ binds {
 
     // deactivate shortcut inhibiting
     Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
+}
+
+overview {
+    zoom 0.6
+    backdrop-color "#9893A5"
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+clipboard {
+    disable-primary
+}
+
+hotkey-overlay {
+    skip-at-startup
 }
