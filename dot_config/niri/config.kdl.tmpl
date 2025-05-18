@@ -591,6 +591,7 @@ binds {
     Mod+Ctrl+Shift+G { spawn "sh" "-c" "rofi -modi '+clipboard:~/.config/rofi/scripts/search -c' -show +clipboard"; }
 
     Mod+Ctrl+C { spawn "sh" "-c" "notify-send \"$(count-tokens)\""; }
+    Mod+Ctrl+D { spawn "sh" "-c" "notify-send \"$(journal-payload)\""; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
