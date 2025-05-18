@@ -222,6 +222,26 @@ layout {
         top 6
         bottom 6
     }
+
+  background-color "transparent"
+}
+
+overview {
+    zoom 0.7
+    // backdrop-color "#9893A5"
+    workspace-shadow { off; }
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+// put swaybg inside the overview backdrop
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
 }
 
 // Add lines like this to spawn processes at startup.
@@ -589,9 +609,11 @@ binds {
     Mod+Ctrl+Shift+R { switch-preset-window-height; }
     Mod+F { maximize-column; }
     Mod+Ctrl+F { fullscreen-window; }
+    Mod+Ctrl+Shift+F { toggle-windowed-fullscreen; }
     Mod+C { center-column; }
     Mod+Alt+C { center-visible-columns; }
-    Mod+Shift+MouseLeft { center-column; }
+    Mod+MouseMiddle { center-column; }
+    Mod+Alt+MouseMiddle { toggle-overview; }
 
     // Finer width adjustments.
     // This command can also:
@@ -638,16 +660,6 @@ binds {
     Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
 }
 
-overview {
-    zoom 0.6
-    backdrop-color "#9893A5"
-}
-
-gestures {
-    hot-corners {
-        off
-    }
-}
 
 clipboard {
     disable-primary
