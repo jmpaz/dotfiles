@@ -79,6 +79,7 @@ output "HDMI-A-2" {
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
     scale 1.25
+    // scale 1.5
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -332,6 +333,11 @@ window-rule {
 
 window-rule {
     match app-id="mpv"
+    open-floating true
+}
+
+window-rule {
+    match app-id="org.gnome.Characters"
     open-floating true
 }
 
@@ -659,6 +665,11 @@ binds {
 
     // deactivate shortcut inhibiting
     Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
+
+    // screencast
+    Mod+F1 { set-dynamic-cast-window; }
+    Mod+F2 { set-dynamic-cast-monitor; }
+    Mod+F4 { clear-dynamic-cast-target; }
 }
 
 
