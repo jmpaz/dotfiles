@@ -1,3 +1,5 @@
+// vim: ft=kdl
+
 workspace "focus"
 {{- if (eq .chezmoi.hostname "fedora") }}
 workspace "chat"
@@ -71,8 +73,8 @@ layout {
     }
     shadow {
       on
-      spread 1
-      softness 4
+      spread -1
+      softness 10
       draw-behind-window true
     }
     focus-ring {
@@ -223,7 +225,9 @@ window-rule {
 }
 layer-rule {
     match namespace="^rofi$"
-    baba-is-float true
+    shadow {
+        on
+    }
 }
 
 // launch scripts
