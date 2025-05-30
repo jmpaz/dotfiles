@@ -1,7 +1,8 @@
 # vim: ft=toml
 
 [character]
-error_symbol = '[↺](bold red) '
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
 vimcmd_symbol = '[✜](bold blue)'
 vimcmd_replace_symbol = '[✜](bold yellow)'
 vimcmd_replace_one_symbol = '[✛](bold yellow)'
@@ -27,6 +28,9 @@ symbol = " "
 [directory]
 read_only = " 󰌾"
 
+# [direnv]
+# disabled=false
+
 [docker_context]
 symbol = " "
 
@@ -44,6 +48,15 @@ disabled = true
 {{ end }}
 [git_branch]
 symbol = " "
+
+[git_status]
+stashed=""
+style="bold grey"
+
+[git_metrics]
+disabled=false
+added_style = 'bold yellow'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 
 [golang]
 symbol = " "
@@ -130,12 +143,16 @@ Windows = "󰍲 "
 
 [package]
 symbol = "󰏗 "
+style = "bold white"
+format = "is [$symbol$version]($style) "
 
 [pijul_channel]
 symbol = " "
 
 [python]
 symbol = " "
+style="bold green"
+format="via [${symbol}${pyenv_prefix}(${version} )]($style)"
 
 [rlang]
 symbol = "󰟔 "

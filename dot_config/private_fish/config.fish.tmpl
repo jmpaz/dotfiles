@@ -118,9 +118,9 @@ set -g fish_color_valid_path --underline
 
 # Prompt
 {{ if eq .chezmoi.os "linux" }}
-export STARSHIP_CONFIG=/home/josh/.config/starship/starship.toml
+set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
 {{ else if eq .chezmoi.os "darwin" }}
-export STARSHIP_CONFIG=/Users/josh/.config/starship/starship.toml
+set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
 {{ end }}
 starship init fish | source
 
