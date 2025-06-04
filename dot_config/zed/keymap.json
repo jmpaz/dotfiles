@@ -1,4 +1,5 @@
 [
+  // basic operations
   {
     "context": "Editor && showing_completions",
     "bindings": {
@@ -14,6 +15,7 @@
     }
   },
 
+  // repl
   {
     "context": "Editor && jupyter && !ContextEditor && VimControl && !VimWaiting && !menu",
     "bindings": {
@@ -28,6 +30,7 @@
     }
   },
 
+  // vim
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
     "bindings": {
@@ -52,6 +55,8 @@
       ]
     }
   },
+
+  // code navigation
   {
     "context": "VimControl && !menu",
     "bindings": {
@@ -63,6 +68,7 @@
     }
   },
 
+  // pane nav/management
   {
     "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || Workspace",
     "bindings": {
@@ -110,6 +116,7 @@
     }
   },
 
+  // editor features
   {
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
@@ -185,15 +192,17 @@
       ", o alt-shift-k": "vim::OpenDefaultKeymap",
       ", o p": "markdown::OpenPreview",
       ", o shift-p": "markdown::OpenPreviewToTheSide",
-      ", o l": "assistant::DeployPromptLibrary",
+      ", o l": "agent::OpenRulesLibrary",
       ", o x": "zed::Extensions",
       ", o z": "zed::OpenZedRepo",
-      ", d k": "debug::OpenKeyContextView",
-      ", d t": "debug::OpenThemePreview"
+      ", d k": "dev::OpenKeyContextView",
+      ", d t": "dev::OpenThemePreview"
     }
   },
+
+  // panel-specific
   {
-    "context": "Editor || ProjectPanel || CollabPanel || OutlinePanel || Terminal || Workspace",
+    "context": "Editor || AgentPanel || ProjectPanel || CollabPanel || OutlinePanel || Terminal || Workspace",
     "bindings": {
       "shift-tab": "workspace::ToggleLeftDock",
       "alt-a alt-g": "git_panel::ToggleFocus",
@@ -203,9 +212,11 @@
       "alt-a alt-c": "collab_panel::ToggleFocus",
       "alt-a h": "workspace::ToggleBottomDock",
       "alt-a \\": "workspace::ToggleRightDock",
-      "alt-a alt-\\": "assistant::ToggleFocus",
+      "alt-a alt-\\": "agent::ToggleFocus",
       "alt-a alt-h": "terminal_panel::ToggleFocus",
-      "alt-\\": "assistant::ToggleFocus",
+      "alt-\\": "agent::ToggleFocus",
+      "ctrl-alt-\\": "agent::NewTextThread",
+      "ctrl-alt-a": "agent::NewThread",
       "alt-|": "workspace::ToggleRightDock"
     }
   },
@@ -216,52 +227,7 @@
     }
   },
 
-  {
-    "context": "ProjectPanel && not_editing",
-    "bindings": {
-      "space": null,
-      "space e": "workspace::ToggleLeftDock",
-      "alt-escape": "workspace::ToggleLeftDock"
-    }
-  },
-
-  {
-    "context": "OutlinePanel",
-    "bindings": {
-      "enter": "outline_panel::Open",
-      "g y": "workspace::CopyPath",
-      "j": "menu::SelectNext",
-      "k": "menu::SelectPrevious",
-      "alt-h": "outline_panel::CollapseSelectedEntry",
-      "alt-shift-h": "outline_panel::ExpandSelectedEntry",
-      "alt-l": "outline_panel::ToggleFocus",
-      "ctrl-l": "outline_panel::ToggleFocus",
-      "alt-p": "outline_panel::ToggleActiveEditorPin"
-    }
-  },
-
-  {
-    "context": "ProjectPanel && not_editing",
-    "bindings": {
-      "space": null,
-      "q": "workspace::ToggleLeftDock",
-      "a": "project_panel::NewFile",
-      "x": "project_panel::Cut",
-      "c": "project_panel::Copy",
-      "p": "project_panel::Paste",
-      "r": "project_panel::Rename",
-      "d": "project_panel::Trash",
-      "space e": "workspace::ToggleLeftDock",
-      "alt-a alt-e": "project_panel::ToggleFocus",
-      "shift-d": "project_panel::Delete",
-      "g y": "workspace::CopyPath",
-      "g shift-y": "workspace::CopyRelativePath",
-      "shift-o": "project_panel::RevealInFileManager",
-      "alt-l": "project_panel::ToggleFocus",
-      "ctrl-l": "project_panel::ToggleFocus"
-    }
-  },
-
+  // misc
   {
     "context": "Pane",
     "bindings": {
@@ -291,6 +257,7 @@
     }
   },
 
+  // ~~assistant~~ agent
   {
     "context": "Editor",
     "bindings": {
@@ -305,7 +272,7 @@
     "bindings": {
       "ctrl-r": "vim::Redo",
       "ctrl->": "assistant::QuoteSelection",
-      ", m": "assistant::ToggleModelSelector",
+      ", m": "agent::ToggleModelSelector",
       ", r": "assistant::CycleMessageRole",
       ", s": "assistant::Split",
       ", enter": "assistant::Assist"
@@ -317,58 +284,6 @@
     "bindings": {
       "space space": "file_finder::Toggle",
       "space f p": "projects::OpenRecent"
-    }
-  },
-
-  // manually disable all ctrl-k bindings so that they don't interfere with the terminal
-  {
-    "context": "Workspace",
-    "bindings": {
-      "ctrl-k s": null,
-      "ctrl-k ctrl-s": null,
-      "ctrl-k ctrl-t": null,
-      "ctrl-k m": null,
-      "ctrl-k ctrl-left": null,
-      "ctrl-k ctrl-right": null,
-      "ctrl-k ctrl-up": null,
-      "ctrl-k ctrl-down": null,
-      "ctrl-k shift-left": null,
-      "ctrl-k shift-right": null,
-      "ctrl-k shift-up": null,
-      "ctrl-k shift-down": null
-    }
-  },
-  {
-    "context": "Terminal || Editor",
-    "bindings": { "ctrl-k": null }
-  },
-  {
-    "context": "Pane",
-    "bindings": {
-      "ctrl-k u": null,
-      "ctrl-k w": null,
-      "ctrl-k ctrl-w": null,
-      "ctrl-k up": null,
-      "ctrl-k down": null,
-      "ctrl-k left": null,
-      "ctrl-k right": null
-    }
-  },
-  {
-    "context": "Editor",
-    "bindings": {
-      "ctrl-k ctrl-r": null,
-      "ctrl-k ctrl-d": null,
-      "ctrl-k ctrl-shift-d": null,
-      "ctrl-k ctrl-i": null,
-      "ctrl-k ctrl-p": null,
-      "ctrl-k ctrl-v": null
-    }
-  },
-  {
-    "context": "Editor && mode == full",
-    "bindings": {
-      "ctrl-k enter": null
     }
   }
 ]
