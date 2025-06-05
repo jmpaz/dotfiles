@@ -90,6 +90,7 @@
   },
   "agent": {
     "button": true,
+    "default_view": "text_thread",
     "default_model": {
       "provider": "amazon-bedrock",
       "model": "anthropic.claude-sonnet-4-20250514-v1:0"
