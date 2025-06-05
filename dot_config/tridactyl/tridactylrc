@@ -1,0 +1,11 @@
+" vim: ft=vim
+"
+" set theme light
+
+set newtab about:blank
+
+unbind D
+bind X tabclose
+
+bind H tabprev
+bind L tabnext
