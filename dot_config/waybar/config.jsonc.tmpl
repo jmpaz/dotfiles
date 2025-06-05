@@ -1,3 +1,4 @@
+// vim: ft=jsonc
 {
   "layer": "top",
 
@@ -18,24 +19,26 @@
 
   "niri/workspaces": {
     "all-outputs": true,
-    "format": "{icon}",
+    "format": "{icon} {index}",
     "format-icons": {
-      {{- if (eq .chezmoi.hostname "asahi") }}
-        "focus": "[]",
-      {{- else }}
         "default": "󱓼",
         "focus": "󱓻",
         "chat": "󰻞",
         "media": "󰋋",
-        "scratchpad": ""
-      {{- end }}
     }
   },
 
   "niri/window": {
-    // "format": "{title}",
+    "format": "{app_id} {title}",
+    "rewrite": {
+      // Match either:
+      //   1) up to 64 characters (lazy) followed immediately by an en/em dash, then anything → capture group 1 is 0–64 chars before the dash
+      //   2) OR exactly 64 characters (when no dash is found in the first 64) → capture group 2 is the first 64 chars
+      "^(?:(.{0,64}?)[–—].*|(.{64}).*)": "$1$2"
+    },
     "separate-outputs": false,
-    "icon": false
+    // "icon": true,
+    // "icon-size": 20
   },
 
   "network": {

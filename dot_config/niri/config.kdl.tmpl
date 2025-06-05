@@ -1,13 +1,15 @@
 // vim: ft=kdl
 
 workspace "focus"
-{{- if (eq .chezmoi.hostname "fedora") }}
-workspace "chat"
 workspace "media"
-{{- end }}
+workspace "chat"
 
 environment {
-    ELECTRON_OZONE_PLATFORM_HINT "auto"
+  ELECTRON_OZONE_PLATFORM_HINT "auto"
+  {{- if (not (eq .chezmoi.hostname "asahi")) }}
+  __EGL_VENDOR_LIBRARY_FILENAMES "/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
+  NVD_BACKEND "direct"
+  {{- end }}
 }
 
 input {
@@ -99,7 +101,7 @@ layout {
     }
     insert-hint {
     }
-    empty-workspace-above-first
+    // empty-workspace-above-first
 
     // outer gaps
     struts {
