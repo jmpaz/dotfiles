@@ -1,11 +1,14 @@
 " vim: ft=vim
 "
-" set theme light
-
+set theme default
 set newtab about:blank
 
 unbind D
 bind X tabclose
+
+unbind <C-f>
+unbind <C-[>
+unbind <C-]>
 
 bind H tabprev
 bind L tabnext
