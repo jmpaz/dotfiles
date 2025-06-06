@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ────────────────────────────────────────────────────────────────────────────────
+# 1) detect key-injection tool
+# ────────────────────────────────────────────────────────────────────────────────
+
+if command -v wtype &>/dev/null; then
+  # Use wtype if installed
+  send_cmd() {
+    wtype --key ctrl+shift+comma
+  }
+elif command -v ydotool &>/dev/null; then
+  # Use ydotool with Linux input codes:
+  #   KEY_LEFTCTRL  = 29
+  #   KEY_LEFTSHIFT = 42
+  #   KEY_COMMA     = 51
+  send_cmd() {
+    # Press Ctrl (29 down), Shift (42 down), Comma (51 down), then release in reverse.
+    ydotool key 29:1 42:1 51:1 51:0 42:0 29:0
+  }
+else
+  echo "Error: Neither 'wtype' nor 'ydotool' found. Please install one of them." >&2
+  exit 1
+fi
+
+# ────────────────────────────────────────────────────────────────────────────────
+# 2) Record the currently focused window (if any)
+#
+#    - 'niri msg --json focused-window' outputs a JSON object for the focused window.
+#    - If no window is focused, this may return 'null' or an empty object.
+# ────────────────────────────────────────────────────────────────────────────────
+
+# Attempt to capture the focused-window ID; suppress errors if none exist.
+# Using 'jq' to pull out ".id" (or empty string if .id is missing/null).
+orig_focused_id=$(
+  niri msg --json focused-window 2>/dev/null \
+    | jq -r 'if . == null then "" elif .id then "\(.id)" else "" end'
+)
+
+# Determine whether we had a focused window
+if [[ -n "$orig_focused_id" ]]; then
+  had_focused_window=true
+else
+  had_focused_window=false
+fi
+
+# ────────────────────────────────────────────────────────────────────────────────
+# 3) Collect all window IDs whose app_id == "com.mitchellh.ghostty"
+#
+#    - 'niri msg --json windows' lists all windows (with fields like "id" and "app_id").
+#    - Use 'jq' to filter for .app_id == "com.mitchellh.ghostty".
+# ────────────────────────────────────────────────────────────────────────────────
+
+mapfile -t ghostty_ids < <(
+  niri msg --json windows \
+    | jq -r '.[] | select(.app_id=="com.mitchellh.ghostty") | .id'
+)
+
+if [[ ${#ghostty_ids[@]} -eq 0 ]]; then
+  echo "No com.mitchellh.ghostty windows found." >&2
+  exit 0
+fi
+
+# ────────────────────────────────────────────────────────────────────────────────
+# 4) Loop over each Ghostty window, focus it, and send Ctrl+Shift+Comma
+# ────────────────────────────────────────────────────────────────────────────────
+
+for wid in "${ghostty_ids[@]}"; do
+  # Focus that window via niri IPC
+  niri msg action focus-window --id "$wid"
+  # Brief pause so the compositor can shift focus
+  sleep 0.05
+
+  # Send Ctrl+Shift+Comma
+  send_cmd
+
+  # Small delay before the next window (tweak if necessary)
+  sleep 0.05
+done
+
+# ────────────────────────────────────────────────────────────────────────────────
+# 5) Restore focus to original target:
+#    - If we had a focused window, restore that.
+#    - Otherwise, re-focus the current workspace.
+# ────────────────────────────────────────────────────────────────────────────────
+
+if [[ "$had_focused_window" == true ]]; then
+  niri msg action focus-window --id "$orig_focused_id"
+else
+  # Find the ID of the currently focused workspace
+  current_ws_id=$(
+    niri msg --json workspaces \
+      | jq -r '.[] | select(.is_focused == true) | .id'
+  )
+  # Focus the workspace
+  niri msg action focus-workspace --id "$current_ws_id"
+fi
+
