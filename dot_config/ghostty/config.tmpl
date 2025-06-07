@@ -2,6 +2,8 @@
 
 command = env SKIP_TMUX=1 /usr/bin/fish
 
+scrollback-limit = 80000000
+
 keybind = clear
 shell-integration = fish
 {{ if eq .chezmoi.os "darwin" }}
@@ -32,6 +34,7 @@ mouse-hide-while-typing = true
 mouse-scroll-multiplier = 0.5
 mouse-shift-capture = true
 
+
 # ===== theme =====
 #
 # fonts
@@ -49,7 +52,7 @@ term = xterm-256color
 # padding
 window-padding-balance = false
 window-padding-x = 17,0
-window-padding-y = 4,0
+window-padding-y = 4,4
 
 
 # ===== keymap =====
@@ -83,6 +86,10 @@ keybind = alt+a>ctrl+n=new_window
 
 keybind = alt+a>z=toggle_split_zoom
 
+keybind = alt+e>l=write_selection_file:open
+keybind = alt+e>s=write_screen_file:open
+keybind = alt+e>shift+s=write_scrollback_file:open
+
 keybind = alt+h=goto_split:left
 keybind = alt+j=goto_split:bottom
 keybind = alt+k=goto_split:top
@@ -106,8 +113,23 @@ keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 keybind = shift+insert=paste_from_selection
 
+# text selection
+keybind = ctrl+shift+a=select_all
+
+keybind = performable:shift+left=adjust_selection:left
+keybind = performable:shift+right=adjust_selection:right
+keybind = performable:shift+up=adjust_selection:up
+keybind = performable:shift+down=adjust_selection:down
+
+keybind = performable:shift+home=adjust_selection:beginning_of_line
+keybind = performable:shift+end=adjust_selection:end_of_line
+keybind = performable:shift+page_up=adjust_selection:page_up
+keybind = performable:shift+page_down=adjust_selection:page_down
+
 # resizing
 keybind = ctrl+equal=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+zero=reset_font_size
 
+# newline
+keybind = shift+enter=text:\n
