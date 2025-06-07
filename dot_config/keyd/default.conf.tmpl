@@ -1,8 +1,12 @@
+# vim: ft=conf
+
 [ids]
 *
 
 [main]
 capslock = overload(capslock_layer, esc)
+esc = grave
+rightmeta = layer(rightwin)
 {{ if eq .chezmoi.hostname "asahi" -}}
 fn = leftcontrol
 leftalt = leftmeta
@@ -23,10 +27,25 @@ space = space
 
 left = home
 right = end
-up = pgup
-down = pgdown
+up = pageup
+down = pagedown
 
 {{ if eq .chezmoi.hostname "cd-tower" }}
 [capslock_layer+shift]
 \ = delete
+
+[rightwin]
+# media
+[ = previoussong
+] = nextsong
+0 = mute
+- = volumedown
+= = volumeup
+backspace = playpause
+
+# navigation
+h = home
+j = pagedown
+k = pageup
+l = end
 {{ end }}
