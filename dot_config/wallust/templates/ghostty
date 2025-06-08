@@ -5,6 +5,9 @@ foreground = "{{foreground}}"
 
 cursor-color = "{{cursor}}"
 
+unfocused-split-fill = "{{color0 | blend(color8) | blend(color0) | blend(color0)}}"
+split-divider-color = "{{color5 | blend(color0) | blend(color0)}}"
+
 # black
 palette = 0={{color0}}
 palette = 8={{color8}}

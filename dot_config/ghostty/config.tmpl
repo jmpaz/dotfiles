@@ -14,6 +14,7 @@ macos-non-native-fullscreen = true
 keybind = ctrl+shift+enter=toggle_quick_terminal
 {{- else }}
 gtk-adwaita = true
+gtk-wide-tabs = true
 adw-toolbar-style=raised-border
 # gtk-custom-css = tabs.css
 resize-overlay = after-first
@@ -31,9 +32,9 @@ cursor-style = block
 cursor-style-blink = false
 cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 0.5
+mouse-scroll-multiplier = 1
 mouse-shift-capture = true
-
+unfocused-split-opacity=0.78
 
 # ===== theme =====
 #
@@ -44,6 +45,9 @@ font-size = 13
 {{- else }}
 font-size = 13
 {{- end }}
+# custom-shader = shaders/dither.glsl
+# custom-shader = shaders/water.glsl
+# custom-shader = shaders/bettercrt.glsl
 
 # color
 theme = light:wallust,dark:wallust
@@ -68,12 +72,12 @@ keybind = ctrl+shift+i=inspector:show
 keybind = alt+a>ctrl+r=reload_config
 
 # nav
-keybind = shift+page_up=scroll_page_up
-keybind = shift+page_down=scroll_page_down
-keybind = shift+end=scroll_to_bottom
-
-keybind = ctrl+shift+page_down=jump_to_prompt:1
-keybind = ctrl+shift+page_up=jump_to_prompt:-1
+keybind = alt+u=scroll_page_up
+keybind = alt+d=scroll_page_down
+keybind = alt+[=jump_to_prompt:-1
+keybind = alt+]=jump_to_prompt:1
+keybind = ctrl+alt+[=scroll_to_top
+keybind = ctrl+alt+]=scroll_to_bottom
 
 keybind = alt+a>minus=new_split:down
 keybind = alt+a>backslash=new_split:right
