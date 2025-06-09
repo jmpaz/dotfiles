@@ -40,26 +40,29 @@ function extract_yaml --description "Extract the first YAML code block from a ma
                 return 1
             end
         end
-    end
 
-    # perform extraction
-    if test $argc -eq 2
-        # write to output file
-        sed -n '/^```yaml[[:space:]]*$/,/^```[[:space:]]*$/p' "$input" \
-            | sed '1d;$d' > "$output"
-        or begin
+        # extract only the first YAML block
+        awk '
+            BEGIN { in_block=0 }
+            /^```yaml[[:space:]]*$/ { if (!found) { in_block=1; next } }
+            /^```[[:space:]]*$/ { if (in_block) { in_block=0; found=1; exit } }
+            { if (in_block) print }
+        ' "$input" > "$output"
+
+        if test (count (cat "$output")) -eq 0
             echo "Error: failed to extract YAML block" >&2
-            return $status
+            return 1
         end
         echo "YAML extracted to '$output'"
+
     else
         # dump to stdout
-        sed -n '/^```yaml[[:space:]]*$/,/^```[[:space:]]*$/p' "$input" \
-            | sed '1d;$d'
-        or begin
-            echo "Error: failed to extract YAML block" >&2
-            return $status
-        end
+        awk '
+            BEGIN { in_block=0 }
+            /^```yaml[[:space:]]*$/ { if (!found) { in_block=1; next } }
+            /^```[[:space:]]*$/ { if (in_block) { in_block=0; found=1; exit } }
+            { if (in_block) print }
+        ' "$input"
     end
 end
 

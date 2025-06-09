@@ -20,6 +20,10 @@ function fetch_docs
             set source https://github.com/tridactyl/tridactyl:src/static/clippy
         case ghostty
             set source https://github.com/ghostty-org/website:docs
+        case zk
+            set source https://github.com/zk-org/zk.git:docs/{index.rst,config,notes,tips}
+        case zk-nvim
+            set source https://github.com/zk-org/zk-nvim.git:{README.md,doc,lua}
         case '*'
             echo "Unsupported target: $target" >&2
             return 1
