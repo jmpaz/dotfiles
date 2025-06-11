@@ -16,12 +16,6 @@ function fish_user_key_bindings
     bind -M default \x7f backward-word
 end
 
-set fish_cursor_default block
-set fish_cursor_insert underscore
-set fish_cursor_replace_one underscore
-set fish_cursor_replace underscore
-set fish_cursor_external line
-
 {{ if eq .chezmoi.os "linux" }}
 fish_add_path /home/josh/.nix-profile/bin
 fish_add_path /home/josh/.local/bin
@@ -60,6 +54,11 @@ fnm env --use-on-cd --shell fish | source
 
 if status is-interactive
 
+    set fish_cursor_insert line blink
+    set fish_cursor_replace_one underscore blink
+    set fish_cursor_visual block
+    set fish_vi_force_cursor 1
+
     if test "$USE_ZELLIJ"
         {{ if eq .displayServer "wayland" -}}
         sleep 0.05 # Workaround for zellij-org/zellij#2126
@@ -76,6 +75,9 @@ if status is-interactive
     end
 
     atuin init fish --disable-up-arrow | source
+    bind -M default -e \cr
+    bind -M insert  -e \cr
+    bind -M insert  \cr _atuin_search
 
     # ctrl + up
     bind \e\[1\;5A _atuin_search
