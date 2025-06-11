@@ -139,10 +139,10 @@ animations {
 }
 
 // window rules
-window-rule {
-    match is-active=false
-    opacity 0.95
-}
+// window-rule {
+//     match is-active=false
+//     opacity 0.95
+// }
 window-rule {
     match is-window-cast-target=true
     border {
@@ -257,7 +257,7 @@ layer-rule {
 spawn-at-startup "~/.config/waybar/launch.sh"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "niriswitcher"
-spawn-at-startup "swaybg -i /mnt/silverblue/home/josh/.local/share/colorweave/wallpapers/f1b7413e-eb66-499f-b754-25001ce36991.png"
+spawn-at-startup "swaybg -i $(colorweave wallpaper show loupe --format json | jq -r .path)"
 
 // key bindings
 binds {
@@ -382,7 +382,7 @@ binds {
     Mod+Comma  hotkey-overlay-title=null { consume-window-into-column; }
     Mod+Period hotkey-overlay-title=null { expel-window-from-column; }
     // sizing
-    Mod+Shift+R hotkey-overlay-title="Expand to Available Width" { expand-column-to-available-width; }
+    Mod+Alt+R hotkey-overlay-title="Expand to Available Width" { expand-column-to-available-width; }
     Mod+R hotkey-overlay-title="Cycle Width" { switch-preset-column-width; }
     Mod+Ctrl+Shift+R hotkey-overlay-title="Cycle Height" { switch-preset-window-height; }
     Mod+Ctrl+R hotkey-overlay-title="Reset Height" { reset-window-height; }
@@ -396,10 +396,14 @@ binds {
     Print       hotkey-overlay-title=null { screenshot; }
     Ctrl+Print  { screenshot-screen; }
     Alt+Print   { screenshot-window; }
-    Mod+Ctrl+Shift+S { screenshot; }
+    Mod+Ctrl+Shift+S { screenshot show-pointer=true; }
     Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { screenshot show-pointer=false; }
     Mod+Shift+W hotkey-overlay-title="Screenshot: Window" { screenshot-window; }
     Mod+Shift+Alt+S hotkey-overlay-title="Screenshot: Display" { screenshot-screen; }
+
+    // color picker
+    Mod+Shift+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
+
 
     // screencast
     Mod+F1 { set-dynamic-cast-window; }

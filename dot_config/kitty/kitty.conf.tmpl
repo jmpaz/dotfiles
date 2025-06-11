@@ -1,22 +1,26 @@
 # vim: ft=kitty
 include colors.conf
 startup_session load_config_file
-{{ if eq .chezmoi.os "darwin" }}
+
 env SKIP_TMUX=1
+{{ if eq .chezmoi.os "darwin" }}
 env USE_ZELLIJ=1
 {{ end }}
-font_family Maple Mono NF
-bold_font Maple Mono NF Bold
-italic_font Maple Mono NF Italic
-bold_italic_font Maple Mono NF Bold Italic
 
-font_size 14
+font_family family=InputMonoNarrow
+bold_font auto
+italic_font auto
+bold_italic_font auto
+
+symbol_map U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d7,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b7,U+e700-U+e8ef,U+ed00-U+efc1,U+f000-U+f2ff,U+f000-U+f2e0,U+f300-U+f381,U+f400-U+f533,U+f0001-U+f1af0 Symbols Nerd Font Mono
+
+font_size 13
 background_opacity 1
-window_padding_width 12 23
+window_padding_width 4 17
 disable_ligatures cursor
 
-cursor_trail 1
-cursor_trail_decay 0.2 0.4
+# cursor_trail 1
+# cursor_trail_decay 0.2 0.4
 
 scrollback_lines 2000
 scrollback_pager_history_size 200
@@ -34,3 +38,6 @@ touch_scroll_multiplier 1.0
 macos_option_as_alt both
 macos_hide_from_tasks yes
 hide_window_decorations titlebar-only
+
+map alt+s kitten kitty_grab/grab.py
+map ctrl+shift+, load_config_file

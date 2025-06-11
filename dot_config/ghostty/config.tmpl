@@ -55,7 +55,7 @@ term = xterm-256color
 
 # padding
 window-padding-balance = false
-window-padding-x = 17,0
+window-padding-x = 17,17
 window-padding-y = 4,4
 
 
@@ -72,12 +72,14 @@ keybind = ctrl+shift+i=inspector:show
 keybind = alt+a>ctrl+r=reload_config
 
 # nav
+keybind = alt+up=scroll_page_lines:-3
+keybind = alt+down=scroll_page_lines:3
 keybind = alt+u=scroll_page_up
 keybind = alt+d=scroll_page_down
 keybind = alt+[=jump_to_prompt:-1
 keybind = alt+]=jump_to_prompt:1
-keybind = ctrl+alt+[=scroll_to_top
-keybind = ctrl+alt+]=scroll_to_bottom
+keybind = alt+shift+[=scroll_to_top
+keybind = alt+shift+]=scroll_to_bottom
 
 keybind = alt+a>minus=new_split:down
 keybind = alt+a>backslash=new_split:right
@@ -90,9 +92,9 @@ keybind = alt+a>ctrl+n=new_window
 
 keybind = alt+a>z=toggle_split_zoom
 
-keybind = alt+e>l=write_selection_file:open
-keybind = alt+e>s=write_screen_file:open
-keybind = alt+e>shift+s=write_scrollback_file:open
+keybind = alt+e>enter=write_screen_file:open
+keybind = alt+e>space=write_scrollback_file:open
+keybind = alt+e>shift+space=write_selection_file:open
 
 keybind = alt+h=goto_split:left
 keybind = alt+j=goto_split:bottom
