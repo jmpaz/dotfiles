@@ -2,9 +2,11 @@
 "
 set theme default
 set newtab about:blank
+set modeindicatormodes {"ignore":"false"}
 
 unbind D
 bind X tabclose
+
 
 unbind <C-f>
 unbind <C-[>
@@ -12,3 +14,5 @@ unbind <C-]>
 
 bind H tabprev
 bind L tabnext
+
+:autocmd DocStart figma.com mode ignore
