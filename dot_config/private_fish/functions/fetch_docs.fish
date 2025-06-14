@@ -20,6 +20,8 @@ function fetch_docs
             set source https://github.com/tridactyl/tridactyl:src/static/clippy
         case ghostty
             set source https://github.com/ghostty-org/website:docs
+        case rich
+            set source https://github.com/Textualize/rich:docs/source
         case zk
             set source https://github.com/zk-org/zk.git:docs/{index.rst,config,notes,tips}
         case zk-nvim
