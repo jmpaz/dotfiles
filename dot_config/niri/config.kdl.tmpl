@@ -190,6 +190,12 @@ window-rule {
     open-floating true
 }
 window-rule {
+    match app-id="Vial"
+    open-floating true
+    default-column-width { proportion 0.35; }
+    default-window-height { proportion 0.50; }
+}
+window-rule {
     match app-id="org.gnome.Characters"
     open-floating true
 }
@@ -267,9 +273,29 @@ binds {
     Mod+D            hotkey-overlay-title="Launcher" { spawn "rofi" "-modes" "drun,window" "-show" "drun"; }
     Ctrl+Mod+Alt+L hotkey-overlay-title="Lock session" { spawn "swaylock"; }
 
-    // brightness & audio
+    // brightness
+    {{- if (not (eq .chezmoi.hostname "asahi")) }}
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "adjust-brightness" "+10" ; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "adjust-brightness" "-10" ; }
+    Alt+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "+5" ; }
+    Alt+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "-5" ; }
+    Shift+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "+20" ; }
+    Shift+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "-20" ; }
+    // mid
+    Ctrl+Alt+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "60" ; }
+    Ctrl+Alt+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "40" ; }
+    // high/low
+    Ctrl+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "80" ; }
+    Ctrl+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "20" ; }
+    // max/min
+    Ctrl+Shift+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "100" ; }
+    Ctrl+Shift+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "0" ; }
+    {{- else }}
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+2%" ; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "2%-" ; }
+    {{- end }}
+
+    // audio
     XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
     XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
     XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
@@ -403,7 +429,6 @@ binds {
 
     // color picker
     Mod+Shift+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
-
 
     // screencast
     Mod+F1 { set-dynamic-cast-window; }
