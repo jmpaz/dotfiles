@@ -87,8 +87,8 @@ keybind = alt+a>shift+minus=new_split:up
 keybind = alt+a>shift+backslash=new_split:left
 
 keybind = alt+a>ctrl+n=new_window
+keybind = super+n=new_window
 # keybind = alt+a>ctrl+tab=toggle_window_decorations
-
 
 keybind = alt+a>z=toggle_split_zoom
 
@@ -97,8 +97,8 @@ keybind = alt+s>space=write_scrollback_file:open
 keybind = alt+s>shift+space=write_selection_file:open
 
 keybind = alt+h=goto_split:left
-keybind = alt+j=goto_split:bottom
-keybind = alt+k=goto_split:top
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
 keybind = alt+l=goto_split:right
 
 keybind = alt+shift+h=resize_split:left,50
@@ -107,6 +107,8 @@ keybind = alt+shift+k=resize_split:up,50
 keybind = alt+shift+l=resize_split:right,50
 
 keybind = alt+shift+t=new_tab
+keybind = alt+shift+left=move_tab:-1
+keybind = alt+shift+right=move_tab:1
 
 keybind = alt+a>equal=equalize_splits
 keybind = alt+a>alt+x=close_surface
@@ -114,10 +116,15 @@ keybind = alt+a>alt+x=close_surface
 keybind = alt+left=previous_tab
 keybind = alt+right=next_tab
 
+# keybind = alt+comma>s=open_config
+keybind = alt+comma>s=text:czw ~/.config/ghostty/config\r
+keybind = alt+comma>r=reload_config
+
 # clipboard
 keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 keybind = shift+insert=paste_from_selection
+keybind = ctrl+shift+u=copy_url_to_clipboard
 
 # text selection
 keybind = ctrl+shift+a=select_all
