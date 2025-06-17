@@ -1,3 +1,5 @@
+# vim: set filetype=conf
+
 font=JetBrains Mono Nerd Font 12
 icon-path=/usr/share/icons/Adwaita
 max-icon-size=48
@@ -10,11 +12,8 @@ width=330
 height=200
 border-size=1
 border-radius=4
-border-color=#6E6A86
-background-color=#191724
-text-color=#E0DEF4
-progress-color=over #6E6A86
+
+include=~/.config/mako/colors.conf
 
 [urgency=critical]
-border-color=#EB6F92
 default-timeout=0
