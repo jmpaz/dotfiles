@@ -121,9 +121,17 @@ set -g fish_color_valid_path --underline
 
 # Prompt
 {{ if eq .chezmoi.os "linux" }}
-set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
+if test "$MINIMAL_PROMPT"
+    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship-minimal.toml
+else
+    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
+end
 {{ else if eq .chezmoi.os "darwin" }}
-set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
+if test "$MINIMAL_PROMPT"
+    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship-minimal.toml
+else
+    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
+end
 {{ end }}
 starship init fish | source
 
