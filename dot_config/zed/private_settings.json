@@ -89,11 +89,15 @@
     "edit_prediction_provider": "none"
   },
   "agent": {
+    "inline_assistant_model": {
+      "provider": "amazon-bedrock",
+      "model": "claude-4-sonnet"
+    },
     "button": true,
     "default_view": "text_thread",
     "default_model": {
       "provider": "amazon-bedrock",
-      "model": "anthropic.claude-sonnet-4-20250514-v1:0"
+      "model": "claude-3-5-haiku"
     },
     "version": "2"
   },
@@ -178,6 +182,39 @@
     "kernel_selections": {}
   },
   "languages": {
+    "JavaScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "TypeScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "JSX": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "TSX": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "HTML": {
+      "formatter": {
+        "language_server": { "name": "vscode-html-language-server" }
+      }
+    },
     "Python": {
       "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",
@@ -215,6 +252,16 @@
           "lint": {
             // isort
             // "extendSelect": ["I"]
+          }
+        }
+      }
+    },
+    "vscode-html-language-server": {
+      "settings": {
+        "html": {
+          "format": {
+            "contentUnformatted": "svg"
+            // "extraLiners": "div,p"
           }
         }
       }

@@ -237,6 +237,7 @@
   {
     "context": "Terminal",
     "bindings": {
+      "shift-tab": null,
       "ctrl-o": null,
       "ctrl-w": null,
       "alt-;": "command_palette::Toggle",
