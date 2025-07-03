@@ -26,6 +26,8 @@ function fetch_docs
             set source https://github.com/zk-org/zk.git:docs/{index.rst,config,notes,tips}
         case zk-nvim
             set source https://github.com/zk-org/zk-nvim.git:{README.md,doc,lua}
+        case niri
+            set source https://github.com/YaLTeR/niri.wiki.git:{*.md,examples}
         case '*'
             echo "Unsupported target: $target" >&2
             return 1
