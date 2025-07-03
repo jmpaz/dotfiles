@@ -1,10 +1,10 @@
 // vim: ft=jsonc
-{
+[{
   "layer": "top",
+  "output": "HDMI-A-2",
+  "include": "~/.config/waybar/modules.jsonc",
 
-  "modules-left": [
-    "niri/workspaces"
-  ],
+  "modules-left": ["niri/workspaces"],
   "modules-center": ["niri/window"],
   "modules-right": [
     "bluetooth",
@@ -14,81 +14,31 @@
     "battery",
     {{- end }}
     "clock",
-    "clock#date",
-  ],
+    "clock#date"
+  ]
+}, {
+  "layer": "top",
+  "output": "DP-1",
+  "include": "~/.config/waybar/modules.jsonc",
 
-  "niri/workspaces": {
-    "all-outputs": true,
-    "format": "{icon} {index}",
-    "format-icons": {
-        "default": "󱓼",
-        "focus": "󱓻",
-        "chat": "󰻞",
-        "media": "󰋋",
-    }
-  },
+  "modules-left": ["clock", "clock#date"],
+  "modules-center": ["niri/window"],
+  "modules-right": ["niri/workspaces"]
+}, {
+  "layer": "top",
+  "output": ["!HDMI-A-2", "!DP-1", "*"],
+  "include": "~/.config/waybar/modules.jsonc",
 
-  "niri/window": {
-    "format": "{app_id} {title}",
-    "rewrite": {
-      // Match either:
-      //   1) up to 64 characters (lazy) followed immediately by an en/em dash, then anything → capture group 1 is 0–64 chars before the dash
-      //   2) OR exactly 64 characters (when no dash is found in the first 64) → capture group 2 is the first 64 chars
-      "^(?:(.{0,64}?)[–—].*|(.{64}).*)": "$1$2"
-    },
-    "separate-outputs": false,
-    // "icon": true,
-    // "icon-size": 20
-  },
-
-  "network": {
-    "format-wifi": "{icon}  {essid}",
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-    "format-ethernet": "󰈀 {ipaddr}/{cidr}",
-    "format-linked": "󰛳 {ifname}",
-    "format-disconnected": "󰅛 disconnected",
-    "tooltip-format": "{ipaddr}\n{ifname} ({signalStrength}%)",
-    "on-click": "nm-connection-editor"
-  },
-
-  "bluetooth": {
-    "format": "󰂯 {status}",
-    "format-connected": "󰂰 {device_alias}",
-    "format-disabled": "󰂲",
-    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "on-click": "blueman-manager"
-  },
-
-  "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "󰝟 M",
-    "format-icons": {
-      "default": ["󰕿", "󰖀", "󰕾"]
-    },
-    "scroll-step": 5,
-    "on-click": "pavucontrol",
-    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-  },
-
-  "battery": {
-    "states": {
-      "warning": 30,
-      "critical": 10
-    },
-    "format": "{icon} {capacity}%",
-    "format-charging": "󰂄 {capacity}%",
-    "format-plugged": "{capacity}%  plugged",
-    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-  },
-
-  "clock": {
-    "format": "󰥔 {:%H:%M}"
-  },
-
-  "clock#date": {
-    "format": "󰃮 {:%d %b}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>"
-  }
-}
+  "modules-left": ["niri/workspaces"],
+  "modules-center": ["niri/window"],
+  "modules-right": [
+    "bluetooth",
+    "pulseaudio",
+    {{- if eq .chezmoi.hostname "asahi" }}
+    "network",
+    "battery",
+    {{- end }}
+    "clock",
+    "clock#date"
+  ]
+}]

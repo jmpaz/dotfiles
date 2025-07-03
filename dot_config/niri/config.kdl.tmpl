@@ -50,9 +50,14 @@ output "eDP-1" {
 }
 output "HDMI-A-2" {
     mode "3840x2160@143.999"
-    scale 1.25
+    scale 1.2
     // scale 1.5
     transform "normal"
+}
+output "DP-1" {
+    mode "3840x2160@60"
+    scale 1.2
+    position x=-3840 y=180
 }
 
 layout {
@@ -315,23 +320,36 @@ binds {
     Mod+K     { focus-window-up; }
     Mod+N          { focus-window-down-or-top; }
     Mod+P          { focus-window-up-or-bottom; }
+    //
     Mod+Shift+H     { move-column-left; }
     Mod+Shift+L     { move-column-right; }
     Mod+Alt+J     { move-window-down; }
     Mod+Alt+K     { move-window-up; }
-    Mod+Shift+J  { move-column-to-workspace-down; }
-    Mod+Shift+K    { move-column-to-workspace-up; }
     Mod+Alt+Shift+J   { move-window-to-workspace-down; }
     Mod+Alt+Shift+K     { move-window-to-workspace-up; }
-    Mod+W { toggle-column-tabbed-display; }
-    Mod+Left       { focus-column-first; }
-    Mod+Right      { focus-column-last; }
-    Mod+Shift+Left  { move-column-to-first; }
-    Mod+Shift+Right { move-column-to-last; }
-    Mod+Ctrl+J       { focus-workspace-down; }
-    Mod+Ctrl+K         { focus-workspace-up; }
-    Mod+Ctrl+Shift+J { move-workspace-down; }
-    Mod+Ctrl+Shift+K   { move-workspace-up; }
+    Mod+Ctrl+Shift+J  { move-column-to-workspace-down; }
+    Mod+Ctrl+Shift+K    { move-column-to-workspace-up; }
+    Mod+Tab { toggle-column-tabbed-display; }
+    ////
+    // Mod+Left       { focus-column-first; }
+    // Mod+Right      { focus-column-last; }
+    // Mod+Shift+Left  { move-column-to-first; }
+    // Mod+Shift+Right { move-column-to-last; }
+    ////
+    // multi-monitor navigation
+    Mod+Shift+Alt+H  { move-window-to-monitor-left; }
+    Mod+Shift+Alt+L  { move-window-to-monitor-right; }
+    Mod+Ctrl+Shift+H { move-column-to-monitor-left; }
+    Mod+Ctrl+Shift+L { move-column-to-monitor-right; }
+    // workspace navigation
+    Mod+Up         { focus-workspace-up; }
+    Mod+Down       { focus-workspace-down; }
+    Mod+Left       { focus-monitor-left; }
+    Mod+Right       { focus-monitor-right; }
+    Mod+Shift+Up     { move-workspace-up; }
+    Mod+Shift+Down   { move-workspace-down; }
+    Mod+Shift+Left   { move-workspace-to-monitor-left; }
+    Mod+Shift+Right  { move-workspace-to-monitor-right; }
     // workspace scrolling
     Mod+WheelScrollDown      { focus-column-right; }
     Mod+WheelScrollUp        { focus-column-left; }
@@ -377,7 +395,7 @@ binds {
     }
 
     // app/desktop switching
-    Mod+Tab hotkey-overlay-title="Overview" { toggle-overview; }
+    Mod+W hotkey-overlay-title="Overview" { toggle-overview; }
     Mod+Shift+Tab hotkey-overlay-title="Window Finder" { spawn "sh" "-c" "~/.config/rofi/scripts/window-switcher"; }
     Alt+Tab hotkey-overlay-title="Window Switcher" repeat=false { spawn "pkill" "-USR1" "niriswitcher"; }
     Alt+Shift+Tab repeat=false { spawn "pkill" "-USR1" "niriswitcher"; }
