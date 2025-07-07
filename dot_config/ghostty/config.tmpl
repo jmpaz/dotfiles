@@ -13,7 +13,7 @@ macos-titlebar-style = hidden
 macos-non-native-fullscreen = true
 keybind = ctrl+shift+enter=toggle_quick_terminal
 {{- else }}
-gtk-adwaita = true
+# gtk-adwaita = true
 gtk-wide-tabs = true
 adw-toolbar-style=raised-border
 # gtk-custom-css = tabs.css
@@ -35,15 +35,16 @@ mouse-hide-while-typing = true
 mouse-scroll-multiplier = 1
 mouse-shift-capture = true
 unfocused-split-opacity=0.78
+focus-follows-mouse = true
 
 # ===== theme =====
 #
 # fonts
 config-file = fonts
 {{- if eq .chezmoi.hostname "asahi" }}
-font-size = 13
+font-size = 12
 {{- else }}
-font-size = 13
+font-size = 12
 {{- end }}
 # custom-shader = shaders/dither.glsl
 # custom-shader = shaders/water.glsl
