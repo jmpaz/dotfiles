@@ -50,13 +50,13 @@ output "eDP-1" {
 }
 output "HDMI-A-2" {
     mode "3840x2160@143.999"
-    scale 1.2
+    scale 1.25
     // scale 1.5
     transform "normal"
 }
 output "DP-1" {
     mode "3840x2160@60"
-    scale 1.2
+    scale 1.3
     position x=-3840 y=180
 }
 
@@ -274,7 +274,7 @@ spawn-at-startup "swaybg -i $(colorweave wallpaper show loupe --format json | jq
 binds {
     // overlays & launchers
     Mod+Shift+Slash  hotkey-overlay-title="Show hotkeys" { show-hotkey-overlay; }
-    Mod+Return       hotkey-overlay-title="Spawn Terminal" { spawn "ghostty"; }
+    Mod+Return       hotkey-overlay-title="Spawn Terminal" { spawn "nixGL" "ghostty"; }
     Mod+D            hotkey-overlay-title="Launcher" { spawn "rofi" "-modes" "drun,window" "-show" "drun"; }
     Ctrl+Mod+Alt+L hotkey-overlay-title="Lock session" { spawn "swaylock"; }
 
@@ -321,15 +321,19 @@ binds {
     Mod+N          { focus-window-down-or-top; }
     Mod+P          { focus-window-up-or-bottom; }
     //
-    Mod+Shift+H     { move-column-left; }
-    Mod+Shift+L     { move-column-right; }
-    Mod+Alt+J     { move-window-down; }
-    Mod+Alt+K     { move-window-up; }
-    Mod+Alt+Shift+J   { move-window-to-workspace-down; }
-    Mod+Alt+Shift+K     { move-window-to-workspace-up; }
-    Mod+Ctrl+Shift+J  { move-column-to-workspace-down; }
-    Mod+Ctrl+Shift+K    { move-column-to-workspace-up; }
-    Mod+Tab { toggle-column-tabbed-display; }
+    Mod+Tab { focus-window-previous; }
+    //
+    Mod+Shift+H     { move-column-left-or-to-monitor-left; }
+    Mod+Shift+L     { move-column-right-or-to-monitor-right; }
+    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+    Mod+Alt+J       { move-window-down; }
+    Mod+Alt+K       { move-window-up; }
+    Mod+Alt+Down    { move-window-to-workspace-down; }
+    Mod+Alt+Up      { move-window-to-workspace-up; }
+    Mod+Ctrl+Down   { move-column-to-workspace-down; }
+    Mod+Ctrl+Up     { move-column-to-workspace-up; }
+    Mod+W { toggle-column-tabbed-display; }
     ////
     // Mod+Left       { focus-column-first; }
     // Mod+Right      { focus-column-last; }
@@ -337,10 +341,10 @@ binds {
     // Mod+Shift+Right { move-column-to-last; }
     ////
     // multi-monitor navigation
-    Mod+Shift+Alt+H  { move-window-to-monitor-left; }
-    Mod+Shift+Alt+L  { move-window-to-monitor-right; }
-    Mod+Ctrl+Shift+H { move-column-to-monitor-left; }
-    Mod+Ctrl+Shift+L { move-column-to-monitor-right; }
+    Mod+Alt+Left  { move-window-to-monitor-left; }
+    Mod+Alt+Right  { move-window-to-monitor-right; }
+    Mod+Ctrl+Left { move-column-to-monitor-left; }
+    Mod+Ctrl+Right { move-column-to-monitor-right; }
     // workspace navigation
     Mod+Up         { focus-workspace-up; }
     Mod+Down       { focus-workspace-down; }
@@ -395,7 +399,7 @@ binds {
     }
 
     // app/desktop switching
-    Mod+W hotkey-overlay-title="Overview" { toggle-overview; }
+    Mod+Escape hotkey-overlay-title="Overview" { toggle-overview; }
     Mod+Shift+Tab hotkey-overlay-title="Window Finder" { spawn "sh" "-c" "~/.config/rofi/scripts/window-switcher"; }
     Alt+Tab hotkey-overlay-title="Window Switcher" repeat=false { spawn "pkill" "-USR1" "niriswitcher"; }
     Alt+Shift+Tab repeat=false { spawn "pkill" "-USR1" "niriswitcher"; }
@@ -417,7 +421,7 @@ binds {
     Mod+Ctrl+F        hotkey-overlay-title="Fullscreen" { fullscreen-window; }
     Mod+Ctrl+Shift+F  hotkey-overlay-title="Fullscreen (windowed)" { toggle-windowed-fullscreen; }
     Mod+C hotkey-overlay-title="Center Column" { center-column; }
-    Mod+Alt+C hotkey-overlay-title="Center Visible" { center-visible-columns; }
+    Mod+V hotkey-overlay-title="Center Visible" { center-visible-columns; }
     Mod+MouseMiddle { center-column; }
     Mod+Alt+MouseMiddle { toggle-overview; }
     // columns
@@ -457,7 +461,7 @@ binds {
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
-    Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
+    Mod+F12 { toggle-keyboard-shortcuts-inhibit; }
 }
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
