@@ -51,6 +51,7 @@ model_map:
     mistral-small-24b:
       model_str: "mistral-small:24b-text-2501-Q5_K_M"
       type: text
+
   bedrock:
     claude-3-opus:
       region: us-west-2
@@ -67,3 +68,27 @@ model_map:
     mistral-large-old:
       region: us-west-2
 
+  openrouter:
+    provider:
+      data_collection: deny
+
+    kimi-k2:
+      model_str: "moonshotai/kimi-k2"
+      type: both
+      provider:
+        only:
+          - "groq"
+          - "parasail"
+          - "fireworks"
+          - "together"
+        sort: "latency"
+        quantizations:
+          - "fp8"
+
+    deepseek-v3-base:
+      model_str: deepseek/deepseek-v3-base
+      type: text
+      provider:
+        only:
+          - "chutes"
+        data_collection: allow
