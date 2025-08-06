@@ -20,14 +20,18 @@ function fetch_docs
             set source https://github.com/tridactyl/tridactyl:src/static/clippy
         case ghostty
             set source https://github.com/ghostty-org/website:docs
+        case wezterm
+            set source "https://github.com/wezterm/wezterm:docs/{cli,config/*.md,faq.md,hyperlinks.md,multiplexing.md,quickselect.md,recipes,scrollback.md,serial.md,shell-integration.md,ssh.md,troubleshooting.md}"
         case rich
             set source https://github.com/Textualize/rich:docs/source
         case zk
-            set source https://github.com/zk-org/zk.git:docs/{index.rst,config,notes,tips}
+            set source "https://github.com/zk-org/zk.git:docs/{index.rst,config,notes,tips}"
         case zk-nvim
-            set source https://github.com/zk-org/zk-nvim.git:{README.md,doc,lua}
+            set source "https://github.com/zk-org/zk-nvim.git:{README.md,doc,lua}"
         case niri
-            set source https://github.com/YaLTeR/niri.wiki.git:{*.md,examples}
+            set source "https://github.com/YaLTeR/niri.wiki.git:{*.md,examples}"
+        case llama.cpp
+            set source "https://github.com/ggml-org/llama.cpp:{examples/{simple,simple-chat},docs/{development,multimodal,{function-calling,llguidance,multimodal}.md}}"
         case '*'
             echo "Unsupported target: $target" >&2
             return 1
@@ -39,9 +43,9 @@ function fetch_docs
     end
 
     if test (count $extra_args) -gt 0
-        contextualize cat $extra_args $source
+        contextualize cat $extra_args "$source"
     else
-        contextualize cat $source
+        contextualize cat "$source"
     end
 end
 
