@@ -96,4 +96,3 @@ else
   # Focus the workspace
   niri msg action focus-workspace --id "$current_ws_id"
 fi
-

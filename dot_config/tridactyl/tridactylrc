@@ -7,7 +7,6 @@ set modeindicatormodes {"ignore":"false"}
 unbind D
 bind X tabclose
 
-
 unbind <C-f>
 unbind <C-[>
 unbind <C-]>
@@ -16,3 +15,6 @@ bind H tabprev
 bind L tabnext
 
 :autocmd DocStart figma.com mode ignore
+:autocmd DocStart tldraw.com mode ignore
+:autocmd DocStart excalidraw.com mode ignore
+
