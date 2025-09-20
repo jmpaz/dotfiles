@@ -32,6 +32,8 @@ function fetch_docs
             set source "https://github.com/YaLTeR/niri.wiki.git:{*.md,examples}"
         case llama.cpp
             set source "https://github.com/ggml-org/llama.cpp:{examples/{simple,simple-chat},docs/{development,multimodal,{function-calling,llguidance,multimodal}.md}}"
+        case bun
+            set source "https://github.com/oven-sh/bun:docs/{api,bundler,cli,ecosystem,runtime,test}"
         case '*'
             echo "Unsupported target: $target" >&2
             return 1
