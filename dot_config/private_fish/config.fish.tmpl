@@ -58,7 +58,9 @@ fish_add_path -P ~/.local/npm/bin
 fish_add_path -P ~/bin
 
 zoxide init fish --cmd cd | source
-fnm env --use-on-cd --shell fish | source
+if type -q fnm
+    fnm env --use-on-cd --shell fish | source
+end
 
 if status is-interactive
 
