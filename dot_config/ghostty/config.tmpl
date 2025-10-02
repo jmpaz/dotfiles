@@ -1,8 +1,8 @@
 # vim: ft=conf
 {{ if eq .chezmoi.os "darwin" }}
-command = env SKIP_TMUX=1 /opt/homebrew/bin/fish -c "exec fish"
+command = /opt/homebrew/bin/fish -c "exec fish"
 {{ else }}
-command = env SKIP_TMUX=1 /usr/bin/fish -c "exec fish"
+command = /usr/bin/fish -c "exec fish"
 {{- end }}
 quit-after-last-window-closed = false
 
@@ -69,7 +69,6 @@ window-padding-balance = false
 window-padding-x = 17,17
 window-padding-y = 4,4
 
-
 # ===== keymap =====
 
 # config
@@ -80,52 +79,11 @@ keybind = ctrl+shift+n=new_window
 keybind = ctrl+shift+comma=reload_config
 keybind = ctrl+shift+i=inspector:show
 
-keybind = alt+a>ctrl+r=reload_config
-
-# nav
-keybind = alt+up=scroll_page_lines:-3
-keybind = alt+down=scroll_page_lines:3
-keybind = alt+u=scroll_page_up
-keybind = alt+d=scroll_page_down
-keybind = alt+[=jump_to_prompt:-1
-keybind = alt+]=jump_to_prompt:1
-keybind = alt+shift+[=scroll_to_top
-keybind = alt+shift+]=scroll_to_bottom
-
-keybind = alt+a>minus=new_split:down
-keybind = alt+a>backslash=new_split:right
-keybind = alt+a>shift+minus=new_split:up
-keybind = alt+a>shift+backslash=new_split:left
-
-keybind = alt+a>ctrl+n=new_window
 keybind = super+n=new_window
-# keybind = alt+a>ctrl+tab=toggle_window_decorations
-
-keybind = alt+a>z=toggle_split_zoom
 
 keybind = alt+s>enter=write_screen_file:open
 keybind = alt+s>space=write_scrollback_file:open
 keybind = alt+s>shift+space=write_selection_file:open
-
-keybind = alt+h=goto_split:left
-keybind = alt+j=goto_split:down
-keybind = alt+k=goto_split:up
-keybind = alt+l=goto_split:right
-
-keybind = alt+shift+h=resize_split:left,50
-keybind = alt+shift+j=resize_split:down,50
-keybind = alt+shift+k=resize_split:up,50
-keybind = alt+shift+l=resize_split:right,50
-
-keybind = alt+shift+t=new_tab
-keybind = alt+shift+left=move_tab:-1
-keybind = alt+shift+right=move_tab:1
-
-keybind = alt+a>equal=equalize_splits
-keybind = alt+a>alt+x=close_surface
-
-keybind = alt+left=previous_tab
-keybind = alt+right=next_tab
 
 # keybind = alt+comma>s=open_config
 keybind = alt+comma>s=text:czw ~/.config/ghostty/config\r
@@ -140,33 +98,6 @@ keybind = cmd+[=jump_to_prompt:-1
 keybind = cmd+]=jump_to_prompt:1
 keybind = cmd+shift+[=scroll_to_top
 keybind = cmd+shift+]=scroll_to_bottom
-
-keybind = cmd+a>minus=new_split:down
-keybind = cmd+a>backslash=new_split:right
-keybind = cmd+a>shift+minus=new_split:up
-keybind = cmd+a>shift+backslash=new_split:left
-
-keybind = cmd+a>z=toggle_split_zoom
-
-keybind = cmd+h=goto_split:left
-keybind = cmd+j=goto_split:down
-keybind = cmd+k=goto_split:up
-keybind = cmd+l=goto_split:right
-
-keybind = cmd+shift+h=resize_split:left,50
-keybind = cmd+shift+j=resize_split:down,50
-keybind = cmd+shift+k=resize_split:up,50
-keybind = cmd+shift+l=resize_split:right,50
-
-keybind = cmd+shift+t=new_tab
-keybind = cmd+shift+left=move_tab:-1
-keybind = cmd+shift+right=move_tab:1
-
-keybind = cmd+a>equal=equalize_splits
-keybind = cmd+a>cmd+x=close_surface
-
-keybind = cmd+left=previous_tab
-keybind = cmd+right=next_tab
 
 keybind = cmd+c=copy_to_clipboard
 keybind = cmd+v=paste_from_clipboard
