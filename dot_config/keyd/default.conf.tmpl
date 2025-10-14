@@ -6,6 +6,7 @@
 [main]
 capslock = overload(capslock_layer, esc)
 rightmeta = layer(rightwin)
+tab = timeout(overload(hyper, tab), 220, macro2(220, 40, tab))
 {{ if eq .chezmoi.hostname "asahi" -}}
 fn = leftcontrol
 leftalt = leftmeta
@@ -28,6 +29,8 @@ left = home
 right = end
 up = pageup
 down = pagedown
+
+[hyper:C-A-M]
 
 {{ if eq .chezmoi.hostname "cd-tower" }}
 [capslock_layer+shift]

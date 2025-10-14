@@ -278,12 +278,15 @@ spawn-at-startup "swaybg -i $(colorweave wallpaper show loupe --format json | jq
 
 // key bindings
 binds {
-    // overlays & launchers
-    Mod+Shift+Slash  hotkey-overlay-title="Show hotkeys" { show-hotkey-overlay; }
-    Mod+Return       hotkey-overlay-title="Spawn Terminal" { spawn "nixGL" "ghostty" "+new-window"; }
-    Mod+W            hotkey-overlay-title="Spawn Browser" { spawn "flatpak" "run" "com.google.Chrome"; }
-    Mod+D            hotkey-overlay-title="Launcher" { spawn "rofi" "-modes" "drun,window" "-show" "drun"; }
-    Ctrl+Mod+Alt+L hotkey-overlay-title="Lock session" { spawn "swaylock"; }
+    Mod+D                 hotkey-overlay-title="Launcher" { spawn "rofi" "-modes" "drun,window" "-show" "drun"; }
+    Ctrl+Mod+Alt+L        hotkey-overlay-title="Lock session" { spawn "swaylock"; }
+    Mod+Shift+Slash       hotkey-overlay-title="Show hotkeys" { show-hotkey-overlay; }
+
+    // applications
+    Mod+Return            hotkey-overlay-title="Spawn Terminal" { spawn "nixGL" "ghostty" "+new-window"; }
+    Ctrl+Alt+Mod+Q        hotkey-overlay-title="Spawn Browser" { spawn "google-chrome"; }
+    Ctrl+Alt+Mod+Shift+Q  hotkey-overlay-title="Spawn Browser (incognito)" { spawn "google-chrome" "--incognito"; }
+    Ctrl+Alt+Mod+W        hotkey-overlay-title="Spawn File Manager" { spawn "nautilus"; }
 
     // brightness
     {{- if (not (eq .chezmoi.hostname "asahi")) }}
@@ -340,7 +343,7 @@ binds {
     Mod+Alt+Up      { move-window-to-workspace-up; }
     Mod+Ctrl+Down   { move-column-to-workspace-down; }
     Mod+Ctrl+Up     { move-column-to-workspace-up; }
-    Mod+Tab { toggle-column-tabbed-display; }
+    Mod+W { toggle-column-tabbed-display; }
     ////
     // Mod+Left       { focus-column-first; }
     // Mod+Right      { focus-column-last; }
@@ -455,9 +458,12 @@ binds {
     Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { screenshot show-pointer=false; }
     Mod+Shift+W hotkey-overlay-title="Screenshot: Window" { screenshot-window; }
     Mod+Shift+Alt+S hotkey-overlay-title="Screenshot: Display" { screenshot-screen; }
+    Mod+Shift+R hotkey-overlay-title="Record Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh"; }
+    Mod+Shift+Alt+R hotkey-overlay-title="Record Region (cached)" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh" "--cached"; }
+
 
     // color picker
-    Mod+Shift+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
+    // Mod+Shift+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
 
     // screencast
     Mod+F1 { set-dynamic-cast-window; }
@@ -469,6 +475,8 @@ binds {
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
     Mod+F12 { toggle-keyboard-shortcuts-inhibit; }
+
+
 }
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
