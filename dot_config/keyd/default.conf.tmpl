@@ -4,9 +4,9 @@
 *
 
 [main]
-capslock = overload(capslock_layer, esc)
+capslock = overload(navigation, esc)
 rightmeta = layer(rightwin)
-tab = timeout(overload(hyper, tab), 220, macro2(220, 40, tab))
+tab = timeout(overload(hyper, tab), 260, macro2(260, 33, tab))
 {{ if eq .chezmoi.hostname "asahi" -}}
 fn = leftcontrol
 leftalt = leftmeta
@@ -15,7 +15,7 @@ rightmeta = rightalt
 rightalt = rightcontrol
 {{- end }}
 
-[capslock_layer]
+[navigation]
 h = left
 j = down
 k = up
@@ -31,13 +31,35 @@ up = pageup
 down = pagedown
 
 [hyper:C-A-M]
+esc = macro2(260, 33, tab)
+
+# preserve modifier+Tab shortcuts by emitting expected chords
+[control:C]
+tab = macro(C-tab)
+
+[alt:A]
+tab = macro(A-tab)
+
+[meta:M]
+tab = macro(M-tab)
+
+[shift:S]
+tab = macro(S-tab)
+
+[control+shift:C-S]
+tab = macro(C-S-tab)
+
+[alt+shift:A-S]
+tab = macro(A-S-tab)
+
+[meta+shift:M-S]
+tab = macro(M-S-tab)
 
 {{ if eq .chezmoi.hostname "cd-tower" }}
-[capslock_layer+shift]
+[navigation+shift]
 \ = delete
 
 [rightwin]
-# media
 [ = previoussong
 ] = nextsong
 0 = mute
@@ -45,7 +67,6 @@ down = pagedown
 = = volumeup
 backspace = playpause
 
-# navigation
 h = home
 j = pagedown
 k = pageup
