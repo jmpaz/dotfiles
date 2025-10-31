@@ -15,6 +15,15 @@ if [ -z "$pane_path" ] || [ ! -d "$pane_path" ]; then
     pane_path="."
 fi
 
+TTOK_CMD=""
+if TTOK_CMD=$(command -v ttok-rs 2>/dev/null); then
+    TTOK_CMD=${TTOK_CMD:-}
+elif TTOK_CMD=$(command -v ttok 2>/dev/null); then
+    TTOK_CMD=${TTOK_CMD:-}
+else
+    TTOK_CMD=""
+fi
+
 if ! git -C "$pane_path" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     fallback
     exit 0
@@ -76,14 +85,24 @@ token_diff_totals() {
     local diff_args=("$@")
     local added_tokens removed_tokens
 
-    # Added tokens: lines starting with '+' but not '+++'
-    added_tokens=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
-        | awk 'substr($0,1,1)=="+" && substr($0,1,3)!="+++" {print substr($0,2)}' \
-        | ttok 2>/dev/null)
-    # Removed tokens: lines starting with '-' but not '---'
-    removed_tokens=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
-        | awk 'substr($0,1,1)=="-" && substr($0,1,3)!="---" {print substr($0,2)}' \
-        | ttok 2>/dev/null)
+    if [ -z "$TTOK_CMD" ]; then
+        printf '0 0\n'
+        return
+    fi
+
+    if [ "${TTOK_CMD##*/}" = "ttok-rs" ]; then
+        local output
+        output=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
+            | "$TTOK_CMD" --diff 2>/dev/null)
+        read -r added_tokens removed_tokens <<<"$output"
+    else
+        added_tokens=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
+            | awk 'substr($0,1,1)=="+" && substr($0,1,3)!="+++" {print substr($0,2)}' \
+            | "$TTOK_CMD" 2>/dev/null)
+        removed_tokens=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
+            | awk 'substr($0,1,1)=="-" && substr($0,1,3)!="---" {print substr($0,2)}' \
+            | "$TTOK_CMD" 2>/dev/null)
+    fi
 
     [[ $added_tokens =~ ^[0-9]+$ ]] || added_tokens=0
     [[ $removed_tokens =~ ^[0-9]+$ ]] || removed_tokens=0
@@ -119,20 +138,24 @@ if command -v tmux >/dev/null 2>&1; then
     requested_tokens=$(tmux show-option -gqv @gitmux_tokens 2>/dev/null || true)
 fi
 
-use_tokens=0
-case "${requested_tokens,,}" in
-    1|on|true)
-        if command -v ttok >/dev/null 2>&1; then
+use_tokens_default=0
+if [ "${TTOK_CMD##*/}" = "ttok-rs" ]; then
+    use_tokens_default=1
+fi
+
+use_tokens=$use_tokens_default
+if [ -n "$requested_tokens" ]; then
+    lower_value=$(printf '%s' "$requested_tokens" | tr '[:upper:]' '[:lower:]')
+    if [ "$lower_value" = "1" ] || [ "$lower_value" = "on" ] || [ "$lower_value" = "true" ]; then
+        if [ -n "$TTOK_CMD" ]; then
             use_tokens=1
+        else
+            use_tokens=0
         fi
-        ;;
-    0|off|false)
+    elif [ "$lower_value" = "0" ] || [ "$lower_value" = "off" ] || [ "$lower_value" = "false" ]; then
         use_tokens=0
-        ;;
-    *)
-        use_tokens=0
-        ;;
-esac
+    fi
+fi
 
 if (( use_tokens == 1 )); then
     diff_func=token_diff_totals
