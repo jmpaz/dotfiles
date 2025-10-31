@@ -59,6 +59,19 @@ sys.stdout.write(text.strip())
 '
 }
 
+hash_string() {
+    local input=$1
+    if command -v sha256sum >/dev/null 2>&1; then
+        printf '%s' "$input" | sha256sum 2>/dev/null | awk '{print $1}'
+    elif command -v shasum >/dev/null 2>&1; then
+        printf '%s' "$input" | shasum -a 256 2>/dev/null | awk '{print $1}'
+    elif command -v md5sum >/dev/null 2>&1; then
+        printf '%s' "$input" | md5sum 2>/dev/null | awk '{print $1}'
+    else
+        printf '%s' "$input" | sed 's/[^A-Za-z0-9]/_/g'
+    fi
+}
+
 stripped_output=$(printf '%s' "$output" | strip_stash)
 if [ -n "$stripped_output" ]; then
     output=$stripped_output
@@ -81,33 +94,92 @@ diff_totals() {
     printf '%s %s\n' "$added_total" "$deleted_total"
 }
 
-token_diff_totals() {
-    local diff_args=("$@")
-    local added_tokens removed_tokens
+TOKEN_TOTALS_READY=0
+TOKEN_STAGED_ADD=0
+TOKEN_STAGED_DEL=0
+TOKEN_UNSTAGED_ADD=0
+TOKEN_UNSTAGED_DEL=0
 
-    if [ -z "$TTOK_CMD" ]; then
-        printf '0 0\n'
+compute_token_totals() {
+    if [ "$TOKEN_TOTALS_READY" = "1" ]; then
         return
     fi
 
-    if [ "${TTOK_CMD##*/}" = "ttok-rs" ]; then
-        local output
-        output=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
-            | "$TTOK_CMD" --diff 2>/dev/null)
-        read -r added_tokens removed_tokens <<<"$output"
+    TOKEN_TOTALS_READY=1
+    TOKEN_STAGED_ADD=0
+    TOKEN_STAGED_DEL=0
+    TOKEN_UNSTAGED_ADD=0
+    TOKEN_UNSTAGED_DEL=0
+
+    if [ -z "$TTOK_CMD" ]; then
+        return
+    fi
+
+    local git_dir
+    git_dir=$(git -C "$pane_path" rev-parse --absolute-git-dir 2>/dev/null)
+    local cache_root cache_file
+    if [ -n "$git_dir" ]; then
+        cache_root="$git_dir/gitmux-cache"
     else
-        added_tokens=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
+        cache_root="$pane_path/.gitmux-cache"
+    fi
+    mkdir -p "$cache_root" 2>/dev/null || true
+    cache_file="$cache_root/token-totals"
+
+    local status_snapshot status_hash
+    status_snapshot=$(git -C "$pane_path" status --porcelain 2>/dev/null || true)
+    status_hash=$(hash_string "$status_snapshot")
+    if [ -z "$status_hash" ]; then
+        status_hash="clean"
+    fi
+
+    if [ -n "$status_hash" ] && [ -f "$cache_file" ]; then
+        local cached_hash cached_staged_add cached_staged_del cached_unstaged_add cached_unstaged_del
+        read -r cached_hash cached_staged_add cached_staged_del cached_unstaged_add cached_unstaged_del < "$cache_file"
+        if [ "$cached_hash" = "$status_hash" ]; then
+            TOKEN_STAGED_ADD=${cached_staged_add:-0}
+            TOKEN_STAGED_DEL=${cached_staged_del:-0}
+            TOKEN_UNSTAGED_ADD=${cached_unstaged_add:-0}
+            TOKEN_UNSTAGED_DEL=${cached_unstaged_del:-0}
+            return
+        fi
+    fi
+
+    if [ "${TTOK_CMD##*/}" = "ttok-rs" ]; then
+        local unstaged_output staged_output
+        unstaged_output=$("$TTOK_CMD" --git 2>/dev/null)
+        staged_output=$("$TTOK_CMD" --git --cached 2>/dev/null)
+        read -r TOKEN_UNSTAGED_ADD TOKEN_UNSTAGED_DEL <<<"${unstaged_output:-0 0}"
+        read -r TOKEN_STAGED_ADD TOKEN_STAGED_DEL <<<"${staged_output:-0 0}"
+    else
+        TOKEN_UNSTAGED_ADD=$(git -C "$pane_path" diff --no-ext-diff --unified=0 2>/dev/null \
             | awk 'substr($0,1,1)=="+" && substr($0,1,3)!="+++" {print substr($0,2)}' \
             | "$TTOK_CMD" 2>/dev/null)
-        removed_tokens=$(git -C "$pane_path" diff --no-ext-diff --unified=0 "${diff_args[@]}" 2>/dev/null \
+        TOKEN_UNSTAGED_DEL=$(git -C "$pane_path" diff --no-ext-diff --unified=0 2>/dev/null \
+            | awk 'substr($0,1,1)=="-" && substr($0,1,3)!="---" {print substr($0,2)}' \
+            | "$TTOK_CMD" 2>/dev/null)
+        TOKEN_STAGED_ADD=$(git -C "$pane_path" diff --no-ext-diff --unified=0 --cached 2>/dev/null \
+            | awk 'substr($0,1,1)=="+" && substr($0,1,3)!="+++" {print substr($0,2)}' \
+            | "$TTOK_CMD" 2>/dev/null)
+        TOKEN_STAGED_DEL=$(git -C "$pane_path" diff --no-ext-diff --unified=0 --cached 2>/dev/null \
             | awk 'substr($0,1,1)=="-" && substr($0,1,3)!="---" {print substr($0,2)}' \
             | "$TTOK_CMD" 2>/dev/null)
     fi
 
-    [[ $added_tokens =~ ^[0-9]+$ ]] || added_tokens=0
-    [[ $removed_tokens =~ ^[0-9]+$ ]] || removed_tokens=0
+    for var in TOKEN_STAGED_ADD TOKEN_STAGED_DEL TOKEN_UNSTAGED_ADD TOKEN_UNSTAGED_DEL; do
+        local value
+        value=${!var}
+        if ! [[ $value =~ ^[0-9]+$ ]]; then
+            printf -v "$var" '%s' 0
+        fi
+    done
 
-    printf '%s %s\n' "$added_tokens" "$removed_tokens"
+    if [ -n "$status_hash" ] && [ -n "$cache_file" ]; then
+        local tmp_file
+        tmp_file=$(mktemp "$cache_root/tmp.XXXXXX" 2>/dev/null) || return
+        printf '%s %s %s %s %s\n' "$status_hash" "$TOKEN_STAGED_ADD" "$TOKEN_STAGED_DEL" "$TOKEN_UNSTAGED_ADD" "$TOKEN_UNSTAGED_DEL" > "$tmp_file"
+        mv "$tmp_file" "$cache_file" 2>/dev/null || true
+    fi
 }
 
 format_segment() {
@@ -128,7 +200,6 @@ format_segment() {
     printf '%s%s %s%d%s' "$color" "$symbol" "$prefix" "${net#-}" "$suffix"
 }
 
-diff_func=diff_totals
 VALUE_SUFFIX=""
 VALUE_PREFIX=""
 SEPARATOR=" | "
@@ -158,12 +229,16 @@ if [ -n "$requested_tokens" ]; then
 fi
 
 if (( use_tokens == 1 )); then
-    diff_func=token_diff_totals
     VALUE_PREFIX="·"
+    compute_token_totals
+    unstaged_insertions=$TOKEN_UNSTAGED_ADD
+    unstaged_deletions=$TOKEN_UNSTAGED_DEL
+    staged_insertions=$TOKEN_STAGED_ADD
+    staged_deletions=$TOKEN_STAGED_DEL
+else
+    read -r unstaged_insertions unstaged_deletions < <(diff_totals)
+    read -r staged_insertions staged_deletions < <(diff_totals --cached)
 fi
-
-read -r unstaged_insertions unstaged_deletions < <($diff_func)
-read -r staged_insertions staged_deletions < <($diff_func --cached)
 
 unstaged_total=$((unstaged_insertions + unstaged_deletions))
 staged_total=$((staged_insertions + staged_deletions))
