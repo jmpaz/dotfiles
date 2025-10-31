@@ -458,12 +458,13 @@ binds {
     Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { screenshot show-pointer=false; }
     Mod+Shift+W hotkey-overlay-title="Screenshot: Window" { screenshot-window; }
     Mod+Shift+Alt+S hotkey-overlay-title="Screenshot: Display" { screenshot-screen; }
-    Mod+Shift+R hotkey-overlay-title="Record Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh"; }
-    Mod+Shift+Alt+R hotkey-overlay-title="Record Region (cached)" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh" "--cached"; }
+
+    // Mod+Shift+R hotkey-overlay-title="Record Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh"; }
+    // Mod+Shift+Alt+R hotkey-overlay-title="Record Region (cached)" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh" "--cached"; }
 
 
     // color picker
-    // Mod+Shift+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
+    Mod+Shift+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
 
     // screencast
     Mod+F1 { set-dynamic-cast-window; }
