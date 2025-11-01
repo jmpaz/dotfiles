@@ -1,0 +1,8 @@
+customCommands:
+  - key: c
+    context: commits
+    description: Count tokens
+    loadingText: counting tokens...
+    command: >
+      ~/.config/lazygit/scripts/ttok_diff.sh "{{.SelectedCommitRange.From}}" "{{.SelectedCommitRange.To}}" "{{.SelectedCommit}}"
+    output: log
