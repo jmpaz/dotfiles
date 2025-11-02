@@ -4,12 +4,12 @@ customCommands:
     description: Count tokens
     loadingText: counting tokens...
     command: >
-      ~/.config/lazygit/scripts/ttok_diff.sh "{{.SelectedCommitRange.From}}" "{{.SelectedCommitRange.To}}" "{{.SelectedCommit}}"
+      ~/.config/lazygit/scripts/ttok.sh --context commits --from "{{.SelectedCommitRange.From}}" --to "{{.SelectedCommitRange.To}}" --commit "{{.SelectedCommit}}"
     output: log
   - key: t
     context: files
     description: Count tokens for file
     loadingText: counting tokens...
     command: >
-      ~/.config/lazygit/scripts/ttok_file.sh "{{if .SelectedFile}}{{.SelectedFile.Name}}{{else}}{{.SelectedPath}}{{end}}" "{{if .SelectedFile}}{{.SelectedFile.HasStagedChanges}}{{else}}AUTO{{end}}" "{{if .SelectedFile}}{{.SelectedFile.HasUnstagedChanges}}{{else}}AUTO{{end}}" "{{.SelectedPath}}"
+      ~/.config/lazygit/scripts/ttok.sh --context path --path "{{if .SelectedFile}}{{.SelectedFile.Name}}{{else}}{{.SelectedPath}}{{end}}" --staged "{{if .SelectedFile}}{{.SelectedFile.HasStagedChanges}}{{else}}AUTO{{end}}" --unstaged "{{if .SelectedFile}}{{.SelectedFile.HasUnstagedChanges}}{{else}}AUTO{{end}}" --selected-path "{{.SelectedPath}}"
     output: log
