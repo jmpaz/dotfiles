@@ -6,3 +6,10 @@ customCommands:
     command: >
       ~/.config/lazygit/scripts/ttok_diff.sh "{{.SelectedCommitRange.From}}" "{{.SelectedCommitRange.To}}" "{{.SelectedCommit}}"
     output: log
+  - key: t
+    context: files
+    description: Count tokens for file
+    loadingText: counting tokens...
+    command: >
+      ~/.config/lazygit/scripts/ttok_file.sh "{{if .SelectedFile}}{{.SelectedFile.Name}}{{else}}{{.SelectedPath}}{{end}}" "{{if .SelectedFile}}{{.SelectedFile.HasStagedChanges}}{{else}}AUTO{{end}}" "{{if .SelectedFile}}{{.SelectedFile.HasUnstagedChanges}}{{else}}AUTO{{end}}" "{{.SelectedPath}}"
+    output: log
