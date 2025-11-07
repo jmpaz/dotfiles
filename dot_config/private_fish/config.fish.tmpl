@@ -2,6 +2,9 @@
 
 set -U fish_greeting ""
 source ~/.config/fish/alias.fish
+{{- if eq .chezmoi.os "darwin" }}
+set -gx XDG_CONFIG_HOME ~/.config
+{{- end }}
 {{- if (ne .displayServer "wayland") }}
 source ~/.asdf/asdf.fish
 {{- end }}
