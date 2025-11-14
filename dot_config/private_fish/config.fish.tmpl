@@ -138,6 +138,10 @@ pyenv init - | source
 
 set -gx EDITOR nvim
 set -gx ZK_NOTEBOOK_DIR ~/notes
+set -l _lazygit_colors "$HOME/.config/lazygit/colors.yml"
+if test -f $_lazygit_colors
+    set -gx LG_CONFIG_FILE $HOME/.config/lazygit/config.yml,$_lazygit_colors
+end
 
 # Syntax highlighting
 set -g fish_color_autosuggestion 555 brblack

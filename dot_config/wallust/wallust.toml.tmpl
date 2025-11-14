@@ -30,6 +30,10 @@ mako.src           = "mako.conf"
 mako.target        = "~/.config/mako/colors.conf"
 mako.new_engine    = true
 
+lazygit.src        = "lazygit.yml"
+lazygit.target     = "~/.config/lazygit/colors.yml"
+lazygit.new_engine = true
+
 {{ if ne .displayServer "none" -}}
 wal.src            = "wal.json"
 wal.target         = "~/.cache/wal/colors.json"
@@ -59,4 +63,3 @@ sketchybar.src        = "sketchybar.sh"
 sketchybar.target     = "~/.config/sketchybar/colors.sh"
 sketchybar.new_engine = true
 {{ end -}}
-

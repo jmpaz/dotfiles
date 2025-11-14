@@ -1,0 +1,8 @@
+gui:
+  theme:
+    selectedLineBgColor:
+      - "{{color12}}"
+    selectedRangeBgColor:
+      - "{{color12}}"
+    selectedLineFgColor:
+      - "{{foreground}}"
