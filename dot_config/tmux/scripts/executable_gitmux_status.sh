@@ -59,6 +59,16 @@ sys.stdout.write(text.strip())
 '
 }
 
+run_ttok_git() {
+    if [ -z "$TTOK_CMD" ]; then
+        return 1
+    fi
+    (
+        cd -- "${pane_path:-.}" 2>/dev/null || exit 1
+        "$TTOK_CMD" --git "$@" 2>/dev/null
+    )
+}
+
 hash_string() {
     local input=$1
     if command -v sha256sum >/dev/null 2>&1; then
@@ -115,8 +125,16 @@ compute_token_totals() {
         return
     fi
 
-    local git_dir
+    local git_dir work_tree worktree_hash
     git_dir=$(git -C "$pane_path" rev-parse --absolute-git-dir 2>/dev/null)
+    work_tree=$(git -C "$pane_path" rev-parse --show-toplevel 2>/dev/null || printf '%s' "$pane_path")
+    if [ -z "$work_tree" ]; then
+        work_tree=$pane_path
+    fi
+    worktree_hash=$(hash_string "$work_tree")
+    if [ -z "$worktree_hash" ]; then
+        worktree_hash="worktree"
+    fi
     local cache_root cache_file
     if [ -n "$git_dir" ]; then
         cache_root="$git_dir/gitmux-cache"
@@ -134,9 +152,9 @@ compute_token_totals() {
     fi
 
     if [ -n "$status_hash" ] && [ -f "$cache_file" ]; then
-        local cached_hash cached_staged_add cached_staged_del cached_unstaged_add cached_unstaged_del
-        read -r cached_hash cached_staged_add cached_staged_del cached_unstaged_add cached_unstaged_del < "$cache_file"
-        if [ "$cached_hash" = "$status_hash" ]; then
+        local cached_hash cached_worktree cached_staged_add cached_staged_del cached_unstaged_add cached_unstaged_del
+        read -r cached_hash cached_worktree cached_staged_add cached_staged_del cached_unstaged_add cached_unstaged_del < "$cache_file"
+        if [ "$cached_hash" = "$status_hash" ] && [ "$cached_worktree" = "$worktree_hash" ]; then
             TOKEN_STAGED_ADD=${cached_staged_add:-0}
             TOKEN_STAGED_DEL=${cached_staged_del:-0}
             TOKEN_UNSTAGED_ADD=${cached_unstaged_add:-0}
@@ -147,8 +165,8 @@ compute_token_totals() {
 
     if [ "${TTOK_CMD##*/}" = "ttok-rs" ]; then
         local unstaged_output staged_output
-        unstaged_output=$("$TTOK_CMD" --git 2>/dev/null)
-        staged_output=$("$TTOK_CMD" --git --cached 2>/dev/null)
+        unstaged_output=$(run_ttok_git)
+        staged_output=$(run_ttok_git --cached)
         read -r TOKEN_UNSTAGED_ADD TOKEN_UNSTAGED_DEL <<<"${unstaged_output:-0 0}"
         read -r TOKEN_STAGED_ADD TOKEN_STAGED_DEL <<<"${staged_output:-0 0}"
     else
@@ -177,7 +195,7 @@ compute_token_totals() {
     if [ -n "$status_hash" ] && [ -n "$cache_file" ]; then
         local tmp_file
         tmp_file=$(mktemp "$cache_root/tmp.XXXXXX" 2>/dev/null) || return
-        printf '%s %s %s %s %s\n' "$status_hash" "$TOKEN_STAGED_ADD" "$TOKEN_STAGED_DEL" "$TOKEN_UNSTAGED_ADD" "$TOKEN_UNSTAGED_DEL" > "$tmp_file"
+        printf '%s %s %s %s %s %s\n' "$status_hash" "$worktree_hash" "$TOKEN_STAGED_ADD" "$TOKEN_STAGED_DEL" "$TOKEN_UNSTAGED_ADD" "$TOKEN_UNSTAGED_DEL" > "$tmp_file"
         mv "$tmp_file" "$cache_file" 2>/dev/null || true
     fi
 }
