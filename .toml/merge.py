@@ -1,5 +1,6 @@
-import tomllib
 from pathlib import Path
+
+import tomllib
 
 
 def format_value(value):
@@ -12,22 +13,28 @@ def format_value(value):
 
 
 def serialize_toml(data):
-    toml_content = ""
-    age_related = 'encryption = "age"'
+    lines = []
+
+    def emit_kv(key, value, indent=""):
+        lines.append(f"{indent}{key} = {format_value(value)}")
+
+    for key, value in data.items():
+        if isinstance(value, dict):
+            continue
+        if key == "encryption":
+            continue
+        emit_kv(key, value)
+
     for section, values in data.items():
-        if section != "age":
-            toml_content += f"[{section}]\n"
-            for key, value in values.items():
-                # Ensure `encryption` key is handled separately
-                if f"{key} = {format_value(value)}" != age_related:
-                    toml_content += f"    {key} = {format_value(value)}\n"
-            toml_content += "\n"
-    # Add `encryption = "age"` line directly above the `[age]` section, without indentation
-    if "age" in data:
-        toml_content += f"{age_related}\n[age]\n"
-        for key, value in data["age"].items():
-            toml_content += f"    {key} = {format_value(value)}\n"
-    return toml_content
+        if not isinstance(values, dict):
+            continue
+        if section == "age" and "encryption" in data:
+            emit_kv("encryption", data["encryption"])
+        lines.append(f"[{section}]")
+        for key, value in values.items():
+            emit_kv(key, value, indent="    ")
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def merge_toml(base_file_path, vars_dir_path):
@@ -49,7 +56,11 @@ def merge_toml(base_file_path, vars_dir_path):
         with open(update_file, "rb") as uf:
             update_data = tomllib.load(uf)
             for section, values in update_data.items():
-                if section in base_data:
+                if (
+                    section in base_data
+                    and isinstance(base_data[section], dict)
+                    and isinstance(values, dict)
+                ):
                     base_data[section].update(values)
                 else:
                     base_data[section] = values
