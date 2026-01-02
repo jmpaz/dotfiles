@@ -30,7 +30,9 @@ adw-toolbar-style=raised-border
 resize-overlay = after-first
 resize-overlay-position = bottom-right
 resize-overlay-duration = 500ms
+{{- if stat (joinPath .chezmoi.homeDir ".config/niri/config.kdl") }}
 window-decoration = false
+{{- end }}
 window-theme = ghostty
 window-subtitle = working-directory
 {{- end }}

@@ -1,5 +1,9 @@
 # Directories to ignore on Mac/Linux
 
+{{- if and (hasKey . "tiling") (not .tiling) }}
+.config/niri/
+{{- end }}
+
 {{- if eq .chezmoi.os "darwin" }}
 .config/i3/
 .config/polybar/
