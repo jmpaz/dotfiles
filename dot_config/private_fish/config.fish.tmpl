@@ -32,14 +32,20 @@ end
 
 fish_add_path -P ~/.lmstudio/bin
 {{ if eq .chezmoi.os "linux" }}
-fish_add_path /home/josh/.nix-profile/bin
-fish_add_path /home/josh/.local/bin
+fish_add_path $HOME/.nix-profile/bin
+fish_add_path $HOME/.local/bin
 {{ else if eq .chezmoi.os "darwin" }}
-fish_add_path /Users/josh/.local/bin
+fish_add_path $HOME/.local/bin
 fish_add_path /opt/homebrew/bin
 fish_add_path /usr/local/bin
-fish_add_path /Users/josh/.nix-profile/bin
+fish_add_path $HOME/.nix-profile/bin
 fish_add_path /nix/var/nix/profiles/default/bin
+set -l uv_python_root $HOME/.local/share/uv/python
+if test -d $uv_python_root
+    for uv_python_bin in (command find $uv_python_root -maxdepth 2 -type d -name bin 2>/dev/null)
+        fish_add_path $uv_python_bin
+    end
+end
 {{ end }}
 {{- if (eq .chezmoi.hostname "silverblue") }}
 fish_add_path /nix/var/nix/profiles/default/bin/
@@ -132,7 +138,7 @@ end
 
 # pyenv
 {{ if eq .chezmoi.os "darwin" }}
-set PYENV_ROOT /Users/josh/.pyenv
+set PYENV_ROOT $HOME/.pyenv
 fish_add_path $PYENV_ROOT/bin
 pyenv init - | source
 {{ end }}
