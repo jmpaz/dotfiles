@@ -181,6 +181,35 @@ window-rule {
     default-floating-position x=32 y=32 relative-to="bottom-left"
 }
 window-rule {
+    match app-id=r#"(?i)^steam$"#
+    open-floating false
+    open-maximized true
+    open-maximized-to-edges true
+}
+window-rule {
+    match app-id=r#"(?i)^(steam|steamwebhelper)$"#
+    match title=r#"^Friends List$"#
+    open-floating true
+    open-focused true
+    default-column-width { fixed 420; }
+    default-window-height { fixed 820; }
+    default-floating-position x=24 y=24 relative-to="top-right"
+    open-maximized false
+    open-maximized-to-edges false
+    open-fullscreen false
+}
+window-rule {
+    match app-id=r#"(?i)^(steam|steamwebhelper)$"#
+    match title=r#"^(Steam Settings|Settings|Properties|Sign in|Login|Steam Guard|Add a Game|Install|Uninstall|Warning|Error)"#
+    open-floating true
+    open-focused true
+    default-column-width { fixed 980; }
+    default-window-height { fixed 720; }
+    open-maximized false
+    open-maximized-to-edges false
+    open-fullscreen false
+}
+window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
 }
@@ -286,7 +315,6 @@ layer-rule {
 
 // launch scripts
 spawn-at-startup "~/.config/waybar/launch.sh"
-spawn-at-startup "xwayland-satellite"
 spawn-at-startup "swaybg -i $(colorweave wallpaper show loupe --format json | jq -r .path)"
 
 // key bindings
