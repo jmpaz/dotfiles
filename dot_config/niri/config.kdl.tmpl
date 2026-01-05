@@ -177,7 +177,7 @@ window-rule {
 window-rule {
       match app-id=r#"^com\.local\.ostt$"#
       open-floating true
-      // open-focused false
+      open-focused false
       default-column-width { proportion 0.18; }
       default-window-height { fixed 8; }
       min-height 8
@@ -465,7 +465,7 @@ binds {
 
     // utility bindings
     Mod+Shift+C hotkey-overlay-title="Clipboard History" { spawn "rofi" "-modi" "clipboard:~/.config/rofi/scripts/cliphist" "-show" "clipboard" "-show-icons"; }
-    Mod+Shift+T hotkey-overlay-title="Text Snippets" { spawn "rofi" "-modi" "snippet:~/.config/rofi/scripts/snippets" "-show" "snippet"; }
+    // Mod+Shift+T hotkey-overlay-title="Text Snippets" { spawn "rofi" "-modi" "snippet:~/.config/rofi/scripts/snippets" "-show" "snippet"; }
     Mod+Shift+V hotkey-overlay-title="Paste (wrapped)" { spawn "sh" "-c" "~/.go/bin/wrap paste md"; }
     Mod+Ctrl+Shift+V hotkey-overlay-title="Paste (wrapped, XML)" { spawn "sh" "-c" "~/.go/bin/wrap paste xml"; }
     Mod+Ctrl+G hotkey-overlay-title="Search" { spawn "sh" "-c" "rofi -modi 'search:~/.config/rofi/scripts/search,+clipboard:~/.config/rofi/scripts/search -c' -show search"; }
@@ -528,9 +528,16 @@ binds {
     Mod+F12 { toggle-keyboard-shortcuts-inhibit; }
 
     Mod+T hotkey-overlay-title="ostt" {
-        spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt record";
+      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh";
     }
 
+    Mod+Alt+T hotkey-overlay-title="ostt (type)" {
+      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh type";
+    }
+
+    Mod+Shift+T hotkey-overlay-title="ostt (cancel)" {
+      spawn "sh" "-c" "~/.local/bin/ostt-remote.sh cancel";
+    }
 }
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
