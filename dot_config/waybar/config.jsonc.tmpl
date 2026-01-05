@@ -7,6 +7,7 @@
   "modules-left": ["niri/workspaces"],
   "modules-center": ["niri/window"],
   "modules-right": [
+    "custom/recording",
     "bluetooth",
     "pulseaudio",
     {{- if eq .chezmoi.hostname "asahi" }}
@@ -21,7 +22,7 @@
   "output": "DP-1",
   "include": "~/.config/waybar/modules.jsonc",
 
-  "modules-left": ["clock", "clock#date"],
+  "modules-left": ["clock", "clock#date", "custom/recording"],
   "modules-center": ["niri/window"],
   "modules-right": ["niri/workspaces"]
 }, {
@@ -32,6 +33,7 @@
   "modules-left": ["niri/workspaces"],
   "modules-center": ["niri/window"],
   "modules-right": [
+    "custom/recording",
     "bluetooth",
     "pulseaudio",
     {{- if eq .chezmoi.hostname "asahi" }}

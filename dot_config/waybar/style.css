@@ -47,6 +47,7 @@ window#waybar {
 #battery,
 #bluetooth,
 #pulseaudio,
+#custom-recording,
 #clock,
 #clock.date {
   margin: 2px 4px;
@@ -76,4 +77,3 @@ window#waybar {
 #clock.date {
   margin: 2px 7px 2px 4px;
 }
-
