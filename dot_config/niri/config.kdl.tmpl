@@ -175,6 +175,17 @@ window-rule {
     }
 }
 window-rule {
+      match app-id=r#"^com\.local\.ostt$"#
+      open-floating true
+      // open-focused false
+      default-column-width { proportion 0.18; }
+      default-window-height { fixed 8; }
+      min-height 8
+      max-height 80
+      baba-is-float true
+      default-floating-position x=0 y=32 relative-to="bottom"
+  }
+window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
     opacity 1.0
@@ -516,6 +527,9 @@ binds {
     Mod+Shift+P { power-off-monitors; }
     Mod+F12 { toggle-keyboard-shortcuts-inhibit; }
 
+    Mod+T hotkey-overlay-title="ostt" {
+        spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt record";
+    }
 
 }
 
