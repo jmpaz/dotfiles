@@ -490,15 +490,14 @@ binds {
     Mod+Comma  hotkey-overlay-title=null { consume-window-into-column; }
     Mod+Period hotkey-overlay-title=null { expel-window-from-column; }
     // sizing
-    Mod+Shift+R hotkey-overlay-title="Expand to Available Width" { expand-column-to-available-width; }
-    Mod+R hotkey-overlay-title="Cycle Width" { switch-preset-column-width; }
-    Mod+Ctrl+Shift+R hotkey-overlay-title="Cycle Height" { switch-preset-window-height; }
-    Mod+Ctrl+R hotkey-overlay-title="Reset Height" { reset-window-height; }
-    // fine adjustments
     Mod+BracketLeft { set-window-height "-10%"; }
     Mod+BracketRight { set-window-height "+10%"; }
     Mod+Shift+BracketLeft { set-column-width "-5%"; }
     Mod+Shift+BracketRight { set-column-width "+5%"; }
+    Mod+Minus hotkey-overlay-title="Cycle Height" { switch-preset-window-height; }
+    Mod+Shift+Minus hotkey-overlay-title="Reset Height" { reset-window-height; }
+    Mod+KP_Equal hotkey-overlay-title="Expand to Available Width" { expand-column-to-available-width; }
+    Mod+Shift+Equal hotkey-overlay-title="Cycle Width" { switch-preset-column-width; }
 
     // screenshots
     Print       hotkey-overlay-title=null { screenshot; }
@@ -509,14 +508,22 @@ binds {
     Mod+Shift+W hotkey-overlay-title="Screenshot: Window" { screenshot-window; }
     Mod+Shift+Alt+S hotkey-overlay-title="Screenshot: Display" { screenshot-screen; }
 
-    // Mod+Shift+R hotkey-overlay-title="Record Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh"; }
-    // Mod+Shift+Alt+R hotkey-overlay-title="Record Region (cached)" { spawn "sh" "-c" "~/.config/niri/scripts/record-region.sh" "--cached"; }
+    // recording
+    Mod+Shift+R hotkey-overlay-title="Record: Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh"; }
 
-    Mod+Shift+Alt+R hotkey-overlay-title="Record: Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh"; }
-
+    // voice
+    Mod+T hotkey-overlay-title="ostt" {
+      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh";
+    }
+    Mod+Alt+T hotkey-overlay-title="ostt (type)" {
+      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh type";
+    }
+    Mod+Shift+T hotkey-overlay-title="ostt (cancel)" {
+      spawn "sh" "-c" "~/.local/bin/ostt-remote.sh cancel";
+    }
 
     // color picker
-    Mod+Alt+R { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
+    Mod+Alt+P { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
 
     // screencast
     Mod+F1 { set-dynamic-cast-window; }
@@ -528,18 +535,6 @@ binds {
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
     Mod+F12 { toggle-keyboard-shortcuts-inhibit; }
-
-    Mod+T hotkey-overlay-title="ostt" {
-      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh";
-    }
-
-    Mod+Alt+T hotkey-overlay-title="ostt (type)" {
-      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh type";
-    }
-
-    Mod+Shift+T hotkey-overlay-title="ostt (cancel)" {
-      spawn "sh" "-c" "~/.local/bin/ostt-remote.sh cancel";
-    }
 }
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
