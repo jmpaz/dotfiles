@@ -509,7 +509,13 @@ binds {
     Mod+Shift+Alt+S hotkey-overlay-title="Screenshot: Display" { screenshot-screen; }
 
     // recording
-    Mod+Shift+R hotkey-overlay-title="Record: Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh"; }
+    Mod+Shift+R hotkey-overlay-title="Record Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh"; }
+    Mod+Alt+R hotkey-overlay-title="Record (System Audio)" {
+        spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh --system-audio";
+    }
+    Mod+Ctrl+R hotkey-overlay-title="Record (Mic Audio)" {
+        spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh --audio";
+    }
 
     // voice
     Mod+T hotkey-overlay-title="ostt" {
