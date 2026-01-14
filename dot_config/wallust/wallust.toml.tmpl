@@ -55,6 +55,11 @@ xresources.target  = "~/.Xresources.d/colors.xresources"
 {{   if eq .displayServer "wayland" -}}
 waybar.src         = "waybar.css"
 waybar.target      = "~/.config/waybar/colors.css"
+waybar.new_engine  = true
+
+niri.src           = "niri.kdl"
+niri.target        = "~/.config/niri/colors.kdl"
+niri.new_engine    = true
 {{   end -}}
 {{ end -}}
 

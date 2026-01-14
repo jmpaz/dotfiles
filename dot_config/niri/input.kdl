@@ -1,0 +1,34 @@
+// Input configuration
+
+input {
+    keyboard {
+        xkb {}
+        numlock
+        repeat-rate 30
+        repeat-delay 260
+    }
+
+    touchpad {
+        tap
+        dwt
+        drag-lock
+        natural-scroll
+        accel-profile "adaptive"
+        accel-speed 0.2
+        scroll-factor 0.4
+    }
+
+    mouse {
+    }
+
+    trackpoint {
+    }
+
+    focus-follows-mouse max-scroll-amount="0%"
+    warp-mouse-to-focus
+    workspace-auto-back-and-forth
+}
+
+cursor {
+    hide-when-typing
+}

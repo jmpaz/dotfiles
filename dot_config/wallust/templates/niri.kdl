@@ -1,0 +1,12 @@
+// vim: ft=kdl
+
+layout {
+    focus-ring {
+        active-color "{{color4 | saturate(-0.2)}}"
+        inactive-color "{{color8}}"
+    }
+    border {
+        active-color "{{color4 | saturate(-0.2)}}"
+        inactive-color "{{color8}}"
+    }
+}

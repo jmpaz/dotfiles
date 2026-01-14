@@ -1,49 +1,22 @@
 // vim: ft=kdl
 
+include "input.kdl"
+include "animations.kdl"
+include "window-rules.kdl"
+include "binds.kdl"
+include optional=true "colors.kdl"
+
 workspace "focus"
 workspace "media"
 workspace "chat"
 
 environment {
-  MOZ_ENABLE_WAYLAND "0"
-  ELECTRON_OZONE_PLATFORM_HINT "auto"
-  {{- if (not (eq .chezmoi.hostname "asahi")) }}
-  __EGL_VENDOR_LIBRARY_FILENAMES "/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
-  NVD_BACKEND "direct"
-  {{- end }}
-}
-
-input {
-    keyboard {
-        xkb {}
-        numlock
-        repeat-rate 30
-        repeat-delay 260
-    }
-
-    touchpad {
-        tap
-        dwt
-        drag-lock
-        natural-scroll
-        accel-profile "adaptive"
-        accel-speed 0.2
-        scroll-factor 0.4
-    }
-
-    mouse {
-    }
-
-    trackpoint {
-    }
-
-    focus-follows-mouse max-scroll-amount="0%"
-    warp-mouse-to-focus
-    workspace-auto-back-and-forth
-}
-
-cursor {
-  hide-when-typing
+    MOZ_ENABLE_WAYLAND "0"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    {{- if (not (eq .chezmoi.hostname "asahi")) }}
+    __EGL_VENDOR_LIBRARY_FILENAMES "/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
+    NVD_BACKEND "direct"
+    {{- end }}
 }
 
 output "eDP-1" {
@@ -52,7 +25,6 @@ output "eDP-1" {
 output "HDMI-A-2" {
     mode "3840x2160@143.999"
     scale 1.25
-    // scale 1.5
     transform "normal"
 }
 output "DP-1" {
@@ -89,25 +61,21 @@ layout {
         length total-proportion=0.4
     }
     shadow {
-      on
-      spread -1
-      softness 10
-      draw-behind-window true
+        on
+        spread -1
+        softness 10
+        draw-behind-window true
     }
     focus-ring {
         off
         width 2
-        active-color "#56949F"
-        inactive-color "#9893A5"
     }
     border {
+        on
         width 4
-        active-color "#56949F"
-        inactive-color "#9893A5"
     }
     insert-hint {
     }
-    // empty-workspace-above-first
 
     // outer gaps
     struts {
@@ -117,440 +85,20 @@ layout {
         bottom 6
     }
 
-  background-color "transparent"
+    background-color "transparent"
 }
 
-overview {
-    zoom 0.7
-    workspace-shadow { off; }
-}
-gestures {
-    hot-corners {
-        off
-    }
-    dnd-edge-workspace-switch {
-        trigger-height 100
-        max-speed 2000
-    }
-
-}
-layer-rule {
-    match namespace="^wallpaper$"
-    place-within-backdrop true
-}
-
-animations {
-    workspace-switch {
-        spring damping-ratio=0.95 stiffness=1200 epsilon=0.0001
-    }
-    horizontal-view-movement {
-        spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
-    }
-    slowdown 1.0
-}
-
-recent-windows {
-    open-delay-ms 80
-    debounce-ms 200
-    highlight {
-      padding 20
-    }
-    binds {
-        Alt+Tab         { next-window; }
-        Alt+Shift+Tab   { previous-window; }
-        Alt+grave       { next-window     filter="app-id"; }
-        Alt+Shift+grave { previous-window filter="app-id"; }
-    }
-}
-
-// window rules
-// window-rule {
-//     match is-active=false
-//     opacity 0.95
-// }
-window-rule {
-    match is-window-cast-target=true
-    border {
-        // inactive-color "#7d0d2d"
-    }
-}
-window-rule {
-      match app-id=r#"^com\.local\.ostt$"#
-      open-floating true
-      open-focused false
-      default-column-width { proportion 0.18; }
-      default-window-height { fixed 8; }
-      min-height 8
-      max-height 80
-      baba-is-float true
-      default-floating-position x=0 y=32 relative-to="bottom"
-  }
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-    opacity 1.0
-    default-floating-position x=32 y=32 relative-to="bottom-left"
-}
-window-rule {
-    match app-id=r#"(?i)^steam$"#
-    open-floating false
-    open-maximized true
-    open-maximized-to-edges true
-}
-window-rule {
-    match app-id=r#"(?i)^(steam|steamwebhelper)$"#
-    match title=r#"^Friends List$"#
-    open-floating true
-    open-focused true
-    default-column-width { fixed 420; }
-    default-window-height { fixed 820; }
-    default-floating-position x=24 y=24 relative-to="top-right"
-    open-maximized false
-    open-maximized-to-edges false
-    open-fullscreen false
-}
-window-rule {
-    match app-id=r#"(?i)^(steam|steamwebhelper)$"#
-    match title=r#"^(Steam Settings|Settings|Properties|Sign in|Login|Steam Guard|Add a Game|Install|Uninstall|Warning|Error)"#
-    open-floating true
-    open-focused true
-    default-column-width { fixed 980; }
-    default-window-height { fixed 720; }
-    open-maximized false
-    open-maximized-to-edges false
-    open-fullscreen false
-}
-window-rule {
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
-window-rule {
-    match app-id="ghostty.separator"
-    default-column-width { proportion 0.1; }
-}
-window-rule {
-    match app-id="com.github.wwmm.easyeffects"
-    default-column-width { proportion 0.38; }
-    default-window-height { proportion 0.60; }
-    open-on-workspace "media"
-}
-window-rule {
-    match app-id="org.gnome.Fractal"
-    open-on-workspace "chat"
-}
-window-rule {
-    match app-id="im.riot.Riot"
-    open-on-workspace "chat"
-}
-window-rule {
-    match app-id="vesktop"
-    open-on-workspace "chat"
-}
-window-rule {
-    match app-id="BeeperTexts"
-    open-on-workspace "chat"
-}
-window-rule {
-    match app-id="mpv"
-    open-floating true
-}
-window-rule {
-    match app-id="Vial"
-    open-floating true
-    default-column-width { proportion 0.35; }
-    default-window-height { proportion 0.50; }
-}
-window-rule {
-    match app-id="org.gnome.Characters"
-    open-floating true
-}
-window-rule {
-    match app-id="blueman-manager"
-    default-column-width { proportion 0.10; }
-    default-window-height { proportion 0.25; }
-    default-floating-position x=8 y=12 relative-to="top-right"
-    open-floating true
-}
-window-rule {
-    match app-id="org.pulseaudio"
-    default-column-width { proportion 0.25; }
-    default-window-height { proportion 0.55; }
-    default-floating-position x=8 y=12 relative-to="top-right"
-    open-floating true
-}
-window-rule {
-    match app-id="dragon"
-    default-floating-position x=8 y=12 relative-to="top-left"
-    open-floating true
-}
-window-rule {
-    match app-id="nm-connection-editor"
-    default-column-width { proportion 0.15; }
-    default-window-height { proportion 0.25; }
-    open-floating true
-}
-window-rule {
-    match app-id=r#"^org\.gnome\.Nautilus$"# title="^(Open File|Save (As|Image)|Upload File|File Upload|Enter name of file to save to…)$"
-    open-floating true
-    default-column-width { proportion 0.38; }
-    default-window-height { proportion 0.52; }
-}
-window-rule {
-    match app-id=r#"^setroubleshoot$"# title=".*"
-    open-floating true
-    default-column-width { fixed 0; }
-    default-window-height { fixed 0; }
-}
-window-rule {
-    match app-id=r#"^wev$"# title=".*"
-    open-floating true
-    default-column-width { fixed 400; }
-    default-window-height { fixed 400; }
-    default-floating-position x=32 y=32 relative-to="bottom-right"
-}
-/-window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
-    block-out-from "screen-capture"
-}
-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
-layer-rule {
-    match namespace="^rofi$"
-    shadow {
-        on
-    }
-}
-
-// launch scripts
+// startup
 spawn-at-startup "~/.config/waybar/launch.sh"
 spawn-at-startup "swaybg -i $(colorweave wallpaper show loupe --format json | jq -r .path)"
 
-// key bindings
-binds {
-    Mod+D                 hotkey-overlay-title="Launcher" { spawn "rofi" "-modes" "drun,window" "-show" "drun"; }
-    Ctrl+Mod+Alt+L        hotkey-overlay-title="Lock session" { spawn "swaylock"; }
-    Mod+Shift+Slash       hotkey-overlay-title="Show hotkeys" { show-hotkey-overlay; }
-
-    // applications
-    Mod+Return            hotkey-overlay-title="Spawn Terminal" { spawn "nixGL" "ghostty" "+new-window"; }
-    Ctrl+Alt+Mod+Q        hotkey-overlay-title="Spawn Browser" { spawn "google-chrome"; }
-    Ctrl+Alt+Mod+Shift+Q  hotkey-overlay-title="Spawn Browser (incognito)" { spawn "google-chrome" "--incognito"; }
-    Ctrl+Alt+Mod+W        hotkey-overlay-title="Spawn File Manager" { spawn "nautilus"; }
-
-    // brightness
-    {{- if (not (eq .chezmoi.hostname "asahi")) }}
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "adjust-brightness" "+10" ; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "adjust-brightness" "-10" ; }
-    Alt+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "+5" ; }
-    Alt+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "-5" ; }
-    Shift+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "+20" ; }
-    Shift+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "-20" ; }
-    // mid
-    Ctrl+Alt+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "60" ; }
-    Ctrl+Alt+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "40" ; }
-    // high/low
-    Ctrl+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "80" ; }
-    Ctrl+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "20" ; }
-    // max/min
-    Ctrl+Shift+XF86MonBrightnessUp     allow-when-locked=true { spawn "adjust-brightness" "100" ; }
-    Ctrl+Shift+XF86MonBrightnessDown   allow-when-locked=true { spawn "adjust-brightness" "0" ; }
-    {{- else }}
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "set" "+2%" ; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "2%-" ; }
-    {{- end }}
-
-    // audio
-    XF86AudioRaiseVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
-    XF86AudioLowerVolume  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
-    XF86AudioMute         allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioPlay         allow-when-locked=true { spawn "playerctl" "play-pause"; }
-    XF86AudioPause        allow-when-locked=true { spawn "playerctl" "pause"; }
-    XF86AudioNext         allow-when-locked=true { spawn "playerctl" "next"; }
-    XF86AudioPrev         allow-when-locked=true { spawn "playerctl" "previous"; }
-
-    // window focus
-    Mod+Shift+Q hotkey-overlay-title=null { close-window; }
-    // Mod+O { toggle-window-rule-opacity; }
-
-    // column and window navigation
-    Mod+H     { focus-column-left; }
-    Mod+L     { focus-column-right; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
-    Mod+N          { focus-window-down-or-top; }
-    Mod+P          { focus-window-up-or-bottom; }
-    //
-    Mod+Grave { focus-window-previous; }
-    //
-    Mod+Shift+H     { move-column-left-or-to-monitor-left; }
-    Mod+Shift+L     { move-column-right-or-to-monitor-right; }
-    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
-    Mod+Shift+K     { move-window-up-or-to-workspace-up; }
-    Mod+Alt+J       { move-window-down; }
-    Mod+Alt+K       { move-window-up; }
-    Mod+Alt+Down    { move-window-to-workspace-down; }
-    Mod+Alt+Up      { move-window-to-workspace-up; }
-    Mod+Ctrl+Down   { move-column-to-workspace-down; }
-    Mod+Ctrl+Up     { move-column-to-workspace-up; }
-    Mod+W { toggle-column-tabbed-display; }
-    ////
-    // Mod+Left       { focus-column-first; }
-    // Mod+Right      { focus-column-last; }
-    // Mod+Shift+Left  { move-column-to-first; }
-    // Mod+Shift+Right { move-column-to-last; }
-    ////
-    // multi-monitor navigation
-    Mod+Alt+Left  { move-window-to-monitor-left; }
-    Mod+Alt+Right  { move-window-to-monitor-right; }
-    Mod+Ctrl+Left { move-column-to-monitor-left; }
-    Mod+Ctrl+Right { move-column-to-monitor-right; }
-    // workspace navigation
-    Mod+Up         { focus-workspace-up; }
-    Mod+Down       { focus-workspace-down; }
-    Mod+Left       { focus-monitor-left; }
-    Mod+Right       { focus-monitor-right; }
-    Mod+Shift+Up     { move-workspace-up; }
-    Mod+Shift+Down   { move-workspace-down; }
-    Mod+Shift+Left   { move-workspace-to-monitor-left; }
-    Mod+Shift+Right  { move-workspace-to-monitor-right; }
-    // workspace scrolling
-    Mod+WheelScrollDown      { focus-column-right; }
-    Mod+WheelScrollUp        { focus-column-left; }
-    Mod+Alt+Shift+WheelScrollDown { focus-window-down-or-top; }
-    Mod+Alt+Shift+WheelScrollUp   { focus-window-up-or-bottom; }
-    Mod+Shift+WheelScrollDown { move-column-right; }
-    Mod+Shift+WheelScrollUp   { move-column-left; }
-    Mod+Alt+WheelScrollDown        cooldown-ms=150 { focus-workspace-down; }
-    Mod+Alt+WheelScrollUp          cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
-    // numbered workspaces
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
-    Mod+Shift+1 { move-column-to-workspace 1; }
-    Mod+Shift+2 { move-column-to-workspace 2; }
-    Mod+Shift+3 { move-column-to-workspace 3; }
-    Mod+Shift+4 { move-column-to-workspace 4; }
-    Mod+Shift+5 { move-column-to-workspace 5; }
-    Mod+Shift+6 { move-column-to-workspace 6; }
-    Mod+Shift+7 { move-column-to-workspace 7; }
-    Mod+Shift+8 { move-column-to-workspace 8; }
-    Mod+Shift+9 { move-column-to-workspace 9; }
-    Mod+Alt+1 { move-window-to-workspace 1; }
-    Mod+Alt+2 { move-window-to-workspace 2; }
-    Mod+Alt+3 { move-window-to-workspace 3; }
-    Mod+Alt+4 { move-window-to-workspace 4; }
-    Mod+Alt+5 { move-window-to-workspace 5; }
-    Mod+Alt+6 { move-window-to-workspace 6; }
-    Mod+Alt+7 { move-window-to-workspace 7; }
-    Mod+Alt+8 { move-window-to-workspace 8; }
-    Mod+Alt+9 { move-window-to-workspace 9; }
-    Mod+Backslash { focus-workspace "scratchpad"; }
-    Mod+Ctrl+Backslash hotkey-overlay-title="Spawn Separator" {
-        spawn "env" "SKIP_TMUX=1" "ghostty" "--class=ghostty.separator";
-    }
-
-    // app/desktop switching
-    Mod+Space hotkey-overlay-title="Overview" { toggle-overview; }
-
-    // utility bindings
-    Mod+Shift+C hotkey-overlay-title="Clipboard History" { spawn "rofi" "-modi" "clipboard:~/.config/rofi/scripts/cliphist" "-show" "clipboard" "-show-icons"; }
-    // Mod+Shift+T hotkey-overlay-title="Text Snippets" { spawn "rofi" "-modi" "snippet:~/.config/rofi/scripts/snippets" "-show" "snippet"; }
-    Mod+Shift+V hotkey-overlay-title="Paste (wrapped)" { spawn "sh" "-c" "~/.go/bin/wrap paste md"; }
-    Mod+Ctrl+Shift+V hotkey-overlay-title="Paste (wrapped, XML)" { spawn "sh" "-c" "~/.go/bin/wrap paste xml"; }
-    Mod+Ctrl+G hotkey-overlay-title="Search" { spawn "sh" "-c" "rofi -modi 'search:~/.config/rofi/scripts/search,+clipboard:~/.config/rofi/scripts/search -c' -show search"; }
-    Mod+Ctrl+Shift+G hotkey-overlay-title="Search (+clipboard)" { spawn "sh" "-c" "rofi -modi '+clipboard:~/.config/rofi/scripts/search -c' -show +clipboard"; }
-    Mod+Ctrl+C hotkey-overlay-title="Count tokens" { spawn "sh" "-c" "notify-send \"$(count-tokens)\""; }
-    Mod+Ctrl+D hotkey-overlay-title="Copy recent context" { spawn "sh" "-c" "notify-send \"$(journal-payload)\""; }
-
-    // tiling
-    Mod+G             hotkey-overlay-title="Toggle Float" { toggle-window-floating; }
-    Mod+Shift+G       hotkey-overlay-title="Swap Focused Plane" { switch-focus-between-floating-and-tiling; }
-    Mod+F             hotkey-overlay-title="Full Width" { maximize-column; }
-    Mod+Ctrl+F        hotkey-overlay-title="Fullscreen" { fullscreen-window; }
-    Mod+Shift+F       hotkey-overlay-title="Maximize to Edges" { maximize-window-to-edges; }
-    Mod+Alt+F         hotkey-overlay-title="Fullscreen (windowed)" { toggle-windowed-fullscreen; }
-    Mod+C hotkey-overlay-title="Center Column" { center-column; }
-    Mod+V hotkey-overlay-title="Center Visible" { center-visible-columns; }
-    Mod+MouseMiddle { center-column; }
-    Mod+Alt+MouseMiddle { toggle-overview; }
-    // columns
-    Mod+Alt+H  hotkey-overlay-title=null { consume-or-expel-window-left; }
-    Mod+Alt+L  hotkey-overlay-title=null { consume-or-expel-window-right; }
-    Mod+Comma  hotkey-overlay-title=null { consume-window-into-column; }
-    Mod+Period hotkey-overlay-title=null { expel-window-from-column; }
-    // sizing
-    Mod+BracketLeft { set-window-height "-10%"; }
-    Mod+BracketRight { set-window-height "+10%"; }
-    Mod+Shift+BracketLeft { set-column-width "-5%"; }
-    Mod+Shift+BracketRight { set-column-width "+5%"; }
-    Mod+Minus hotkey-overlay-title="Cycle Height" { switch-preset-window-height; }
-    Mod+Shift+Minus hotkey-overlay-title="Reset Height" { reset-window-height; }
-    Mod+KP_Equal hotkey-overlay-title="Expand to Available Width" { expand-column-to-available-width; }
-    Mod+Shift+Equal hotkey-overlay-title="Cycle Width" { switch-preset-column-width; }
-
-    // screenshots
-    Print       hotkey-overlay-title=null { screenshot; }
-    Ctrl+Print  { screenshot-screen; }
-    Alt+Print   { screenshot-window; }
-    Mod+Ctrl+Shift+S { screenshot show-pointer=true; }
-    Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { screenshot show-pointer=false; }
-    Mod+Shift+W hotkey-overlay-title="Screenshot: Window" { screenshot-window; }
-    Mod+Shift+Alt+S hotkey-overlay-title="Screenshot: Display" { screenshot-screen; }
-
-    // recording
-    Mod+Shift+R hotkey-overlay-title="Record Region" { spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh"; }
-    Mod+Alt+R hotkey-overlay-title="Record (System Audio)" {
-        spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh --system-audio";
-    }
-    Mod+Ctrl+R hotkey-overlay-title="Record (Mic Audio)" {
-        spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh --audio";
-    }
-    Mod+Shift+Ctrl+R hotkey-overlay-title="Record (Mixed Audio)" {
-        spawn "sh" "-c" "~/.config/niri/scripts/record-screen.sh --mixed-audio";
-    }
-
-    // voice
-    Mod+T hotkey-overlay-title="ostt" {
-      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh";
-    }
-    Mod+Alt+T hotkey-overlay-title="ostt (type)" {
-      spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh type";
-    }
-    Mod+Shift+T hotkey-overlay-title="ostt (cancel)" {
-      spawn "sh" "-c" "~/.local/bin/ostt-remote.sh cancel";
-    }
-
-    // color picker
-    Mod+Alt+P { spawn "wl-color-picker" "-c" "--notify" "--delay" "0.1"; }
-
-    // screencast
-    Mod+F1 { set-dynamic-cast-window; }
-    Mod+F2 { set-dynamic-cast-monitor; }
-    Mod+F4 { clear-dynamic-cast-target; }
-
-    // session control
-    Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
-    Mod+Shift+P { power-off-monitors; }
-    Mod+F12 { toggle-keyboard-shortcuts-inhibit; }
-}
-
+// misc
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 clipboard {
     disable-primary
 }
+
 hotkey-overlay {
     skip-at-startup
 }

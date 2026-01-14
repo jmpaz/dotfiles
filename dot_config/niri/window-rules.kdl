@@ -1,0 +1,186 @@
+// Window and layer rules
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+
+window-rule {
+    match is-window-cast-target=true
+    border {
+    }
+}
+
+window-rule {
+    match app-id=r#"^com\.local\.ostt$"#
+    open-floating true
+    open-focused false
+    default-column-width { proportion 0.18; }
+    default-window-height { fixed 8; }
+    min-height 8
+    max-height 80
+    baba-is-float true
+    default-floating-position x=0 y=32 relative-to="bottom"
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+    opacity 1.0
+    default-floating-position x=32 y=32 relative-to="bottom-left"
+}
+
+window-rule {
+    match app-id=r#"(?i)^steam$"#
+    open-floating false
+    open-maximized true
+    open-maximized-to-edges true
+}
+
+window-rule {
+    match app-id=r#"(?i)^(steam|steamwebhelper)$"#
+    match title=r#"^Friends List$"#
+    open-floating true
+    open-focused true
+    default-column-width { fixed 420; }
+    default-window-height { fixed 820; }
+    default-floating-position x=24 y=24 relative-to="top-right"
+    open-maximized false
+    open-maximized-to-edges false
+    open-fullscreen false
+}
+
+window-rule {
+    match app-id=r#"(?i)^(steam|steamwebhelper)$"#
+    match title=r#"^(Steam Settings|Settings|Properties|Sign in|Login|Steam Guard|Add a Game|Install|Uninstall|Warning|Error)"#
+    open-floating true
+    open-focused true
+    default-column-width { fixed 980; }
+    default-window-height { fixed 720; }
+    open-maximized false
+    open-maximized-to-edges false
+    open-fullscreen false
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+window-rule {
+    match app-id="ghostty.separator"
+    default-column-width { proportion 0.1; }
+}
+
+window-rule {
+    match app-id="com.github.wwmm.easyeffects"
+    default-column-width { proportion 0.38; }
+    default-window-height { proportion 0.60; }
+    open-on-workspace "media"
+}
+
+window-rule {
+    match app-id="org.gnome.Fractal"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="im.riot.Riot"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="vesktop"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="BeeperTexts"
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="mpv"
+    open-floating true
+}
+
+window-rule {
+    match app-id="Vial"
+    open-floating true
+    default-column-width { proportion 0.35; }
+    default-window-height { proportion 0.50; }
+}
+
+window-rule {
+    match app-id="org.gnome.Characters"
+    open-floating true
+}
+
+window-rule {
+    match app-id="blueman-manager"
+    default-column-width { proportion 0.10; }
+    default-window-height { proportion 0.25; }
+    default-floating-position x=8 y=12 relative-to="top-right"
+    open-floating true
+}
+
+window-rule {
+    match app-id="org.pulseaudio"
+    default-column-width { proportion 0.25; }
+    default-window-height { proportion 0.55; }
+    default-floating-position x=8 y=12 relative-to="top-right"
+    open-floating true
+}
+
+window-rule {
+    match app-id="dragon"
+    default-floating-position x=8 y=12 relative-to="top-left"
+    open-floating true
+}
+
+window-rule {
+    match app-id="nm-connection-editor"
+    default-column-width { proportion 0.15; }
+    default-window-height { proportion 0.25; }
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.gnome\.Nautilus$"# title="^(Open File|Save (As|Image)|Upload File|File Upload|Enter name of file to save to…)$"
+    open-floating true
+    default-column-width { proportion 0.38; }
+    default-window-height { proportion 0.52; }
+}
+
+window-rule {
+    match app-id=r#"^setroubleshoot$"# title=".*"
+    open-floating true
+    default-column-width { fixed 0; }
+    default-window-height { fixed 0; }
+}
+
+window-rule {
+    match app-id=r#"^wev$"# title=".*"
+    open-floating true
+    default-column-width { fixed 400; }
+    default-window-height { fixed 400; }
+    default-floating-position x=32 y=32 relative-to="bottom-right"
+}
+
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+    block-out-from "screen-capture"
+}
+
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+layer-rule {
+    match namespace="^rofi$"
+    shadow {
+        on
+    }
+}

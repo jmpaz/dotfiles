@@ -1,0 +1,39 @@
+// Animations/gestures/overview
+overview {
+    zoom 0.7
+    workspace-shadow { off; }
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+    dnd-edge-workspace-switch {
+        trigger-height 100
+        max-speed 2000
+    }
+}
+
+animations {
+    workspace-switch {
+        spring damping-ratio=0.95 stiffness=1200 epsilon=0.0001
+    }
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
+    }
+    slowdown 1.0
+}
+
+recent-windows {
+    open-delay-ms 80
+    debounce-ms 200
+    highlight {
+        padding 20
+    }
+    binds {
+        Alt+Tab         { next-window; }
+        Alt+Shift+Tab   { previous-window; }
+        Alt+grave       { next-window     filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+    }
+}
