@@ -9,4 +9,34 @@ layout {
         active-color "{{color4 | saturate(-0.2)}}"
         inactive-color "{{color8}}"
     }
+    tab-indicator {
+        active-color "{{color4 | saturate(-0.25)}}"
+        inactive-color "{{color8 | saturate(-0.2)}}"
+        urgent-color "{{color3}}"
+    }
+    insert-hint {
+        gradient from="{{color4 | blend(color0)}}80" to="{{color6 | blend(color0)}}80" angle=45
+    }
+}
+
+window-rule {
+    match is-urgent=true
+    border {
+        active-gradient from="{{color3}}" to="{{color11}}" angle=45
+        inactive-color "{{color3 | saturate(-0.3)}}"
+    }
+}
+
+window-rule {
+    match is-floating=true
+    border {
+        active-gradient from="{{color4}}" to="{{color5}}" angle=135
+        inactive-color "{{color8 | blend(color0) | blend(color0)}}"
+    }
+    shadow {
+        on
+        softness 25
+        spread 3
+        color "{{color0}}70"
+    }
 }

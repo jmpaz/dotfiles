@@ -1,6 +1,6 @@
 // Animations/gestures/overview
 overview {
-    zoom 0.7
+    zoom 0.85
     workspace-shadow { off; }
 }
 
@@ -16,11 +16,30 @@ gestures {
 
 animations {
     workspace-switch {
-        spring damping-ratio=0.95 stiffness=1200 epsilon=0.0001
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
     }
     horizontal-view-movement {
-        spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
     }
+    window-open {
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
+    }
+    window-close {
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=1.0 stiffness=3000 epsilon=0.0001
+    }
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=1500 epsilon=0.0001
+    }
+
     slowdown 1.0
 }
 

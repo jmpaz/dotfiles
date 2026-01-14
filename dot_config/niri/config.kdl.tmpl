@@ -4,7 +4,7 @@ include "input.kdl"
 include "animations.kdl"
 include "window-rules.kdl"
 include "binds.kdl"
-include optional=true "colors.kdl"
+include "colors.kdl"
 
 workspace "focus"
 workspace "media"
@@ -58,12 +58,15 @@ layout {
         position "top"
         hide-when-single-tab
         gaps-between-tabs 3
-        length total-proportion=0.4
+        length total-proportion=0.6
+        width 4
+        gap 4
+        corner-radius 3
     }
     shadow {
         on
-        spread -1
-        softness 10
+        softness 6
+        spread -3
         draw-behind-window true
     }
     focus-ring {
