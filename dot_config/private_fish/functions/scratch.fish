@@ -1,26 +1,24 @@
-# scratch - create/enter directories in ~/scratch
-# format: MM-DD@HH.MM
+# scratch - create/enter directories in ~/scratch/YYYY/
+# format: YYYY/MM-DD@HH-MM-SS
 # usage: scratch [-n|--new] [-l|--latest] [-r|--recent N]
-# no args - enters today's most latest dir, or prompts to create one
-# -n: creates new scratch dir
-# -l: enters most recent dir
+#        scratch note [-n|--new] [-l|--latest]
+# no args - enters today's most recent dir, or prompts to create one
+# -n: creates new scratch dir silently
+# -l: enters most recent dir globally
 # -r N: enters Nth most recent dir (0-indexed)
 
 function scratch
     set -l base_dir ~/scratch
-    set -l current_date (date '+%m-%d')
-    set -l current_time (date '+%H-%M-%S')
-    set -l new_dir "$base_dir/$current_date@$current_time"
 
     mkdir -p $base_dir
 
-    # Handle subcommands
     if test (count $argv) -gt 0
         switch $argv[1]
             case "note"
                 __scratch_handle_note $argv[2..-1]
                 return $status
             case "--new" "-n"
+                set -l new_dir (__scratch_new_dir_path)
                 mkdir -p $new_dir
                 cd $new_dir
                 return
@@ -29,10 +27,9 @@ function scratch
                     echo "Error: --latest doesn't accept additional arguments"
                     return 1
                 end
-                set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' -not -name 'archive' 2>/dev/null)
-                if test (count $dirs) -gt 0
-                    set -l latest_dir (string join \n $dirs | sort -r | head -n1)
-                    cd $latest_dir
+                set -l latest (__scratch_find_all | head -n1)
+                if test -n "$latest"
+                    cd $latest
                     return
                 end
                 echo "No scratch directories found"
@@ -46,93 +43,113 @@ function scratch
                     echo "Error: --recent argument must be a number"
                     return 1
                 end
-                set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' -not -name 'archive' 2>/dev/null)
-                if test (count $dirs) -gt 0
-                    set -l target_dir (string join \n $dirs | sort -r | sed -n (math $argv[2] + 1)"p")
-                    if test -n "$target_dir"
-                        cd $target_dir
-                        return
-                    end
-                    echo "No scratch directory at index $argv[2]"
-                    return 1
+                set -l target (__scratch_find_all | sed -n (math $argv[2] + 1)"p")
+                if test -n "$target"
+                    cd $target
+                    return
                 end
-                echo "No scratch directories found"
+                echo "No scratch directory at index $argv[2]"
                 return 1
         end
     end
 
-    __scratch_ensure_today_dir
+    __scratch_ensure_today_dir --prompt
+end
+
+function __scratch_new_dir_path
+    set -l base_dir ~/scratch
+    set -l year (date '+%Y')
+    set -l date (date '+%m-%d')
+    set -l time (date '+%H-%M-%S')
+    echo "$base_dir/$year/$date@$time"
+end
+
+function __scratch_find_all
+    # Returns all scratch dirs sorted newest-first (globally across years)
+    # Year prefix ensures lexicographic sort equals chronological sort
+    find ~/scratch -mindepth 2 -maxdepth 2 -type d -name '*@*' \
+        -not -path '*/.git/*' \
+        -not -path '*/archive/*' 2>/dev/null | sort -r
+end
+
+function __scratch_find_today
+    # Returns today's most recent dir if it exists
+    set -l base_dir ~/scratch
+    set -l year (date '+%Y')
+    set -l date (date '+%m-%d')
+    set -l year_dir "$base_dir/$year"
+
+    if test -d $year_dir
+        find $year_dir -maxdepth 1 -type d -name "$date@*" 2>/dev/null | sort -r | head -n1
+    end
 end
 
 function __scratch_ensure_today_dir
-    set -l base_dir ~/scratch
-    set -l current_date (date '+%m-%d')
-    set -l current_time (date '+%H-%M-%S')
-    set -l new_dir "$base_dir/$current_date@$current_time"
-
-    mkdir -p $base_dir
-
-    set -l dirs (find $base_dir -mindepth 1 -maxdepth 1 -type d -not -name '.git' -not -name 'archive' 2>/dev/null)
-    if test (count $dirs) -gt 0
-        set -l latest_dir (string join \n $dirs | sort -r | head -n1)
-        set -l latest_date (string match -r '\d{2}-\d{2}' $latest_dir)
-
-        if test "$latest_date" = "$current_date"
-            cd $latest_dir
-            return 0
+    set -l prompt_mode 0
+    for arg in $argv
+        switch $arg
+            case "--prompt"
+                set prompt_mode 1
         end
     end
 
-    read -l -P "Create new scratch directory for today? [Y/n] " confirm
-    if test $status -ne 0
-        echo "Aborted."
-        return 1
+    set -l today_dir (__scratch_find_today)
+
+    if test -n "$today_dir"
+        cd $today_dir
+        return 0
     end
 
-    if test -z "$confirm" -o "$confirm" = "y" -o "$confirm" = "Y"
-        mkdir -p $new_dir
-        cd $new_dir
-        return 0
+    if test $prompt_mode -eq 1
+        read -l -P "Create new scratch directory for today? [Y/n] " confirm
+        if test $status -ne 0
+            echo "Aborted."
+            return 1
+        end
+        if test -n "$confirm" -a "$confirm" != "y" -a "$confirm" != "Y"
+            echo "Aborted."
+            return 1
+        end
+    end
+
+    set -l new_dir (__scratch_new_dir_path)
+    mkdir -p $new_dir
+    cd $new_dir
+    return 0
+end
+
+function __scratch_display_path -a full_path
+    set -l current_year (date '+%Y')
+    set -l path_year (string match -r '/(\d{4})/' $full_path | tail -n1)
+    set -l leaf (basename $full_path)
+
+    if test "$path_year" = "$current_year"
+        echo $leaf
     else
-        echo "Aborted."
-        return 1
+        echo "$path_year/$leaf"
     end
 end
 
-
 function __scratch_handle_note
     set -l force_new 0
-    set -l use_latest 0
 
-    # Parse flags for note
     for arg in $argv
         switch $arg
             case "--new" "-n"
                 set force_new 1
             case "--latest" "-l"
-                set use_latest 1
+                # -l is default behavior, just ignore
         end
     end
 
-    if test $force_new -eq 1 -a $use_latest -eq 1
-        echo "Error: --new and --latest are mutually exclusive"
-        return 1
-    end
-
-    # Check if we're in a scratch directory. If not, try to ensure one.
+    # Check if we're in a scratch directory
     if not string match -q -r '\d{2}-\d{2}@' $PWD
+        # Not in a scratch dir - silently ensure one exists
         __scratch_ensure_today_dir
         if test $status -ne 0
-            # User opted not to create a new directory
             echo "Cannot create/open notes without a scratch directory."
             return 1
         end
-    end
-
-    # Ensure notes directory is properly structured
-    if test -d "notes/notes"
-        mv notes/notes/* notes/ 2>/dev/null
-        rm -rf notes/notes
     end
 
     if not test -d "notes"
@@ -146,7 +163,7 @@ function __scratch_handle_note
         return
     end
 
-    # Default or --latest: open most recent note if it exists
+    # Default: open most recent note if it exists
     set -l latest_note (find notes/ -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort -r | head -n1)
     if test -n "$latest_note"
         $EDITOR $latest_note
@@ -162,4 +179,3 @@ function __scratch_handle_note
         return 1
     end
 end
-
