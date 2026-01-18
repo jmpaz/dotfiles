@@ -138,6 +138,7 @@ binds {
     Mod+Ctrl+Shift+G hotkey-overlay-title="Search (+clipboard)" { spawn "sh" "-c" "rofi -modi '+clipboard:~/.config/rofi/scripts/search -c' -show +clipboard"; }
     Mod+Ctrl+C hotkey-overlay-title="Count tokens" { spawn "sh" "-c" "notify-send \"$(count-tokens)\""; }
     Mod+Ctrl+D hotkey-overlay-title="Copy recent context" { spawn "sh" "-c" "notify-send \"$(journal-payload)\""; }
+    Mod+Ctrl+P hotkey-overlay-title="Print Clipboard" { spawn "fish" "-c" "rp_clipboard"; }
 
     // tiling
     Mod+G             hotkey-overlay-title="Toggle Float" { toggle-window-floating; }
