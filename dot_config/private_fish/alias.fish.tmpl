@@ -1,72 +1,59 @@
 # vim: ft=fish
 
-alias tree='eza --tree'
-alias shcopy='shcopy --term tmux'
-
-alias lm-studio='lms'
-abbr -a lms 'lm-studio'
-
-alias f='yazi'
-alias y='yazi'
-alias lg='lazygit'
-
 abbr -a n 'nvim'
 abbr -a c 'claude'
+alias nvim-scratch="nvim --cmd 'let g:no_startscreen = 1' --cmd 'set wrap'"
 
-abbr -a cn 'cd ~/notes'
+alias tree='eza --tree'
+abbr -a f 'yazi'
+abbr -a y 'yazi'
 
-alias zj='zellij'
+abbr -a lg 'lazygit'
+alias print-staged='git ls-files --stage | awk "{print \$4}" | grep -v -e "__init__.py" -e "requirements.txt" -e ".gitignore"'
+
+abbr -a zj 'zellij'
 abbr -a zjr 'zellij_refresh'
-
-abbr -a cw 'colorweave'
-abbr -a cws 'colorweave scheme'
-abbr -a cww 'colorweave wallpaper'
-
 alias kitty-reload='kill -SIGUSR1 (pgrep kitty)'
 
-alias cz='chezmoi'
+abbr -a cz 'chezmoi'
 abbr -a cze 'chezmoi edit'
 abbr -a czw 'chezmoi edit --watch'
 abbr -a cza 'chezmoi apply'
 alias cz-applytheme 'chezmoi apply --include scripts && chezmoi apply --include templates {{- if and (eq .displayServer "wayland") (ne (env "XDG_CURRENT_DESKTOP") "KDE") }} && ~/.config/river/modules/colors.sh && ~/.config/waybar/launch.sh {{- end }} && tmux source-file ~/.config/tmux/tmux.conf'
 
-alias cpimg='copy -t image/png -i'
+abbr -a cw 'colorweave'
+abbr -a cws 'colorweave scheme'
+abbr -a cww 'colorweave wallpaper'
 
 abbr -a s 'scratch'
 abbr -a sl 'scratch --latest'
-
 abbr -a sn 'scratch note'
 abbr -a snn 'scratch note --new'
 abbr -a snl 'scratch note --latest'
 
-abbr -a uvr 'uv run ~/scripts/'
-
-# Warn when about to pip install globally
-alias pip='pip_wrapper'
-
-# List files being tracked by git
-alias print-staged='git ls-files --stage | awk "{print \$4}" | grep -v -e "__init__.py" -e "requirements.txt" -e ".gitignore"'
-
-# receipt
-abbr -a rp 'receipt-print'
-abbr -a rw 'receipt-weave'
-
-# contextualize
 abbr -a cx 'contextualize'
 abbr -a cxxc 'collect_context'
-# cat
 abbr -a cxc 'contextualize cat'
 abbr -a cxcc 'contextualize --copy cat'
 abbr -a cxcp 'contextualize -p "" -p "" --wrap md --copy cat'
-# shell
 abbr -a cxs 'contextualize shell'
 abbr -a cxsc 'contextualize --copy shell'
 abbr -a cxsp 'contextualize -p "" -p "" --wrap md --copy shell'
-# map
 abbr -a cxm 'contextualize map'
 abbr -a cxmc 'contextualize --copy map'
-# fetch
 abbr -a cxf 'contextualize fetch'
 abbr -a cxfc 'contextualize --copy fetch'
 
-alias nvim-scratch="nvim --cmd 'let g:no_startscreen = 1' --cmd 'set wrap'"
+abbr -a rp 'receipt-print'
+abbr -a rw 'receipt-weave'
+
+alias cpimg='copy -t image/png -i'
+alias shcopy='shcopy --term tmux'
+
+alias pip='pip_wrapper'
+abbr -a uvr 'uv run ~/scripts/'
+
+alias lm-studio='lms'
+abbr -a lms 'lm-studio'
+
+abbr -a cn 'cd ~/notes'

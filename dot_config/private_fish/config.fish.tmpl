@@ -74,45 +74,6 @@ if type -q fnm
 end
 
 if status is-interactive
-
-    function __fish_apply_vi_cursor -a mode
-        switch $mode
-            case default
-                printf '\e[2 q'
-            case insert
-                printf '\e[6 q'
-            case replace_one
-                printf '\e[4 q'
-            case visual
-                printf '\e[2 q'
-        end
-    end
-
-    function __fish_vi_cursor_listener --on-variable fish_bind_mode
-        __fish_apply_vi_cursor $fish_bind_mode
-    end
-
-    function __fish_vi_cursor_prompt --on-event fish_prompt
-        if set -q fish_bind_mode
-            __fish_apply_vi_cursor $fish_bind_mode
-        else
-            __fish_apply_vi_cursor insert
-        end
-    end
-
-    if set -q fish_bind_mode
-        __fish_apply_vi_cursor $fish_bind_mode
-    else
-        __fish_apply_vi_cursor insert
-    end
-
-    if test "$USE_ZELLIJ"
-        {{ if eq .displayServer "wayland" -}}
-        sleep 0.05 # Workaround for zellij-org/zellij#2126
-        {{ end -}}
-        eval (zellij setup --generate-auto-start fish | string collect)
-    end
-
     if not set -q SSH_TTY
         if test -z "$SKIP_TMUX"
             if not set -q TMUX
@@ -171,19 +132,11 @@ set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
 # Prompt
-{{ if eq .chezmoi.os "linux" }}
 if test "$MINIMAL_PROMPT"
     set -gx STARSHIP_CONFIG $HOME/.config/starship/starship-minimal.toml
 else
     set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
 end
-{{ else if eq .chezmoi.os "darwin" }}
-if test "$MINIMAL_PROMPT"
-    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship-minimal.toml
-else
-    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
-end
-{{ end }}
 starship init fish | source
 
 export DIRENV_LOG_FORMAT="$(printf "\033[34mdirenv: %%s")"
