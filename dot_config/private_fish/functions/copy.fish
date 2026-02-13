@@ -1,13 +1,7 @@
 function copy
-    set -l backend
-    if command -q pbcopy
-        set backend pbcopy
-    else if command -q wl-copy
-        set backend wl-copy
-    else if command -q xclip
-        set backend xclip -selection clipboard
-    else
-        return 1
+    set -l in_ssh 0
+    if set -q SSH_TTY; or set -q SSH_CONNECTION; or set -q SSH_CLIENT
+        set in_ssh 1
     end
 
     set -l use_osc52 1
@@ -22,9 +16,21 @@ function copy
         end
     end
 
-    set -l in_ssh 0
-    if set -q SSH_TTY; or set -q SSH_CONNECTION; or set -q SSH_CLIENT
-        set in_ssh 1
+    set -l backend
+    if command -q pbcopy
+        set backend pbcopy
+    else if test $in_ssh -eq 1
+        if command -q xclip
+            set backend xclip -selection clipboard
+        else if command -q tmux
+            set backend tmux load-buffer -
+        end
+    else if command -q wl-copy
+        set backend wl-copy
+    else if command -q xclip
+        set backend xclip -selection clipboard
+    else if command -q tmux
+        set backend tmux load-buffer -
     end
 
     set -l shcopy_args
@@ -33,8 +39,14 @@ function copy
     end
 
     set -l try_osc52 0
-    if test $use_osc52 -eq 1; and test $in_ssh -eq 1; and command -q shcopy
-        set try_osc52 1
+    if test $in_ssh -eq 1; and command -q shcopy
+        if test $use_osc52 -eq 1
+            set try_osc52 1
+        end
+    end
+
+    if test -z "$backend"; and test $in_ssh -eq 0
+        return 1
     end
 
     if not test -t 0
@@ -42,18 +54,35 @@ function copy
         cat > $tmp
 
         if test $try_osc52 -eq 1
-            command shcopy $shcopy_args $argv < $tmp >/dev/null 2>/dev/null
+            command shcopy $shcopy_args $argv < $tmp
+            if test $status -eq 0
+                rm -f $tmp
+                return 0
+            end
         end
 
-        command $backend $argv < $tmp
-        set -l status_code $status
+        if test -n "$backend"
+            command $backend $argv < $tmp
+            set -l status_code $status
+            rm -f $tmp
+            return $status_code
+        end
+
         rm -f $tmp
-        return $status_code
+        return 1
     end
 
     if test $try_osc52 -eq 1
-        command shcopy $shcopy_args $argv >/dev/null 2>/dev/null
+        command shcopy $shcopy_args $argv
+        if test $status -eq 0
+            return 0
+        end
     end
 
-    command $backend $argv
+    if test -n "$backend"
+        command $backend $argv
+        return $status
+    end
+
+    return 1
 end
