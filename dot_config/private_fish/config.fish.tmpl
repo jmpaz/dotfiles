@@ -94,13 +94,6 @@ if status is-interactive
 end
 
 
-# pyenv
-{{ if eq .chezmoi.os "darwin" }}
-set PYENV_ROOT $HOME/.pyenv
-fish_add_path $PYENV_ROOT/bin
-pyenv init - | source
-{{ end }}
-
 set -gx EDITOR nvim
 set -gx ZK_NOTEBOOK_DIR ~/notes
 set -l _lazygit_colors "$HOME/.config/lazygit/colors.yml"
