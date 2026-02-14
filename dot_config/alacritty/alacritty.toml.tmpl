@@ -32,6 +32,6 @@ bindings = [
 
 {{ if eq .chezmoi.os "darwin" }}
 [shell]
-program = "/opt/homebrew/bin/fish"
+program = "/usr/local/bin/fish"
 args = ["-c", "env USE_ZELLIJ=1 SKIP_TMUX=1 fish"]
 {{ end }}

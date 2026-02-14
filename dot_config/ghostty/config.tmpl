@@ -1,6 +1,7 @@
 # vim: ft=conf
+# vim: ft=conf
 {{ if eq .chezmoi.os "darwin" }}
-command = /opt/homebrew/bin/fish -c "exec fish"
+command = /usr/local/bin/fish -c "exec fish"
 {{ else }}
 command = /usr/bin/fish -c "exec fish"
 {{- end }}
