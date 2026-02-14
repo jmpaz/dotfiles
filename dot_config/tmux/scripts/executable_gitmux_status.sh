@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 pane_path=$1
+session_activity=$2
 
 fallback() {
     printf '%s' '#S'
@@ -13,6 +14,57 @@ fi
 
 if [ -z "$pane_path" ] || [ ! -d "$pane_path" ]; then
     pane_path="."
+fi
+
+cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/tmux/gitmux-status"
+cache_key=$(printf '%s' "$pane_path" | sed 's/[^A-Za-z0-9._-]/_/g')
+cache_file="$cache_root/$cache_key"
+
+read_cached_output() {
+    [ -f "$cache_file" ] || return 1
+    cat "$cache_file"
+}
+
+write_cached_output() {
+    local value=$1
+    local tmp_file
+    mkdir -p "$cache_root" 2>/dev/null || return 0
+    tmp_file=$(mktemp "$cache_root/tmp.XXXXXX" 2>/dev/null) || return 0
+    printf '%s' "$value" > "$tmp_file"
+    mv "$tmp_file" "$cache_file" 2>/dev/null || true
+}
+
+session_is_idle() {
+    local idle_after
+
+    idle_after=${GITMUX_IDLE_AFTER:-}
+    if [ -z "$idle_after" ] && command -v tmux >/dev/null 2>&1; then
+        idle_after=$(tmux show-option -gqv @gitmux_idle_after 2>/dev/null || true)
+    fi
+    if ! [[ $idle_after =~ ^[0-9]+$ ]]; then
+        idle_after=120
+    fi
+    if (( idle_after <= 0 )); then
+        return 1
+    fi
+    if ! [[ ${session_activity:-} =~ ^[0-9]+$ ]]; then
+        return 1
+    fi
+
+    local now_epoch
+    now_epoch=$(date +%s 2>/dev/null || printf '%s' 0)
+    if ! [[ $now_epoch =~ ^[0-9]+$ ]]; then
+        return 1
+    fi
+
+    (( now_epoch - session_activity >= idle_after ))
+}
+
+if session_is_idle; then
+    if cached_output=$(read_cached_output); then
+        printf '%s' "$cached_output"
+        exit 0
+    fi
 fi
 
 TTOK_CMD=""
@@ -273,9 +325,11 @@ if (( unstaged_total > 0 )); then
     segments+=("$(format_segment "$unstaged_net" "󰇂")")
 fi
 
+final_output=$output
 if (( ${#segments[@]} > 0 )); then
-    printf '%s%s%s#[fg=default,bg=default]' \
-        "$output" "$SEPARATOR" "$(IFS=' '; printf '%s' "${segments[*]}")"
-else
-    printf '%s' "$output"
+    final_output=$(printf '%s%s%s#[fg=default,bg=default]' \
+        "$output" "$SEPARATOR" "$(IFS=' '; printf '%s' "${segments[*]}")")
 fi
+
+write_cached_output "$final_output"
+printf '%s' "$final_output"
