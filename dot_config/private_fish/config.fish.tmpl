@@ -25,6 +25,11 @@ function fish_user_key_bindings
     # backspace to go back a word
     bind -M default \b backward-word
     bind -M default \x7f backward-word
+
+    # fg from empty prompt
+    bind -M default \cz resume_if_empty
+    bind -M insert \cz resume_if_empty
+    bind -M visual \cz resume_if_empty
 end
 
 fish_add_path -P ~/.lmstudio/bin
