@@ -1,3 +1,5 @@
+# vim: ft=tmux
+
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
@@ -10,8 +12,10 @@ set -g @override_copy_command "fish -c 'copy'"
 
 set -g @plugin 'jabirali/tmux-normalmode'
 
+{{ if eq .chezmoi.os "darwin" }}
 set-option -g default-shell '/usr/local/bin/fish'
 set-option -g default-command ''
+{{ end }}
 
 set -g @resurrect-dir '~/.local/share/tmux/resurrect'
 set -g @resurrect-save 'S'
@@ -33,6 +37,7 @@ set-option -g status-keys vi
 set-option -g mode-keys vi
 set-option -g mouse on
 set-option -g xterm-keys on
+set -g prompt-cursor-style bar
 
 set -g @vim_navigator_mapping_left 'M-h'
 set -g @vim_navigator_mapping_right 'M-l'
@@ -102,9 +107,9 @@ bind -n M-Tab display-popup -E "tms windows"
 bind r run-shell 'tms refresh'
 unbind M-r
 bind M-r display-menu -T "Rename" \
-    "Pane    | #{pane_title}" p "command-prompt -I '#{pane_title}' -p 'Rename pane to:' \"select-pane -t #{pane_id} -T '%%'\"" \
-    "Window  | #{window_index}:#{window_name}" w "command-prompt -I '#W' -p 'Rename window to:' \"rename-window -t #{window_id} '%%'\"" \
-    "Session | #{session_name}" s "command-prompt -I '#S' -p 'Rename session to:' \"rename-session -t #{session_id} '%%'\"" \
+    "Pane    | #{pane_title}" p "command-prompt -l -I '#{pane_title}' -p 'Rename pane to:' \"select-pane -t #{pane_id} -T '%%'\"" \
+    "Window  | #{window_index}:#{window_name}" w "command-prompt -l -I '#W' -p 'Rename window to:' \"rename-window -t #{window_id} '%%'\"" \
+    "Session | #{session_name}" s "command-prompt -l -I '#S' -p 'Rename session to:' \"rename-session -t #{session_id} '%%'\"" \
     "" \
     "Cancel" q ""
 
@@ -117,10 +122,10 @@ bind M-R display-menu -T "Reset name" \
     "Cancel" q ""
 
 unbind ,
-bind , "command-prompt -I '#W' -p 'Rename window to:' \"rename-window -t #{window_id} '%%'\""
+bind , "command-prompt -l -I '#W' -p 'Rename window to:' \"rename-window -t #{window_id} '%%'\""
 
 unbind $
-bind $ "command-prompt -I '#S' -p 'Rename session to:' \"rename-session -t #{session_id} '%%'\""
+bind $ "command-prompt -l -I '#S' -p 'Rename session to:' \"rename-session -t #{session_id} '%%'\""
 
 
 bind -n M-Left previous-window
