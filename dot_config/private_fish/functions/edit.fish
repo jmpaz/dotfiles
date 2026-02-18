@@ -48,7 +48,7 @@ function edit
     # The empty search pattern ('') lists every file with line and column numbers.
     set selection (rg --line-number --column --no-heading --color=always '' $dirs | \
                     fzf --ansi --delimiter ':' \
-                        --preview 'bat --highlight-line {2} {1}' \
+                        --preview 'bat --theme=ansi --color=always --paging=never --highlight-line {2} {1}' \
                         --preview-window '+{2}-/2' $fzf_args)
 
     # If no selection is made (fzf was cancelled), exit.
@@ -68,4 +68,3 @@ function edit
         nvim "$file" "+$line"
     end
 end
-

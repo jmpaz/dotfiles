@@ -36,7 +36,7 @@ function ff --description "Fuzzy find files"
 
     set -l preview
     if type -q bat
-        set preview 'bat --style=numbers --color=always --line-range :300 -- {}'
+        set preview 'bat --theme=ansi --style=numbers --color=always --paging=never --line-range :300 -- {}'
     else
         set preview 'sed -n "1,200p" {}'
     end
