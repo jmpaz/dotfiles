@@ -219,3 +219,4 @@ set -g status-format[0] '#[fg=default,bg=default] '
 
 run '~/.config/tmux/plugins/tpm/tpm'
 bind -n M-g run-shell 'cmd=""; if command -v ttok-rs >/dev/null 2>&1; then cmd="ttok-rs"; elif command -v ttok >/dev/null 2>&1; then cmd="ttok"; fi; v=$(tmux show -gqv @gitmux_tokens); lv=$(printf "%s" "$v" | tr A-Z a-z); if [ "$lv" = "1" ] || [ "$lv" = "on" ] || [ "$lv" = "true" ]; then tmux set -g @gitmux_tokens 0; tmux display-message "gitmux deltas: tokens OFF"; elif [ -n "$cmd" ]; then tmux set -g @gitmux_tokens 1; tmux display-message "gitmux deltas: tokens ON ($cmd)"; else tmux display-message "gitmux deltas: token CLI missing"; fi; tmux refresh-client -S'
+if-shell '[ -f ~/.config/tmux/home-manager.conf ]' 'source-file ~/.config/tmux/home-manager.conf'
