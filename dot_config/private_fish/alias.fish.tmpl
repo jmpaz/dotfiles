@@ -18,7 +18,6 @@ abbr -a cz 'chezmoi'
 abbr -a cze 'chezmoi edit'
 abbr -a czw 'chezmoi edit --watch'
 abbr -a cza 'chezmoi apply'
-alias cz-applytheme 'chezmoi apply --include scripts && chezmoi apply --include templates {{- if and (eq .displayServer "wayland") (ne (env "XDG_CURRENT_DESKTOP") "KDE") }} && ~/.config/river/modules/colors.sh && ~/.config/waybar/launch.sh {{- end }} && tmux source-file ~/.config/tmux/tmux.conf'
 
 abbr -a cw 'colorweave'
 abbr -a cws 'colorweave scheme'

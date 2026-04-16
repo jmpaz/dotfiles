@@ -92,7 +92,6 @@ layout {
 }
 
 // startup
-spawn-at-startup "~/.config/waybar/launch.sh"
 spawn-at-startup "swaybg -i $(colorweave wallpaper show loupe --format json | jq -r .path)"
 
 // misc
