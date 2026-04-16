@@ -191,10 +191,10 @@ binds {
 
     // voice
     Mod+T hotkey-overlay-title="ostt" {
-        spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh";
+        spawn "sh" "-c" "OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9001/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=CohereLabs/cohere-transcribe-03-2026 OSTT_CLASS=com.local.ostt OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt -e ostt remote' ~/.local/bin/ostt-remote.sh";
     }
     Mod+Alt+T hotkey-overlay-title="ostt (dev)" {
-        spawn "sh" "-c" "OSTT_DEV=1 OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9000/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=Systran/faster-distil-whisper-large-v3 OSTT_CLASS=com.local.ostt.dev OSTT_REMOTE_SOCKET=${XDG_RUNTIME_DIR:-/tmp}/ostt-dev.sock OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt.dev -e \"$OSTT_BIN\" remote' ~/.local/bin/ostt-remote.sh";
+        spawn "sh" "-c" "OSTT_DEV=1 OSTT_TRANSCRIPTION_ENDPOINT=http://localhost:9001/v1/audio/transcriptions OSTT_TRANSCRIPTION_MODEL=CohereLabs/cohere-transcribe-03-2026 OSTT_CLASS=com.local.ostt.dev OSTT_REMOTE_SOCKET=${XDG_RUNTIME_DIR:-/tmp}/ostt-dev.sock OSTT_LAUNCH_CMD='nixGL ghostty --window-padding-x=0 --window-padding-y=0 --class=com.local.ostt.dev -e \"$OSTT_BIN\" remote' ~/.local/bin/ostt-remote.sh";
     }
     Mod+Shift+T hotkey-overlay-title="ostt (cancel)" {
         spawn "sh" "-c" "~/.local/bin/ostt-remote.sh cancel";
