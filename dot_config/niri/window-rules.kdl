@@ -12,7 +12,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^com\.local\.ostt$"#
+    match app-id=r#"^com\.local\.ostt(\.dev)?$"#
     open-floating true
     open-focused false
     default-column-width { proportion 0.18; }
